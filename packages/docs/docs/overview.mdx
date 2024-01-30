@@ -1,0 +1,154 @@
+# Overview
+
+![license](https://img.shields.io/badge/license-MIT-0374b5?style=flat)
+<p align="center">
+  <img src="/img/overview.gif" />  
+</p>
+
+## Features
+Es un modal declarativo donde al ejecutar un show, puedes mostrar una vista sin necesidad de montar un state de isVisible, ademas las show functions tienen un tipado estricto, y permiten una comunicacion bidireccional entre modal y cliente (Donde se ejecuto el show) permitiendo crear una infinita variedad de logicas genericas, para evitar que modales genericos absorvan logica de negocio especifica (Ej: modales de confirmacion). Como tambien esperar a que usuario tipee una input dentro del modal, sin necesidad de salir del contexto de ejecucion de una function local, ni tampoco montar un state especifico para esta respuesta.
+<br/>Ademas la libreria provee algunos estilos e animaciones muy basicos, pero no dependen de esta UI, esto quiere decir que puedes montar tus propias animaciones, modales, tipos de modales, sin ninguna limitacion!
+
+✅ Core contruido con JS Vanilla, adaptadores para multiples Frameworks o librerias (React, Next.js, Prox: Solid, Qwik, Svelte, PReact).<br/>
+✅ SRR Soportado.<br/>
+✅ Perfectamente tipado.<br/>
+🚀 Ultra liviano, 0 dependencias, solamente APIs nativas (~2kb size).<br/>
+🌟 Modales hiper genericos sin logica de negocio dentro.<br/>
+🌟 Modales declarativos sin ningun tipo de estado (Si no se requiere).<br/>
+🌟 Comunicacion bidireccional con modales.<br/>
+🌟 Async/Await para respuestas del modal, sin salirte del contexto de la funcion.<br/>
+💡 Headless contruye tu propia ui sin ningun tipo de limitacion, ni props extrañas y complicadas.<br/>
+💡 Animaciones basicas incluidas, pero puedes animarlo tanto como gustes!<br/>
+💡 Ultra versatil core, para construir modales, popups, tooltips, sidebars, menus, lo que imagines! <br/>
+
+## Demo
+http://localhost:3000
+
+## Construye tu propio modal - Paso a paso
+
+#### Construye tu Modal
+Lo mas recomendable es que cualquier vista tenga una estructura de 2 tag (Como un div) que especifiquen el "data-modal-type" como "back" y "container". El primer div es el back y el segundo el container.
+Luego de estos div ya la estructura puede ser cualquiera.
+
+```tsx
+import { ModalProps } from "decl-modal"
+
+interface MyFirstModalProps extends ModalProps {
+  myCustomProp: any
+}
+
+const MyFirstModal: React.FC<MyFirstModalProps> = ({ closeModal }) => {
+  return (
+    <div className='flex fixed opacity-0 bg-black bg-opacity-70 top-0 bottom-0 w-full' 
+      onClick={() => closeModal(false)} 
+    // highlight-next-line
+      data-modal-type='back'>
+      // highlight-next-line
+      <div className='m-auto' data-modal-type='container'>
+        <div className="bg-white rounded-md p-5 font-bold">
+          Hello world! :)
+        </div>
+      </div>
+    </div>
+  )
+}
+```
+
+#### Genera un showMethod/ModalRoot
+
+```tsx
+import { generateModal } from "decl-modal/react"
+
+// Es como el useState, puedes asignarles el nombre que quieras.
+export const [showMyFirstModal, MyFirstModalRoot] = generateModal(MyFirstModal)
+```
+
+#### Renderiza tu ModalRoot
+```tsx
+//Renderiza el Root donde quieras.
+<MyFirstModalRoot />
+```
+
+#### Muestra tu modal
+
+```tsx
+// Simplemente llama al metodo show, Ej un onClick event
+showMyFirstModal()
+```
+
+### Siguientes pasos (Opcionales):
+
+#### Asginale una animacion a tu Modal
+```tsx
+// Definir la propiedad animation en ModalRoot
+<MyFirstModalRoot animation='bubble'/>
+```
+:::tip
+Puedes saber mas acerca de las animaciones aqui.
+:::
+
+#### Separar y contruir un ModalContainer (Layout) para este modal
+Gracias al hook useModalProps el cual es capaz de absorver las props del modal, puedes crear un modalContainer sin preocuparte por las props.
+```tsx
+import { ModalAnimProps, useModalProps } from "decl-modal/react"
+
+interface MyGenericContainerProps { 
+  children: React.ReactNode
+}
+
+const MyGenericContainer: React.FC<MyGenericContainerProps> = ({ children }) => {
+
+  const { closeModal } = useModalProps()
+
+  return (
+    <div onClick={() => closeModal(false)} {...ModalAnimProps.back}>
+      <div {...ModalAnimProps.container}>
+        {children}
+      </div>
+    </div>
+  )
+}
+```
+:::tip
+Puedes ver algunos ejemplos de contenedores aqui.
+:::
+
+#### Declara multiples modales bajo el mismo showMethod/Root
+```tsx
+import { type ModalProps, generateModal } from "decl-modal/react"
+
+const Modal1: React.FC<ModalProps> = () => {
+  return (
+    <ModalPopUpContainer>
+      <div className="bg-white rounded-md p-5 font-bold">
+        Hola desde Modal1!
+      </div>
+    </ModalPopUpContainer>
+  )
+}
+
+// Similar modal
+const Modal2: React.FC<ModalProps>...
+
+const [showModals, ModalsRoot] = generateModal({ Modals: { Modal1, Modal2 } })
+showModals('Modal1', {})
+showModals('Modal2', {})
+```
+:::tip
+Puedes saber mas acerca de lo que hace los modalFactory.
+:::
+
+#### Enviar respuesta y esperar una respuesta de tu modal
+En el modal puede enviar una respuesta via dos metodos sendMessage, closeModal. Ambos metodos pueden extraerse de las props del modal o del useModalProps.<br/>
+El cliente para obtener la respuesta simplemente deberia hacerle un await a la promise que devuelve.
+```tsx
+sendMessage(anyResponse)
+closeModal(anyResponse)
+
+const { response } = await showModals('Modal2', {})
+```
+<a href="/">
+  :::tip
+  Puedes saber mas acerca de la comunicacion que hay entre cliente y modal aqui.
+  :::
+</a>
