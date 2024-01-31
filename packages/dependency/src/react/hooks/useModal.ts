@@ -1,19 +1,15 @@
 
 import type { ShowConfig } from "@/factorys/modal.factory"
-import { DEFAULT_MODAL_ID, ModalFactory } from "@/index"
+import { ModalFactory } from "@/index"
 import React, { useEffect, useState } from "react"
 
 type useModalProps = {
   modalFactory?: InstanceType<typeof ModalFactory<any>> | { suscribe: (...args: any[]) => { unsubscribe: any } }
 }
 
-const genericModal = new ModalFactory({
-  id: DEFAULT_MODAL_ID
-})
+type State = { Component: React.FC, props: any, config: ShowConfig & { uuid: string, internalModalId: string } } | { Component: React.FC, props: any, config: ShowConfig & { uuid: string, internalModalId: string } }[]
 
-type State = { Component: React.FC, props: any, config: ShowConfig & { uuid: string } } | { Component: React.FC, props: any, config: ShowConfig & { uuid: string } }[]
-
-const useModal = ({ modalFactory = genericModal }: useModalProps) => {
+const useModal = ({ modalFactory }: useModalProps) => {
 
   const [state, setState] = useState<State>({ Component: null as any as React.FC, props: {} as any, config: {} as any })
 

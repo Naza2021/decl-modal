@@ -24,14 +24,14 @@ function generateModal<T extends any>(Component: T) {
     if (typeof (Component as any)?.Modals === 'object') {
         const internalFactory = new ModalFactory(Component)
 
-        return [internalFactory.show.bind(internalFactory) as any, (({ animation, ...props }: any) => {
-            return <ModalRoot modalFactory={internalFactory} state={props} animation={animation} />
+        return [internalFactory.show.bind(internalFactory) as any, (({ animation, config, ...props }: any) => {
+            return <ModalRoot modalFactory={internalFactory} state={props} animation={animation} config={config} />
         })] as any
     }
 
     const internalFactory = ModalFactory.generate(Component)
-    return [internalFactory.show.bind(internalFactory) as any, (({ animation, ...props }: any) => {
-        return <ModalRoot modalFactory={internalFactory} state={props} animation={animation} />
+    return [internalFactory.show.bind(internalFactory) as any, (({ animation, config, ...props }: any) => {
+        return <ModalRoot modalFactory={internalFactory} state={props} animation={animation} config={config} />
     })] as any
 }
 

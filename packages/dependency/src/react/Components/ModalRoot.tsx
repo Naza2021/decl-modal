@@ -17,7 +17,7 @@ type useModalPropsType = <T = any>() => modalResponse<extractResponseExtendedMod
 
 const [useInternal, TypedContextProvider] = createTypedContext<modalResponse>()
 
-const ModalRoot = ({ modalFactory, animation, ...state }: ModalRootProps): ReturnType<React.FC> => {
+const ModalRoot = ({ modalFactory, state, animation, config: RootConfig }: ModalRootProps & { state?: any, config?: any }): ReturnType<React.FC> => {
   const State = useModal({ modalFactory: modalFactory })
 
   if (!Array.isArray(State) && !State.Component) return null as any
@@ -26,7 +26,7 @@ const ModalRoot = ({ modalFactory, animation, ...state }: ModalRootProps): Retur
     return <>
       {State.map((InternalState) => {
         const { Component, props, config } = InternalState
-        return <InternalRender key={config.uuid} {...{ ...props, ...state || {}, ...{ Component, animation: config?.animation || animation } }} />
+        return <InternalRender key={config.uuid} {...{ ...props, ...state || {}, ...{ Component, animation: RootConfig?.[config.internalModalId]?.animation || animation } }} />
       })}
     </>
   }
@@ -34,7 +34,7 @@ const ModalRoot = ({ modalFactory, animation, ...state }: ModalRootProps): Retur
   const { Component, props, config } = State
 
   return <>
-    <InternalRender {...{ ...props, ...state || {}, ...{ Component, animation: config?.animation || animation } }} />
+    <InternalRender {...{ ...props, ...state || {}, ...{ Component, animation: RootConfig?.[config.internalModalId]?.animation as any || animation } }} />
   </>
 }
 

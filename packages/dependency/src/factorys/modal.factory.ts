@@ -53,7 +53,7 @@ export class ModalFactory<P = any, U = Record<string, React.FC<P>>>{
         type updateArgs = Partial<Omit<extractExtendedModalProps<U[P]>, keyof modalResponse>>
 
         const updateModal = (args: updateArgs = {}) => {
-            this.observable.next({ config: { ...config, uuid: instanceModalId }, modalProps: { ...modalProps as any, ...args, closeModal, waitFor: modalMessages.waitFor.bind(modalMessages), sendMessage: clientMessages.sendMessage.bind(clientMessages) }, internalModalId: (internalModalId as string) })
+            this.observable.next({ config: { ...config, uuid: instanceModalId, internalModalId }, modalProps: { ...modalProps as any, ...args, closeModal, waitFor: modalMessages.waitFor.bind(modalMessages), sendMessage: clientMessages.sendMessage.bind(clientMessages) }, internalModalId: (internalModalId as string) })
             if (args) modalProps = { ...modalProps as any, ...args as any }
         }
 
