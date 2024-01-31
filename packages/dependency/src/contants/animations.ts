@@ -2,7 +2,7 @@ interface animConfig extends KeyframeAnimationOptions {
     reverse?: boolean
 }
 
-type AnimConfig = {
+export type AnimConfig = {
     back?: {
         keyframes?: Parameters<Animatable['animate']>[0],
         config?: animConfig

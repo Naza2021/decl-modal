@@ -1,0 +1,38 @@
+import Highlight from '../src/components/Hightlist';
+
+# Comunicacion Modal-Cliente
+
+Todas las vistas que se invoquen con el show method se crea un canal interno, para intercambiar informacion en ambas direcciones.
+
+:::tip
+Para darle tipado a esta comunicacion los Modales deben extender de <Highlight>ModalProps</Highlight> el cual su primer parametro de typescript es el tipado que van a tener los metodos para el envio, como el recibimiento de los mensajes. El tipado es compartido para ambas partes. Algo como:<br/>
+```tsx
+import { type ModalProps } from "decl-modal/react"
+interface MyComponent extends ModalProps<{message: string}>
+```
+:::
+
+# Configuracion por defecto
+// el show por default espera un mensajito... wait config... etc... closeModal... waitAnimation
+
+# Escuchar mensajes
+
+El show method devuelve una function <Highlight>waitFor</Highlight>, esta function tambien se encuentra dentro de las props del modal. Al invocarla devuelve una promise la cual va a esperar hasta el modal devuelva algun mensaje. Esta promise puede ser abortada por 2 motivos, se le puede configurar un timeout, o llamar el metodo <Highlight>abort</Highlight> de la propia promise.
+
+```tsx
+cosnt response = await waitFor()
+
+// timeout config
+...waitFor()
+
+// Abortar con el metodo abort
+...waitFor()
+...abort()
+```
+:::info
+Se puede recibir una infinita cantidad de mensajes.
+:::
+
+# Enviar mensajes
+
+Dos maneras, closeModal, sendMessage.

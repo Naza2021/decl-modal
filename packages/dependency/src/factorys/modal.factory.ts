@@ -23,7 +23,7 @@ export class ModalFactory<P = any, U = Record<string, React.FC<P>>>{
     private wait: ModalFactoryProps['wait']
     private observable: Observable<observableProps>
     private id: string
-    public config: Readonly<Partial<Record<keyof U, { animation?: AnimAvailableConfig }>>>
+    private config: Readonly<Partial<Record<keyof U, { animation?: AnimAvailableConfig }>>>
     constructor(props: ModalFactoryProps & { Modals?: U, config?: Partial<Record<keyof U, { animation?: AnimAvailableConfig }>> }) {
         this.Modals = props.Modals
         this.config = props.config
@@ -32,6 +32,10 @@ export class ModalFactory<P = any, U = Record<string, React.FC<P>>>{
         if (!this.Modals) {
             this.id = props.id || DEFAULT_MODAL_ID as any
         }
+    }
+
+    getConfig() {
+        return { ...this.config }
     }
 
     suscribe(componentCallback: (...[Component, ComponentProps, config]: ModalTupleType<U, ModalProps>) => void) {

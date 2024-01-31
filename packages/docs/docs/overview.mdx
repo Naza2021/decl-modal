@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Overview
 
 ![license](https://img.shields.io/badge/license-MIT-0374b5?style=flat)
@@ -7,7 +11,7 @@
 
 ## Features
 Es un modal declarativo donde al ejecutar un show, puedes mostrar una vista sin necesidad de montar un state de isVisible, ademas las show functions tienen un tipado estricto, y permiten una comunicacion bidireccional entre modal y cliente (Donde se ejecuto el show) permitiendo crear una infinita variedad de logicas genericas, para evitar que modales genericos absorvan logica de negocio especifica (Ej: modales de confirmacion). Como tambien esperar a que usuario tipee una input dentro del modal, sin necesidad de salir del contexto de ejecucion de una function local, ni tampoco montar un state especifico para esta respuesta.
-<br/>Ademas la libreria provee algunos estilos e animaciones muy basicos, pero no dependen de esta UI, esto quiere decir que puedes montar tus propias animaciones, modales, tipos de modales, sin ninguna limitacion!
+<br/>Ademas la libreria solo expone su Core para tu montes tu propia UI, esto quiere decir que puedes montar tus propias animaciones, modales, tipos de modales, estilos, configuraciones, sin ninguna limitacion!
 
 ✅ Core contruido con JS Vanilla, adaptadores para multiples Frameworks o librerias (React, Next.js, Prox: Solid, Qwik, Svelte, PReact).<br/>
 ✅ SRR Soportado.<br/>
@@ -83,9 +87,11 @@ showMyFirstModal()
 // Definir la propiedad animation en ModalRoot
 <MyFirstModalRoot animation='bubble'/>
 ```
-:::tip
-Puedes saber mas acerca de las animaciones aqui.
-:::
+<a href="/docs/animations">
+  :::tip
+  Puedes saber mas acerca de las animaciones aqui.
+  :::
+</a>
 
 #### Separar y contruir un ModalContainer (Layout) para este modal
 Gracias al hook useModalProps el cual es capaz de absorver las props del modal, puedes crear un modalContainer sin preocuparte por las props.

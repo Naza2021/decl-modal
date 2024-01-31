@@ -1,0 +1,96 @@
+---
+slug: /animations
+---
+
+import Highlight from '../src/components/Hightlist';
+
+## Asigna una animacion a tu vista
+Por defecto puedes utilizar las default <Highlight>bubble</Highlight> ,<Highlight>pop</Highlight>, <Highlight>fade</Highlight> o directamente un objeto que defina tu animacion.<br/>
+Existen 3 formas de declarar una animacion a tu vista:
+```tsx
+showMethod
+```
+```tsx
+factoryConfig
+```
+```tsx
+RootConfig
+```
+:::tip
+Estan ordenadas en funcion de su prioridad, es decir un metodo puede sobrescribir al otro
+:::
+
+# Como funciona
+
+La forma en la que el core anima las vistas, es detectando los tags que contengan <Highlight>data-modal-type</Highlight> declarado, tanto como 'back' o 'container'.
+Puedes jugar con estos dos tags tanto como quieras. Normalmente con el back puedes crear un efecto de fade o mas sencillo para que "aparezca" la vista y ya con el container animar el contenido de la vista.
+
+
+## Api nativa
+
+Todas las animaciones de esta libreria estan contruidas con la API nativa de animaciones del navegador, esto quiere decir, que si quieres extender o crear tu propia animacion, tendras que hacerlo con las props esta api.<br/>
+[Animate method](https://developer.mozilla.org/en-US/docs/Web/API/Element/animate)<br/>
+[Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API)<br/>
+
+## Animacion por defecto
+
+Todas las animaciones personalizadas que declares, por defecto van a extender de la animacion de "pop" la cual es la siguiente:
+```ts
+{
+    back: {
+        keyframes: [{ opacity: 0 }, { opacity: 1 }],
+        config: { duration: 200, fill: 'forwards' }
+    },
+    container: {
+        keyframes: {
+            transform: ['translateY(60%) scale(0.8)', 'translateY(0%) scale(1)'],
+        },
+        config: { duration: 250, fill: 'forwards', reverse: false, easing: 'cubic-bezier(.47,1.64,.41,.8)' }
+    }
+}
+```
+
+:::info
+Se aclara esto por si no entiendes por que tu animacion personalizada se muestra con cierto "easing" o con cierto tiempo sin que lo declares explicitamente.
+<br/>Ademas la extencion es superficial, esto quiere decir que si declaras por ejemplo <Highlight>container.keyframes</Highlight>, se va a reemplazar completamente por los nuevos keyframes, no se van a combinar.
+:::
+
+## Declara tu propia animacion
+
+En la animacion por defecto puedes ver un ejemplo completo, pero no es necesaria que declares todas las props, gracias a que extienden de esta misma. Puedes simplemente modificar algun detalle, Ej:
+```typescript
+const myCustomAnim = {
+    container: {
+        keyframes: {
+            transform: ['translateY(60%)', 'translateY(0%)'],
+        },
+        config: { duration: 350 }
+    }
+}
+```
+:::info
+La animacion personalizada, puede ser desde una modificacion simple, hasta toda la complejidad que te permita la Web Animations API.
+:::
+:::tip
+Puedes obtener tipado para tu animacion con AnimConfig.
+```typescript
+import { type AnimConfig } from 'decl-modal/react'
+const myCustomAnim = {
+    //...myCustomAnim
+    // highlight-next-line
+} satisfies AnimConfig
+```
+:::
+
+## Consideraciones generales de una animacion
+
+#### Ciclo de vida
+En cuanto se ejecuta el metodo show entra en ejecucion la animacion, y cuando se llama el metodo close, se ejecuta la misma animacion pero en reversa.
+Es decir no puedes definir una animacion especial para el close. Esto es asi, para que se puede cerrar la vista, incluso cuando se esta animando su entrada, y evitar parpadeos o saltos. Puedes anular este comportamiento definiendo en false, la propiedad <Highlight>config.reverse</Highlight>
+```typescript
+const myCustomAnim = {
+    container: {
+        config: { reverse: false }
+    }
+}
+```
