@@ -61,8 +61,7 @@ const Page: React.FC<PageProps> = ({ }) => {
         </div>
       </div >
       <ModalRoot modalFactory={firstFactory} animation='bubble' />
-      <InputComponentRoot animation='pop' />
-      <InputComponentRoot2 />
+      <InputComponentRoot />
       <TooltipRoot />
     </>
   )

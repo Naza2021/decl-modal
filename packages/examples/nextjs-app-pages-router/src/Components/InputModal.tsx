@@ -30,8 +30,4 @@ const TestComponent: React.FC<TestComponentProps> = ({ sendMessage, closeModal }
 }
 
 
-new ModalFactory({ Modals: { wea: TestComponent }, config: { wea: { animation: 'fade' } } })
-export const [showInputModal, InputComponentRoot] = generateModal({ Modals: { TestComponent, sex: {} as React.FC<TestComponentProps2> }, config: { TestComponent: { animation: 'bubble' } } })
-export const [showInputModal2, InputComponentRoot2] = generateModal(TestComponent)
-
-showInputModal('sex', { myProp2: 'holi' })
+export const [showInputModal, InputComponentRoot] = generateModal({ Modals: { TestComponent }, config: { TestComponent: { animation: 'bubble' } } })

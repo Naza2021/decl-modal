@@ -1,36 +1,27 @@
 import type { AnimAvailableConfig } from "@/contants/animations";
-import { DEFAULT_MODAL_ID } from "@/contants/contants";
-import type { GetComponentProps, ModalProps, ModalTupleType, extractExtendedModalProps, extractResponseExtendedModalProps, modalResponse } from "@/lib-types/ModalInterna.types";
+import type { ModalProps, ModalTupleType, extractExtendedModalProps, extractResponseExtendedModalProps, modalResponse } from "@/lib-types/ModalInterna.types";
 import { Observable } from "@/observable-own";
 import React from "react";
 import { MessagesQueue } from "./messages-queue";
 
 export type ModalFactoryProps = {
     wait?: boolean
+    waitAnimation?: boolean
 }
-
-
-
 
 type observableProps = { modalProps?: ModalProps, internalModalId?: string } & Record<string, unknown>
 
-export type ShowConfig = { wait?: boolean, animation?: AnimAvailableConfig, override?: false }
+export type ShowConfig = { animation?: AnimAvailableConfig, override?: false } & ModalFactoryProps
 
 export class ModalFactory<P = any, U = Record<string, React.FC<P>>>{
 
     private Modals: U
     private wait: ModalFactoryProps['wait']
     private observable: Observable<observableProps>
-    private config: Readonly<Partial<Record<keyof U, { animation?: AnimAvailableConfig }>>>
     constructor(props: ModalFactoryProps & { Modals?: U, config?: Partial<Record<keyof U, { animation?: AnimAvailableConfig }>> }) {
         this.Modals = props.Modals
-        this.config = props.config
         this.wait = props.wait || true
         this.observable = Observable.create<observableProps>()
-    }
-
-    getConfig() {
-        return { ...this.config }
     }
 
     suscribe(componentCallback: (...[Component, ComponentProps, config]: ModalTupleType<U, ModalProps>) => void) {
