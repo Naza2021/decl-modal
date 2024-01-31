@@ -2,6 +2,9 @@
 sidebar_position: 1
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Overview
 
 ![license](https://img.shields.io/badge/license-MIT-0374b5?style=flat)
@@ -27,6 +30,50 @@ Es un modal declarativo donde al ejecutar un show, puedes mostrar una vista sin 
 
 ## Demo
 http://localhost:3000
+
+## Instalacion
+
+<Tabs>
+<TabItem value='npm'>
+```npm
+npm install decl-modal
+```
+</TabItem>
+<TabItem value='pnpm'>
+```npm
+pnpm install decl-modal
+```
+</TabItem>
+<TabItem value='yarn'>
+```npm
+yarn add decl-modal
+```
+</TabItem>
+</Tabs>
+
+## Componentes para copiar y pegar
+<nav class="pagination-nav">
+  <div class="pagination-nav__item">
+    <a class="pagination-nav__link" href="#url">
+      <div class="pagination-nav__label">Modal</div>
+    </a>
+  </div>
+  <div class="pagination-nav__item">
+    <a class="pagination-nav__link" href="#url">
+      <div class="pagination-nav__label">Tooltip</div>
+    </a>
+  </div>
+  <div class="pagination-nav__item">
+    <a class="pagination-nav__link" href="#url">
+      <div class="pagination-nav__label">Popup</div>
+    </a>
+  </div>
+  <div class="pagination-nav__item">
+    <a class="pagination-nav__link" href="#url">
+      <div class="pagination-nav__label">Menu</div>
+    </a>
+  </div>
+</nav>
 
 ## Construye tu propio modal - Paso a paso
 
@@ -140,9 +187,6 @@ const [showModals, ModalsRoot] = generateModal({ Modals: { Modal1, Modal2 } })
 showModals('Modal1', {})
 showModals('Modal2', {})
 ```
-:::tip
-Puedes saber mas acerca de lo que hace los modalFactory.
-:::
 
 #### Enviar respuesta y esperar una respuesta de tu modal
 En el modal puede enviar una respuesta via dos metodos sendMessage, closeModal. Ambos metodos pueden extraerse de las props del modal o del useModalProps.<br/>

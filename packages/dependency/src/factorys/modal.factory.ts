@@ -17,11 +17,17 @@ export class ModalFactory<P = any, U = Record<string, React.FC<P>>>{
 
     private Modals: U
     private wait: ModalFactoryProps['wait']
+    private waitAnimation: ModalFactoryProps['waitAnimation']
     private observable: Observable<observableProps>
     constructor(props: ModalFactoryProps & { Modals?: U, config?: Partial<Record<keyof U, { animation?: AnimAvailableConfig }>> }) {
         this.Modals = props.Modals
-        this.wait = props.wait || true
+        this.wait = props.wait ?? true
+        this.waitAnimation = props.waitAnimation ?? true
         this.observable = Observable.create<observableProps>()
+    }
+
+    getConfig() {
+        return { waitAnimation: this.waitAnimation, wait: this.wait }
     }
 
     suscribe(componentCallback: (...[Component, ComponentProps, config]: ModalTupleType<U, ModalProps>) => void) {

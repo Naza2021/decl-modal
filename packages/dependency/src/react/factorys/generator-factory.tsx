@@ -5,7 +5,6 @@ import type { Call, Objects } from 'hotscript';
 import React from 'react';
 import { ModalRoot } from '..';
 
-
 type configType<U> = { config?: Partial<Record<keyof U, { animation?: AnimAvailableConfig }>> }
 
 function generateModal<T extends ConstructorParameters<typeof ModalFactory>[0]>(Component: T):

@@ -32,7 +32,7 @@ graph TD;
 
 ### ModalRoot
 
-Ubicacion donde se van a renderizar la vista (o las vistas).
+Ubicacion donde se van a renderizar la vista (o las vistas). Puedes obtener un ModalRoot utilizando el metodo de generateModal.
 
 #### Props
 
@@ -46,10 +46,8 @@ No recomiendo el uso de esta prop, idealmente pasarle las props necesarias via e
 #### Ejemplo
 
 ```tsx
-import { ModalRoot } from "decl-modal/react"
-
 //Render
-<ModalRoot modalFactory={myGenericModal} animation='fade' />
+<ModalRoot animation='fade' />
 ```
 
 ### ModalContainer

@@ -8,13 +8,16 @@ import Highlight from '../src/components/Hightlist';
 Por defecto puedes utilizar las default <Highlight>bubble</Highlight> ,<Highlight>pop</Highlight>, <Highlight>fade</Highlight> o directamente un objeto que defina tu animacion.<br/>
 Existen 3 formas de declarar una animacion a tu vista:
 ```tsx
-showMethod
+// Ejecutar una animacion especifica en un momento especifico
+showMethod(...modalProps, { animation: 'pop' })
 ```
 ```tsx
-factoryConfig
+// Ejecutar una animacion especifica en un modal especifico
+<MyModalRoot config={{ MyModal: { animation: 'fade' } }}  />
 ```
 ```tsx
-RootConfig
+// Ejecutar una animacion especifica generalizada para todos los modales
+<MyModalRoot animation='bubble' />
 ```
 :::tip
 Estan ordenadas en funcion de su prioridad, es decir un metodo puede sobrescribir al otro
@@ -71,22 +74,13 @@ const myCustomAnim = {
 :::info
 La animacion personalizada, puede ser desde una modificacion simple, hasta toda la complejidad que te permita la Web Animations API.
 :::
-:::tip
-Puedes obtener tipado para tu animacion con AnimConfig.
-```typescript
-import { type AnimConfig } from 'decl-modal/react'
-const myCustomAnim = {
-    //...myCustomAnim
-    // highlight-next-line
-} satisfies AnimConfig
-```
-:::
 
 ## Consideraciones generales de una animacion
 
 #### Ciclo de vida
 En cuanto se ejecuta el metodo show entra en ejecucion la animacion, y cuando se llama el metodo close, se ejecuta la misma animacion pero en reversa.
 Es decir no puedes definir una animacion especial para el close. Esto es asi, para que se puede cerrar la vista, incluso cuando se esta animando su entrada, y evitar parpadeos o saltos. Puedes anular este comportamiento definiendo en false, la propiedad <Highlight>config.reverse</Highlight>
+Lo que va a provocar en cuando se cierre el modal no se ejecute en reversa. No haria nada. (Ejemplo en pop cuando se cierra el modal no se va hacia abajo)
 ```typescript
 const myCustomAnim = {
     container: {

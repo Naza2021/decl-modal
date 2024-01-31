@@ -26,7 +26,7 @@ const ModalRoot = ({ modalFactory, state, animation, config: RootConfig }: Modal
     return <>
       {State.map((InternalState) => {
         const { Component, props, config } = InternalState
-        return <InternalRender key={config.uuid} {...{ ...props, ...state || {}, ...{ Component, animation: RootConfig?.[config.internalModalId]?.animation || animation } }} />
+        return <InternalRender config={config} modalFactory={modalFactory} key={config.uuid} {...{ ...props, ...state || {}, ...{ Component, animation: config?.animation || RootConfig?.[config.internalModalId]?.animation || animation } }} />
       })}
     </>
   }
@@ -34,12 +34,19 @@ const ModalRoot = ({ modalFactory, state, animation, config: RootConfig }: Modal
   const { Component, props, config } = State
 
   return <>
-    <InternalRender {...{ ...props, ...state || {}, ...{ Component, animation: RootConfig?.[config.internalModalId]?.animation as any || animation } }} />
+    <InternalRender config={config} modalFactory={modalFactory} {...{ ...props, ...state || {}, ...{ Component, animation: config?.animation || RootConfig?.[config.internalModalId]?.animation as any || animation } }} />
   </>
 }
 
-const InternalRender: React.FC<any> = ({ Component, animation, ...props }) => {
-  const { closeAnimated } = useAnimatedModal({ animation, closeModal: props?.closeModal, Component })
+const InternalRender: React.FC<any> = ({ Component, animation, modalFactory, config, ...props }) => {
+  const { closeAnimated } = useAnimatedModal({
+    animation,
+    closeModal: props?.closeModal,
+    Component,
+    waitAnimation: config?.waitAnimation ?? modalFactory?.getConfig?.()?.waitAnimation,
+    sendMessage: props?.sendMessage
+  })
+
   return (
     <TypedContextProvider value={{ ...{ ...props, ...{ closeModal: closeAnimated } } }}>
       <Component {...{ ...props, ...{ closeModal: closeAnimated } }} />

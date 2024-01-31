@@ -1,12 +1,15 @@
 import { DEFAULT_ANIMATIONS, generateAnimations, type AnimConfig } from "@/contants/animations"
+import type { ModalFactory } from "@/index"
 import { useEffect, useId, useRef, useState } from "react"
 
 type useAnimationProps = {
     animation?: keyof typeof DEFAULT_ANIMATIONS | AnimConfig,
     Component?: any
+    waitAnimation?: ReturnType<InstanceType<typeof ModalFactory>['getConfig']>['waitAnimation']
+    sendMessage?: any,
 }
 
-const useAnimatedModal = <C extends Function>({ animation, closeModal, Component }: useAnimationProps & { closeModal?: C }) => {
+const useAnimatedModal = <C extends Function>({ animation, closeModal, Component, waitAnimation, sendMessage }: useAnimationProps & { closeModal?: C }) => {
 
     const animateRef = useRef<{ reverse: () => Promise<void>, refreshAnims: () => void } | null>()
     const [closeIntermediate, setCloseIntermediate] = useState<any>(null)
@@ -40,9 +43,12 @@ const useAnimatedModal = <C extends Function>({ animation, closeModal, Component
 
         if (closeIntermediate !== null) {
             (async () => {
+                if (waitAnimation === false) {
+                    sendMessage(closeIntermediate)
+                }
                 if (!animateRef.current) return
                 await animateRef.current.reverse()
-                closeModal(closeIntermediate)
+                closeModal(waitAnimation === false ? false : closeIntermediate)
             })()
         }
 
