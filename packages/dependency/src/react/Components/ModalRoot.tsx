@@ -17,7 +17,7 @@ type useModalPropsType = <T = any>() => modalResponse<extractResponseExtendedMod
 
 const [useInternal, TypedContextProvider] = createTypedContext<modalResponse>()
 
-const ModalRoot = ({ modalFactory, state, animation }: ModalRootProps & { state?: any }): ReturnType<React.FC> => {
+const ModalRoot = ({ modalFactory, animation, ...state }: ModalRootProps): ReturnType<React.FC> => {
   const State = useModal({ modalFactory: modalFactory })
 
   if (!Array.isArray(State) && !State.Component) return null as any
