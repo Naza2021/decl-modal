@@ -1,8 +1,8 @@
 "use client"
-import { ModalRoot } from "decl-modal/react"
-import { ModalFactory, ModalProps, throttle } from "decl-modal"
-import { TooltipRoot, modalTooltip } from "@/Components/Tooltip/TooltipRoot"
+import { ModalRoot, showModal } from "@/Components/Examples/ExampleModal"
+import { TooltipRoot, generateShowTooltip } from "@/Components/Examples/TooltipExample"
 import { InputComponentRoot, InputComponentRoot2, showInputModal } from "@/Components/InputModal"
+import { ModalFactory, ModalProps } from "decl-modal"
 import { useState } from "react"
 
 interface MyFirstModalProps extends ModalProps {
@@ -22,16 +22,12 @@ const MyFirstModal: React.FC<MyFirstModalProps> = ({ closeModal }) => {
   )
 }
 
-const firstFactory = ModalFactory.generate(MyFirstModal)
-
 
 interface PageProps {
 
 }
 
-const showTooltip = throttle(async (e: MouseEvent) => {
-  await modalTooltip.show({ target: e.target as HTMLElement }, { override: false })
-}) as any
+const showTooltip = generateShowTooltip()
 
 const Page: React.FC<PageProps> = ({ }) => {
 
@@ -42,7 +38,7 @@ const Page: React.FC<PageProps> = ({ }) => {
       <div className="bg-[#303030] h-full w-full flex">
         <div className="m-auto flex flex-col gap-4 items-center">
           <div className="flex gap-12 items-center">
-            <button className="bg-black rounded-md py-2 px-4 font-bold text-white" onClick={() => firstFactory.show({}, { animation: 'bubble' })}>
+            <button className="bg-black rounded-md py-2 px-4 font-bold text-white" onClick={() => showModal('ModalComponent')}>
               Modal
             </button>
             <p className="text-white" onMouseEnter={showTooltip}>
@@ -60,8 +56,8 @@ const Page: React.FC<PageProps> = ({ }) => {
           </p>}
         </div>
       </div >
-      <ModalRoot modalFactory={firstFactory} animation='bubble' />
-      <InputComponentRoot animation='bubble' config={{ TestComponent: { animation: 'fade' } }}  />
+      <ModalRoot animation='bubble' />
+      <InputComponentRoot animation='bubble' config={{ TestComponent: { animation: 'fade' } }} />
       <InputComponentRoot2 />
       <TooltipRoot />
     </>

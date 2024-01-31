@@ -38,7 +38,7 @@ export class ModalFactory<P = any, U = Record<string, React.FC<P>>>{
         }
     }
 
-    async show<P extends keyof U, R extends extractResponseExtendedModalProps<U[P]>>(internalModalId?: P, modalProps?: Omit<extractExtendedModalProps<U[P]>, keyof modalResponse>, config: ShowConfig = {}) {
+    async show<P extends keyof U, R extends extractResponseExtendedModalProps<U[P]>>(internalModalId: P, modalProps?: Omit<extractExtendedModalProps<U[P]>, keyof modalResponse>, config: ShowConfig = {}) {
 
         const instanceModalId = crypto.randomUUID()
         const modalMessages = new MessagesQueue<R>()

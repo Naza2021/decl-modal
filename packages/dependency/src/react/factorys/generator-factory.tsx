@@ -3,7 +3,7 @@ import { ModalFactory } from "@/index";
 import type { ValueOf, extractExtendedModalProps, modalResponse } from '@/lib-types/ModalInterna.types';
 import type { Call, Objects } from 'hotscript';
 import React from 'react';
-import { ModalRoot } from '..';
+import { ModalRoot } from '../Components/ModalRoot';
 
 type configType<U> = { config?: Partial<Record<keyof U, { animation?: AnimAvailableConfig }>> }
 
