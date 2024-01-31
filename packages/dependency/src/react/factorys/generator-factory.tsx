@@ -1,14 +1,20 @@
-import React from 'react'
-import { ModalFactory } from "@/index";
-import { ModalRoot } from '..';
-import type { Merge, ValueOf, extractExtendedModalProps, modalResponse } from '@/lib-types/ModalInterna.types';
 import type { AnimAvailableConfig } from '@/contants/animations';
+import { ModalFactory } from "@/index";
+import type { ValueOf, extractExtendedModalProps, modalResponse } from '@/lib-types/ModalInterna.types';
+import type { Call, Objects } from 'hotscript';
+import React from 'react';
+import { ModalRoot } from '..';
 
-function generateModal<T extends { Modals: any }>(Component: T & { config: Partial<Record<keyof T['Modals'], { animation?: AnimAvailableConfig }>> }):
+
+type configType<U> = { config?: Partial<Record<keyof U, { animation?: AnimAvailableConfig }>> }
+
+function generateModal<T extends { Modals: any }>(Component: T):
     [ModalFactory<any, T['Modals']>['show'],
-        (args: Partial<Omit<Merge<extractExtendedModalProps<ValueOf<T['Modals']>>>,
-            keyof modalResponse>>
-            & { animation?: AnimAvailableConfig }) => any]
+        // Merge<>
+        (args: Partial<Omit<Call<Objects.Assign<extractExtendedModalProps<ValueOf<T['Modals']>>>>, keyof modalResponse>>
+            & configType<T['Modals']>
+            & { animation?: AnimAvailableConfig })
+            => any]
 function generateModal<T extends (...args: any[]) => any>(Component: T):
     [ReturnType<typeof ModalFactory.generate<T>>['show'],
         (args: Partial<Omit<extractExtendedModalProps<T>, keyof modalResponse>>
@@ -29,4 +35,4 @@ function generateModal<T extends any>(Component: T) {
     })] as any
 }
 
-export { generateModal }
+export { generateModal };

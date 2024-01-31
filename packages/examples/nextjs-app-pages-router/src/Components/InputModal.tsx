@@ -1,6 +1,7 @@
 import { ModalFactory, ModalProps } from "decl-modal"
 import { MyGenericContainer } from "./ModalPopUpContainer"
 import { generateModal } from "decl-modal/react"
+import React from "react"
 
 interface TestComponentProps extends ModalProps<string | false> {
   myProp?: 'holi'
@@ -30,4 +31,7 @@ const TestComponent: React.FC<TestComponentProps> = ({ sendMessage, closeModal }
 }
 
 
-export const [showInputModal, InputComponentRoot] = generateModal({ Modals: { TestComponent }, config: { TestComponent: { animation: 'bubble' } } })
+export const [showInputModal, InputComponentRoot] = generateModal({ Modals: { TestComponent, sex: {} as React.FC<{message: 'holi 2'}> } })
+export const [showInputModal2, InputComponentRoot2] = generateModal(TestComponent)
+
+// showInputModal('sex', { myProp2: 'holi' })
