@@ -8,7 +8,7 @@ import { ModalRoot } from '..';
 
 type configType<U> = { config?: Partial<Record<keyof U, { animation?: AnimAvailableConfig }>> }
 
-function generateModal<T extends { Modals: any }>(Component: T):
+function generateModal<T extends ConstructorParameters<typeof ModalFactory>[0]>(Component: T):
     [ModalFactory<any, T['Modals']>['show'],
         // Merge<>
         (args: Partial<Omit<Call<Objects.Assign<extractExtendedModalProps<ValueOf<T['Modals']>>>>, keyof modalResponse>>

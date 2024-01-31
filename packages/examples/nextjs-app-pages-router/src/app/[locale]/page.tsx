@@ -61,7 +61,7 @@ const Page: React.FC<PageProps> = ({ }) => {
         </div>
       </div >
       <ModalRoot modalFactory={firstFactory} animation='bubble' />
-      <InputComponentRoot config={{ TestComponent: { animation: 'bubble' } }} />
+      <InputComponentRoot config={{ TestComponent: { animation: 'bubble' } }}  />
       <InputComponentRoot2 />
       <TooltipRoot />
     </>

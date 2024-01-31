@@ -31,7 +31,7 @@ const TestComponent: React.FC<TestComponentProps> = ({ sendMessage, closeModal }
 }
 
 
-export const [showInputModal, InputComponentRoot] = generateModal({ Modals: { TestComponent, sex: {} as React.FC<{message: 'holi 2'}> } })
+export const [showInputModal, InputComponentRoot] = generateModal({ Modals: { TestComponent } })
 export const [showInputModal2, InputComponentRoot2] = generateModal(TestComponent)
 
 // showInputModal('sex', { myProp2: 'holi' })
