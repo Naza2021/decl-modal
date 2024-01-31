@@ -7,7 +7,6 @@ import { MessagesQueue } from "./messages-queue";
 
 export type ModalFactoryProps = {
     wait?: boolean
-    id?: string
 }
 
 
@@ -22,16 +21,12 @@ export class ModalFactory<P = any, U = Record<string, React.FC<P>>>{
     private Modals: U
     private wait: ModalFactoryProps['wait']
     private observable: Observable<observableProps>
-    private id: string
     private config: Readonly<Partial<Record<keyof U, { animation?: AnimAvailableConfig }>>>
     constructor(props: ModalFactoryProps & { Modals?: U, config?: Partial<Record<keyof U, { animation?: AnimAvailableConfig }>> }) {
         this.Modals = props.Modals
         this.config = props.config
         this.wait = props.wait || true
         this.observable = Observable.create<observableProps>()
-        if (!this.Modals) {
-            this.id = props.id || DEFAULT_MODAL_ID as any
-        }
     }
 
     getConfig() {
@@ -41,7 +36,7 @@ export class ModalFactory<P = any, U = Record<string, React.FC<P>>>{
     suscribe(componentCallback: (...[Component, ComponentProps, config]: ModalTupleType<U, ModalProps>) => void) {
         return {
             ...this.observable.subscribe(({ internalModalId, modalProps, config }) => {
-                componentCallback(this.id ? internalModalId : this.Modals?.[internalModalId as keyof typeof this.Modals] as any, modalProps as any, config)
+                componentCallback(this.Modals?.[internalModalId as keyof typeof this.Modals] as any, modalProps as any, config)
             })
         }
     }
