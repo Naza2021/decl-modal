@@ -31,7 +31,7 @@ const Page: React.FC<PageProps> = ({ }) => {
             <button className="bg-black rounded-md py-2 px-4 font-bold text-white" onClick={() => showModal('ModalComponent')}>
               Modal
             </button>
-            <p className="text-white" {...showMyTooltip('Holi')}>
+            <p className="text-white select-none" {...showMyTooltip('Holi')}>
               Tooltip | Popup
             </p>
             <button className="bg-black rounded-md py-2 px-4 font-bold text-white" onClick={async () => {
@@ -41,7 +41,7 @@ const Page: React.FC<PageProps> = ({ }) => {
               Input
             </button>
           </div>
-          {input && <p className="text-white max-w-[10rem] text-ellipsis overflow-hidden text-center text-nowrap break-keep" onClick={() => showToast('Holi!')}>
+          {input && <p className="text-white select-none cursor-pointer max-w-[10rem] text-ellipsis overflow-hidden text-center text-nowrap break-keep" onClick={() => showToast(input)}>
             Input: {input}
           </p>}
         </div>

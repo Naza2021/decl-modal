@@ -1,5 +1,5 @@
 interface animConfig extends KeyframeAnimationOptions {
-    reverse?: boolean
+    reverse?: boolean | ((modalId: string) => AnimConfig['container'])
 }
 
 export type AnimConfig = {
@@ -74,8 +74,23 @@ const generateAnimations = (anim: typeof DEFAULT_ANIMATIONS['pop'], id: string, 
         container: (document.querySelector(`[data-modal-container-id="${id}"]`) as HTMLDivElement),
     } as const)
     const anims = () => ({
-        back: () => nodes().back?.animate?.(processAnimation.back.keyframes, processAnimation.back.config),
-        container: () => nodes().container?.animate?.(processAnimation.container.keyframes, processAnimation.container.config)
+        back: (customAnim?: Function) => {
+            if (customAnim) {
+                const processReverseAnim = mergeAnimations(DEFAULT_ANIMATIONS.pop, { back: customAnim(`[data-modal-back-id="${id}"]`) } || {})
+                return nodes().back?.animate?.(processReverseAnim.back.keyframes, processReverseAnim.back.config)
+
+            }
+            return nodes().back?.animate?.(processAnimation.back.keyframes, processAnimation.back.config)
+        },
+        container: (customAnim?: Function) => {
+            if (customAnim) {
+                const processReverseAnim = mergeAnimations(DEFAULT_ANIMATIONS.pop, customAnim(`[data-modal-back-id="${id}"]`) || {})
+                return nodes().container?.animate?.(processReverseAnim.back.keyframes, processReverseAnim.back.config)
+
+            }
+
+            return nodes().container?.animate?.(processAnimation.container.keyframes, processAnimation.container.config)
+        }
     } as const)
 
     let originAnims = Object.fromEntries(Object.entries(anims()).map(([key, anim]) => [key, anim()]))
@@ -101,9 +116,14 @@ const generateAnimations = (anim: typeof DEFAULT_ANIMATIONS['pop'], id: string, 
                 if (((processAnimation as any)[key]).config.reverse === false) return Promise.resolve()
                 if (!anim) return
 
-                const processsAnim = anim()
+                const customReverseAnim = typeof ((processAnimation as any)[key]).config.reverse === 'function'
+                const processsAnim = anim(customReverseAnim ? ((processAnimation as any)[key]).config.reverse : undefined)
 
                 if (!processsAnim) return
+
+                if (customReverseAnim) {
+                    return processsAnim.finished
+                }
 
                 processsAnim.effect.updateTiming({ direction: 'reverse' })
 
