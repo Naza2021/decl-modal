@@ -14,7 +14,7 @@ const TestComponent: React.FC<TestComponentProps> = ({ closeModal }) => {
     <MyGenericContainer>
       <div className="p-5 bg-white rounded-md flex flex-col">
         <h1 className="font-bold">Input:</h1>
-        <input className="p-2 font-bold border border-solid border-black rounded-[4px]" id='my-modal-input' />
+        <input className="p-2 font-bold border border-solid border-black rounded-[0.25rem]" id='my-modal-input' />
         <button className="bg-black rounded-md py-2 px-8 font-bold text-white self-end mt-4" onClick={() => {
           closeModal((document.querySelector(`#my-modal-input`) as HTMLInputElement).value)
         }}>

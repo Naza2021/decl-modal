@@ -123,7 +123,7 @@ const Page: React.FC<PageProps> = () => {
     <>
       <div className='h-full w-full bg-[#fafafafa] flex'>
         <div className='flex-1 bg-blue-600 relative'>
-          <div className={twMerge('text-[200px] myClass absolute top-0', modak.className)} onClick={() => onShowDevModals()}>
+          <div className={twMerge('text-[12.5rem] myClass absolute top-0', modak.className)} onClick={() => onShowDevModals()}>
             Holi
           </div>
           <ModalRoot modalFactory={myGenericModal} animation='fade' />

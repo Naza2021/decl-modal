@@ -25,7 +25,10 @@ const useAnimatedModal = <C extends Function>({ animation, closeModal, Component
     }, [Component])
 
     useEffect(() => {
-        if (!animation) return
+        if (!animation) {
+            console.warn('No animation this maybe cause an error')
+            return
+        }
 
         if (!Component) {
             animateRef.current = null
