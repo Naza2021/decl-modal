@@ -18,7 +18,7 @@ const TestComponent: React.FC<TestComponentProps> = ({ closeModal }) => {
         <button className="bg-black rounded-md py-2 px-8 font-bold text-white self-end mt-4" onClick={() => {
           closeModal((document.querySelector(`#my-modal-input`) as HTMLInputElement).value)
         }}>
-          Ok k k
+          Ok
         </button>
       </div>
     </MyGenericContainer>

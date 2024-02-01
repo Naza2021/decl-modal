@@ -12,6 +12,7 @@ type useAnimationProps = {
 const useAnimatedModal = <C extends Function>({ animation, closeModal, Component, waitAnimation, sendMessage }: useAnimationProps & { closeModal?: C }) => {
 
     const animateRef = useRef<{ reverse: () => Promise<void>, refreshAnims: () => void } | null>()
+    const animateCloseRef = useRef<Promise<any> | null>(null)
     const [closeIntermediate, setCloseIntermediate] = useState<any>(null)
     const modalId = useId()
 
@@ -41,18 +42,20 @@ const useAnimatedModal = <C extends Function>({ animation, closeModal, Component
             animateRef.current = generateAnimations(DEFAULT_ANIMATIONS.pop, modalId, animation)
         }
 
-        if (closeIntermediate !== null) {
+        if (closeIntermediate !== null && !animateCloseRef.current) {
             (async () => {
                 if (waitAnimation === false) {
                     sendMessage(closeIntermediate)
                 }
                 if (!animateRef.current) return
-                await animateRef.current.reverse()
+                animateCloseRef.current = animateRef.current.reverse()
+                await animateCloseRef.current
+                animateCloseRef.current = null
                 closeModal(waitAnimation === false ? false : closeIntermediate)
             })()
         }
 
-    }, [closeIntermediate, Component])
+    }, [closeIntermediate])
 
     if (!animation) {
         return {

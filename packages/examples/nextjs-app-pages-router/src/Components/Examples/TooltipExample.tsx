@@ -1,11 +1,11 @@
-import { ModalProps, throttle } from "decl-modal"
+import { ModalProps } from "decl-modal"
 import { AnimConfig, generateModal, useModalProps } from "decl-modal/react"
 import { useEffect, useRef, useState } from "react"
 
 export const TooltipAnimation =
   {
-    back: { config: { duration: 300, delay: 200 } },
-    container: { config: { delay: 200 } }
+    back: { config: { duration: 300, delay: 300 } },
+    container: { config: { delay: 300 } }
   } satisfies AnimConfig
 
 interface TooltipContainerProps {
@@ -31,7 +31,7 @@ const TooltipContainer: React.FC<TooltipContainerProps> = ({ target, children })
   useEffect(() => {
     if (!selfReference.current) return
 
-    if(!target) return
+    if (!target) return
 
     const offsets = getOffset(target)
 
@@ -55,24 +55,28 @@ const TooltipContainer: React.FC<TooltipContainerProps> = ({ target, children })
 }
 
 interface TooltipProps extends ModalProps<undefined> {
-  target: TooltipContainerProps['target']
+  target: TooltipContainerProps['target'],
+  content: string
 }
 
-const Tooltip: React.FC<TooltipProps> = ({ target }) => {
+const Tooltip: React.FC<TooltipProps> = ({ target, content }) => {
   return (
     <TooltipContainer target={target}>
       <div className="p-2 rounded-md bg-white font-bold text-xs break-keep whitespace-nowrap">
-        Hello world! :)
+        {content}
       </div>
     </TooltipContainer>
   )
 }
 
-const [showTooltip, TooltipRoot] = generateModal(Tooltip)
+const [showMethod, TooltipRoot] = generateModal(Tooltip)
 
-
-const generateShowTooltip = () => throttle((e: any) => {
-  showTooltip({ target: e.target as HTMLElement }, { override: false })
+// Wrapper method of showMethod to improve its use
+const showMyTooltip = (content: TooltipProps['content']) => ({
+  onMouseEnter: (e: any) => {
+    showMethod({ target: e.target as HTMLElement, content }, { override: false })
+  }
 })
 
-export { generateShowTooltip, TooltipRoot }
+export { TooltipRoot, showMyTooltip }
+

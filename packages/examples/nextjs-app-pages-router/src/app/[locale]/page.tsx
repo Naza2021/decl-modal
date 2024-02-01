@@ -1,33 +1,13 @@
 "use client"
 import { ModalRoot, showModal } from "@/Components/Examples/ExampleModal"
-import { TooltipRoot, generateShowTooltip } from "@/Components/Examples/TooltipExample"
+import { PopupRoot, showMyPopup } from "@/Components/Examples/PopupExample"
+import { TooltipAnimation, TooltipRoot, showMyTooltip } from "@/Components/Examples/TooltipExample"
 import { InputComponentRoot, InputComponentRoot2, showInputModal } from "@/Components/InputModal"
-import { ModalFactory, ModalProps } from "decl-modal"
 import { useState } from "react"
-
-interface MyFirstModalProps extends ModalProps {
-  myCustomProp?: any
-}
-
-const MyFirstModal: React.FC<MyFirstModalProps> = ({ closeModal }) => {
-  return (
-    <div className='flex fixed opacity-0 bg-black bg-opacity-70 top-0 bottom-0 w-full'
-      onClick={() => closeModal(false)} data-modal-type='back'>
-      <div className="m-auto" data-modal-type='container'>
-        <div className="bg-white rounded-md p-5 font-bold">
-          Hello world! :)
-        </div>
-      </div>
-    </div>
-  )
-}
-
 
 interface PageProps {
 
 }
-
-const showTooltip = generateShowTooltip()
 
 const Page: React.FC<PageProps> = ({ }) => {
 
@@ -35,13 +15,31 @@ const Page: React.FC<PageProps> = ({ }) => {
 
   return (
     <>
+      {/* <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" className="bg-opacity-40 fixed top-[350px] left-[700px] bg-blue-600" onMouseLeave={console.log}>
+        <defs>
+          <mask id="mask" x="0" y="0" width="200" height="200" >
+            <rect x="25" y="25" width="50" height="50" fill='white' />
+            <rect x="125" y="25" width="50" height="50" fill='white' />
+          </mask>
+        </defs>
+        <rect x="10" y="10" width="80" height="80" />
+        <rect x="110" y="10" width="80" height="80" className="text-transparent bg-transparent cursor-pointer pointer-events-none" fill="currentColor" />
+      </svg> */}
       <div className="bg-[#303030] h-full w-full flex">
         <div className="m-auto flex flex-col gap-4 items-center">
           <div className="flex gap-12 items-center">
             <button className="bg-black rounded-md py-2 px-4 font-bold text-white" onClick={() => showModal('ModalComponent')}>
+              Menu
+            </button>
+            <button className="bg-black rounded-md py-2 px-4 font-bold text-white" onClick={(e) => showMyPopup(e, 'Popup')}>
+              Popup
+            </button>
+          </div>
+          <div className="flex gap-12 items-center mt-6">
+            <button className="bg-black rounded-md py-2 px-4 font-bold text-white" onClick={() => showModal('ModalComponent')}>
               Modal
             </button>
-            <p className="text-white" onMouseEnter={showTooltip}>
+            <p className="text-white" {...showMyTooltip('Holi')}>
               Tooltip | Popup
             </p>
             <button className="bg-black rounded-md py-2 px-4 font-bold text-white" onClick={async () => {
@@ -59,7 +57,8 @@ const Page: React.FC<PageProps> = ({ }) => {
       <ModalRoot animation='bubble' />
       <InputComponentRoot animation='bubble' config={{ TestComponent: { animation: 'fade' } }} />
       <InputComponentRoot2 />
-      <TooltipRoot />
+      <PopupRoot animation={{back: {config: {duration: 3000}}, container: {config: {duration: 3000}}}} />
+      <TooltipRoot animation={TooltipAnimation} />
     </>
   )
 }
