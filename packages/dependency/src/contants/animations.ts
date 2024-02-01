@@ -1,8 +1,11 @@
 interface animConfig extends KeyframeAnimationOptions {
-    reverse?: boolean | ((modalId: string) => AnimConfig['container'])
+    reverse?: boolean | ((modalId: string) => {
+        keyframes?: Parameters<Animatable['animate']>[0],
+        config?: Omit<animConfig, 'reverse'>
+    })
 }
 
-export type AnimConfig = {
+type AnimConfig = {
     back?: {
         keyframes?: Parameters<Animatable['animate']>[0],
         config?: animConfig
