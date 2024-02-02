@@ -28,5 +28,5 @@ https://decl-modal-nextjs-app-pages-router-example.vercel.app/
 
 https://decl-modal-docs.vercel.app/docs/overview
 
-## Por que deberia utilizar estas libreria.
+## Por que deberia utilizar esta libreria
 Esta libreria puede ser un reemplazo perfecto para ```react-toastify```, ```react-modal```, ```react-tooltip```. Ahorrando un enorme espacio en el bundle size, ademas ya no tienes por que aprender configuraciones, props, estilos especificos. Todo lo montas tu! Tus configuraciones, tus estilos, tus props! Que lo tengas que montar tu, no tiene por que ser complejo, ya que la siguiente seccion puedes simplemente copiar y copiar los contenedor de ejemplo y adaptarlos!
