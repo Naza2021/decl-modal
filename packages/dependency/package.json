@@ -1,8 +1,13 @@
 {
   "name": "decl-modal",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "sideEffects": false,
   "type": "module",
+  "description": "Declarative modals",
+  "repository": {
+    "url": "https://github.com/Naza2021/decl-modal",
+    "type": "git"
+  },
   "main": "dist/esm/index.js",
   "files": [
     "dist/**/*",
