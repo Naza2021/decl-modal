@@ -31,7 +31,7 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "dev:watch": "tsx watch ./src/debug/debug.ts",
-    "dev:full": "tsx watch --inspect=4321 .\\src\\index.ts",
+    "dev:full": "tsx watch --inspect=4321 ./src/index.ts",
     "dev": "tsx ./src/debug/debug.ts",
     "format": "prettier --write 'src/**/*.{js,ts,json}'",
     "lint:all": "yarn lint && yarn tscCheck",
@@ -41,7 +41,7 @@
     "tsc": "tsc",
     "tsxCheck": "tsc --noEmit",
     "clear-cache": "rimraf dist",
-    "release": "rollup -c && node .\\dev\\node-process.js",
+    "release": "rollup -c && node ./dev/node-process.js",
     "watch": "npm-watch"
   },
   "keywords": [
@@ -50,10 +50,8 @@
     "Typescript",
     "Types",
     "Modal",
-    "Solid",
-    "Vue",
-    "Astro",
-    "Svelte"
+    "Nazfy",
+    "Next.Js"
   ],
   "author": "Nazareno Molinari",
   "license": "MIT",
