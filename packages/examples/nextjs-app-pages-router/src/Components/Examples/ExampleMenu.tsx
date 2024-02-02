@@ -17,11 +17,11 @@ interface MenuContainerProps { children: React.ReactNode, onCloseResponse?: any 
 
 const MenuContainer: React.FC<MenuContainerProps> = ({ children, onCloseResponse = false }) => {
 
-  const { closeModal } = useModalProps()
+  const { closeModal, RootProps } = useModalProps()
 
   return (
-    <div className='flex fixed opacity-0 bg-black bg-opacity-70 top-0 bottom-0 w-full' onClick={() => closeModal(onCloseResponse)} data-modal-type='back'>
-      <div className='h-full ml-auto max-w-full' data-modal-type='container' onClick={(e) => { e.stopPropagation() }}>
+    <div className='flex fixed opacity-0 bg-black bg-opacity-70 top-0 bottom-0 w-full' onClick={() => closeModal(onCloseResponse)} {...RootProps}>
+      <div className='h-full ml-auto max-w-full' onClick={(e) => { e.stopPropagation() }}>
         {children}
       </div>
     </div>

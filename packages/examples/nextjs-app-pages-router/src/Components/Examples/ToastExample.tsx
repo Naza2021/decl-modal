@@ -31,7 +31,7 @@ interface ToastContainerProps {
 
 const ToastContainer: React.FC<ToastContainerProps> = ({ children }) => {
 
-  const { closeModal, timeout } = useModalProps<ToastComponentProps>()
+  const { closeModal, timeout, RootProps } = useModalProps<ToastComponentProps>()
   const loadingRef = useRef<HTMLDivElement | null>(null)
 
   // Auto close effect
@@ -53,8 +53,8 @@ const ToastContainer: React.FC<ToastContainerProps> = ({ children }) => {
   }, [])
 
   return (
-    <div className="pt-6" data-modal-type='back'>
-      <div className="bg-white flex flex-col h-auto min-w-max w-[12.5rem] rounded-md cursor-pointer overflow-hidden" onClick={() => closeModal()} data-modal-type='container'>
+    <div className="pt-6" {...RootProps}>
+      <div className="bg-white flex flex-col h-auto min-w-max w-[12.5rem] rounded-md cursor-pointer overflow-hidden" onClick={() => closeModal()} >
         {children}
         {timeout && <div className="h-[6px] bg-[#0096d1] w-full origin-left" ref={loadingRef} />}
       </div>

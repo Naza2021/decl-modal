@@ -1,5 +1,5 @@
 import { ModalProps } from "decl-modal"
-import { AnimConfig, generateModal, useTooltipPosition } from "decl-modal/react"
+import { AnimConfig, generateModal, useModalProps, useTooltipPosition } from "decl-modal/react"
 
 export const TooltipAnimation =
   {
@@ -14,6 +14,8 @@ interface TooltipContainerProps {
 
 const TooltipContainer: React.FC<TooltipContainerProps> = ({ target, children }) => {
 
+  const { RootProps } = useModalProps()
+
   const coords = useTooltipPosition({
     target,
     pointTarget: 't',
@@ -22,8 +24,8 @@ const TooltipContainer: React.FC<TooltipContainerProps> = ({ target, children })
   })
 
   return (
-    <div className='fixed pointer-events-none opacity-0' style={{ top: coords.y, left: coords.x }} data-modal-type='back'>
-      <div data-modal-type='container'>
+    <div className='fixed pointer-events-none opacity-0' style={{ top: coords.y, left: coords.x }} {...RootProps}>
+      <div>
         {children}
       </div>
     </div>
