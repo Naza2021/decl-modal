@@ -57,14 +57,15 @@ interface UseTooltipPositionProps {
   pointContainer?: keyof typeof coordinatesContainer | typeof coordinatesContainer['rb']
 }
 
-export const useTooltipPosition = ({ target, containerId = 'back', debug = false, containerOffsets = 20, zoneOutOffsets = 0, onZoneLeave, pointTarget, pointContainer }: UseTooltipPositionProps) => {
+
+export const useTooltipPosition = ({ target, containerId, debug = false, containerOffsets = 20, zoneOutOffsets = 0, onZoneLeave, pointTarget, pointContainer }: UseTooltipPositionProps) => {
 
   const [coords, setCoords] = useState({ x: 0, y: 0 })
-  const { closeModal } = useModalProps()
+  const { closeModal, modalId } = useModalProps()
   const customId = useId()
 
   useEffect(() => {
-    const backTooltip = document.querySelector(`[data-modal-type="${containerId}"]`) as HTMLDivElement
+    const backTooltip = document.querySelector(`[data-modal-back-id="${containerId ?? modalId}"]`) as HTMLDivElement
     const processOnZoneLeave = onZoneLeave ?? closeModal
     if (!backTooltip) return
 

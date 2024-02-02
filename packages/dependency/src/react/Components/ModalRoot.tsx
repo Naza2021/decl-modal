@@ -1,11 +1,11 @@
 
 'use client'
 import type { AnimAvailableConfig } from "@/contants/animations"
+import type { ModalProps as modalProps, modalResponse } from "@/lib-types/ModalInterna.types"
 import React from "react"
+import { createTypedContext } from "../context-creator"
 import { useAnimatedModal } from "../hooks/useAnimatedModal"
 import { useModal, type useModalProps as ModalProps } from "../hooks/useModal"
-import { createTypedContext } from "../context-creator"
-import type { extractResponseExtendedModalProps, modalResponse } from "@/lib-types/ModalInterna.types"
 
 export interface ModalRootProps {
   modalFactory?: ModalProps['modalFactory']
@@ -13,7 +13,7 @@ export interface ModalRootProps {
 }
 
 
-type useModalPropsType = <T = any>() => modalResponse<extractResponseExtendedModalProps<T>> & Omit<T, keyof modalResponse>
+type useModalPropsType = <T = unknown>() => (T extends { waitFor: any } ? T : modalProps<T>)
 
 const [useInternal, TypedContextProvider] = createTypedContext<modalResponse>()
 
@@ -39,7 +39,7 @@ const ModalRoot = ({ modalFactory, state, animation, config: RootConfig }: Modal
 }
 
 const InternalRender: React.FC<any> = ({ Component, animation, modalFactory, config, ...props }) => {
-  const { closeAnimated } = useAnimatedModal({
+  const { closeAnimated, modalId } = useAnimatedModal({
     animation,
     closeModal: props?.closeModal,
     Component,
@@ -48,8 +48,8 @@ const InternalRender: React.FC<any> = ({ Component, animation, modalFactory, con
   })
 
   return (
-    <TypedContextProvider value={{ ...{ ...props, ...{ closeModal: closeAnimated } } }}>
-      <Component {...{ ...props, ...{ closeModal: closeAnimated } }} />
+    <TypedContextProvider value={{ ...{ ...props, ...{ closeModal: closeAnimated, modalId } } }}>
+      <Component {...{ ...props, ...{ closeModal: closeAnimated, modalId } }} />
     </TypedContextProvider>
   )
 }

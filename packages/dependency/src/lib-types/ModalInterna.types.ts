@@ -14,7 +14,7 @@ export type ModalTupleType<T, E = {}> = {
   [K in keyof T]: [T[K], GetComponentProps<T[K] & E>, ShowConfig & { uuid?: string }];
 }[keyof T];
 
-export type ModalProps<R = any, Props = {}> = Omit<modalResponse<R, Props>, 'response'> & (Props extends Object ? Props : {})
+export type ModalProps<R = any, Props = {}> = Omit<modalResponse<R, Props>, 'response'> & (Props extends Object ? Props : {}) & { modalId: string }
 
 export type StringLiteral<T> = T extends string
   ? string extends T

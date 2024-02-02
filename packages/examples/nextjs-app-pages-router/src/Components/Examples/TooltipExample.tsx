@@ -45,12 +45,12 @@ const Tooltip: React.FC<TooltipProps> = ({ target, content }) => {
   )
 }
 
-const [showMethod, TooltipRoot] = generateModal(Tooltip)
+const [showMethod, TooltipRoot] = generateModal({ Modals: { Tooltip } })
 
 // Wrapper method of showMethod to improve its use
 const showMyTooltip = (content: TooltipProps['content']) => ({
   onMouseEnter: (e: any) => {
-    showMethod({ target: e.target as HTMLElement, content }, { override: false })
+    showMethod('Tooltip', { target: e.target as HTMLElement, content }, { override: false })
   }
 })
 

@@ -63,12 +63,14 @@ const useAnimatedModal = <C extends Function>({ animation, closeModal, Component
     if (!animation) {
         return {
             closeAnimated: closeModal,
+            modalId
         }
     }
 
 
     return {
         closeAnimated: ((args: any) => setCloseIntermediate(args)) as any as C,
+        modalId
     }
 }
 
