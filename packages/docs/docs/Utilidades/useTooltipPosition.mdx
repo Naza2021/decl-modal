@@ -1,0 +1,48 @@
+import Highlight from '../../src/components/Hightlist';
+
+Este hook solo idealmente se utiliza dentro de un modal y te provee la capacidad de obtener coordenadas para ubicar un elemento en relacion con otro elemento. Idealmente para tooltips o popups.
+
+### Props
+
+#### target
+Elemento del cual se va a utilizar como referencia.
+
+#### containerId
+Elemento el cual se quiere ubicar. Por defecto va a agarrar el modal-type=back.
+
+#### containerOffsets
+Distancia generalizada del Elemento target hacia el container.
+
+#### zoneOutOffsets
+Al asignarle un valor, cuando monte el container, va a genera una zona alrededor y con este parametro se puede definir la distancia. Ideal para popups.
+
+#### debug 
+Al configurarlo como true, la zona que se configura con zoneOutOffsets empieza a ser visible.
+
+#### onZoneLeave
+Funcion que se ejecutar cuando el mouse abandone la zona del modal. Esta zona por defecto es el elemento target, pero si zoneOutOffsets esta definido, la zona sera el elemento. Por defecto se ejecuta un closeModal, puedes personalizarlo con tu propio callback.
+
+#### pointTarget
+Punto de referencia del target donde se quiere ubicar el container. Puedes elegir entre estas opciones:<br/>
+<Highlight>lt</Highlight>: Superio izquierda<br/>
+<Highlight>t</Highlight>: Superior<br/>
+<Highlight>rt</Highlight>: Superior derecha<br/>
+<Highlight>lb</Highlight>: Inferior izquierda<br/>
+<Highlight>b</Highlight>: Inferior<br/>
+<Highlight>rb</Highlight>: Inferior derecha<br/>
+
+Tambien puedes proporcionar coordenadas relativas en forma de un objecto algo como:
+```typescript
+{ x: -50, y: 100 }
+```
+Estas coordenadas son relativas, esto quiere decir que por ejemplo y: 100, seria el 100% de la altura del contenedor.
+
+#### pointContainer
+Punto de referencia del container. Puedes utilizar las mismas posibles opciones que el pointTarget.
+
+### Ejemplo
+En el [Popup](/docs/container/popup) puedes ver su utilizacion mas basica para posicionar los puntos. Donde hay una distribucion de "b" en el target y "t" en el container:
+
+<div align='center'>
+<img src='/img/example-points.jpg' width={350}/>
+</div>

@@ -1,3 +1,7 @@
+---
+slug: '/container/modal'
+---
+
 ```tsx
 import { ModalProps } from "decl-modal"
 import { generateModal, useModalProps } from "decl-modal/react"

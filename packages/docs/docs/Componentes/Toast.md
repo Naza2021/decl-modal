@@ -1,3 +1,7 @@
+---
+slug: '/container/toast'
+---
+
 ```tsx
 import { type ModalProps } from "decl-modal"
 import { generateModal, type AnimConfig, useModalProps } from "decl-modal/react"
@@ -6,8 +10,7 @@ import React, { useEffect, useId, useRef } from "react"
 export const ToastAnimation = {
   back: {
     config: {
-      reverse: (id) => {
-        const parentElement = document.querySelector(id) as HTMLDivElement
+      reverse: (parentElement) => {
         Object.assign(parentElement.style, { overflow: 'hidden' })
 
         parentElement.animate({

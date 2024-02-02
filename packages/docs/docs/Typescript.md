@@ -3,17 +3,33 @@ Diferentes metodos o formas para obtener un tipado fuerte en todas tus vistas.
 
 #### ModalProps
 Todos los modales deben extender de estas props para obtener los tipados de closeModal
+```typescript
+interface myModalType extends ModalProps {}
+
+const MyComponent = (props: myModalType)...
+
+// Puedes tipar la comunicacion de waitFor, sendMessage, pasandole como argumento el tipado:
+interface myModalType extends ModalProps<{message: string}> {}
+```
 
 #### useModalProps
-Puedes tipar las props pasandole como argumento ModalProps o tal cual el modalPadre
+Puedes tipar las props pasandole como argumento ModalProps o tal cual el tipado que van tener los waitFor, sendMessage
+
+```typescript
+interface myModalType extends ModalProps {}
+useModalProps<myModalType>()
+
+// O
+useModalProps<{message: string}>()
+```
 
 #### AnimConfig
 Tipado como definir animaciones
-
-<!-- :::tip
-Para darle tipado a esta comunicacion los Modales deben extender de <Highlight>ModalProps</Highlight> el cual su primer parametro de typescript es el tipado que van a tener los metodos para el envio, como el recibimiento de los mensajes. El tipado es compartido para ambas partes. Algo como:<br/>
-```tsx
-import { type ModalProps } from "decl-modal/react"
-interface MyComponent extends ModalProps<{message: string}>
+```tsx 
+const myCustomAnim = {
+    // Tu animacion...
+} satisfies AnimConfig
 ```
-::: -->
+
+#### ModalRoot
+Los ModalRoot automaticamente absorven el tipado de generateModal, si se genera un Root con multiples modales, las props de estos modales van a combinarse hacia el root.

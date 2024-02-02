@@ -1,3 +1,7 @@
+---
+slug: '/container/menu'
+---
+
 ```tsx
 import { type ModalProps } from "decl-modal"
 import { type AnimConfig, generateModal, useModalProps } from "decl-modal/react"

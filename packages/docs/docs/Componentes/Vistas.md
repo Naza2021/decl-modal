@@ -23,11 +23,6 @@ graph TD;
     ModalRoot-->ModalA;
     ModalRoot-->ModalB;
 ```
-
-```mermaid
-graph TD;
-    ModalRoot;
-```
 </div>
 
 ### ModalRoot

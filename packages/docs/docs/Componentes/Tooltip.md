@@ -1,3 +1,7 @@
+---
+slug: '/container/tooltip'
+---
+
 ```tsx
 import { ModalProps } from "decl-modal"
 import { AnimConfig, generateModal, useTooltipPosition } from "decl-modal/react"

@@ -1,5 +1,6 @@
 ---
 slug: /animations
+sidebar_position: 4
 ---
 
 import Highlight from '../src/components/Hightlist';
@@ -89,12 +90,38 @@ const myCustomPopAnim = {
 
 #### Ciclo de vida
 En cuanto se ejecuta el metodo show entra en ejecucion la animacion, y cuando se llama el metodo close, se ejecuta la misma animacion pero en reversa.
-Es decir no puedes definir una animacion especial para el close. Esto es asi, para que se puede cerrar la vista, incluso cuando se esta animando su entrada, y evitar parpadeos o saltos. Puedes anular este comportamiento definiendo en false, la propiedad <Highlight>config.reverse</Highlight>
+Esto es asi, para que se puede cerrar la vista, incluso cuando se esta animando su entrada, y evitar parpadeos o saltos. Puedes anular este comportamiento definiendo en false, la propiedad <Highlight>config.reverse</Highlight>
 Lo que va a provocar en cuando se cierre el modal no se ejecute en reversa. No haria nada. (Ejemplo en pop cuando se cierra el modal no se va hacia abajo)
 ```typescript
 const myCustomAnim = {
     container: {
         config: { reverse: false }
     }
+}
+```
+#### Animacion personalizada de reversa
+Puedes definir tambien <Highlight>reverse</Highlight> como una function, la cual tendra un devolver una configuracion de animacion, el primer argumento de esta function va a ser el elemento a animar esto quiere decir, que podras crear configuraciones de salida dinamicas. Un ejemplo de esto lo puedes encontrar en el [Toast de ejemplo](/docs/container/toast).
+
+```tsx
+const ToastAnim = {
+    back: {
+    config: {
+      reverse: (parentElement) => {
+        Object.assign(parentElement.style, { overflow: 'hidden' })
+
+        parentElement.animate({
+          opacity: [1, 0],
+        }, { duration: 150, fill: 'forwards' })
+
+        return {
+          keyframes: {
+            maxHeight: [`${parentElement?.offsetHeight}px`, '0px'],
+            paddingTop: [`${parentElement.style.paddingTop}px`, '0px']
+          },
+          config: { duration: 300, delay: 150 }
+        }
+      }
+    }
+  }
 }
 ```

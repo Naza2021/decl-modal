@@ -1,3 +1,7 @@
+---
+slug: '/container/popup'
+---
+
 ```tsx
 
 import { type ModalProps } from "decl-modal"
