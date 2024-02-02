@@ -33,6 +33,9 @@ export class ModalFactory<P = any, U = Record<string, React.FC<P>>>{
     suscribe(componentCallback: (...[Component, ComponentProps, config]: ModalTupleType<U, ModalProps>) => void) {
         return {
             ...this.observable.subscribe(({ internalModalId, modalProps, config }) => {
+                if (internalModalId && !this.Modals?.[internalModalId as keyof typeof this.Modals]) {
+                    console.error('Modal not found:', internalModalId)
+                }
                 componentCallback(this.Modals?.[internalModalId as keyof typeof this.Modals] as any, modalProps as any, config)
             })
         }

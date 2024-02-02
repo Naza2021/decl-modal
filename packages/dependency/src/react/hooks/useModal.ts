@@ -15,10 +15,6 @@ const useModal = ({ modalFactory }: useModalProps) => {
 
   const stateUpdater = (Component: any, ComponentProps: any, config: any) => {
 
-    if (!Component && Array.isArray(state) === false && state.Component === null) {
-      console.error(`Modal not found: ${config?.internalModalId}`)
-    }
-
     // Append new item with override
     if (config.override === false) {
       setState(prev => {

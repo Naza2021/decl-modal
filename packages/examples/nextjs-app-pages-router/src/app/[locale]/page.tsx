@@ -35,7 +35,7 @@ const Page: React.FC<PageProps> = ({ }) => {
               Tooltip | Popup
             </p>
             <button className="bg-black rounded-md py-2 px-4 font-bold text-white" onClick={async () => {
-              const { response } = await showInputModal('TestComponent2', { myProp: 'holi' }, { waitAnimation: true, animation: 'pop' })
+              const { response } = await showInputModal('asdfasdfasdf', { myProp: 'holi' }, { waitAnimation: true, animation: 'pop' })
               if (typeof response === 'string') setinput(response)
             }}>
               Input
