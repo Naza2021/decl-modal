@@ -68,7 +68,7 @@ const mergeAnimations = (anim1: any, anim2: any) => {
     }
 }
 
-const generateAnimations = (anim: typeof DEFAULT_ANIMATIONS['pop'], id: string, newMergeAnimation?: AnimConfig) => {
+const generateAnimations = (anim: typeof DEFAULT_ANIMATIONS['fade'], id: string, newMergeAnimation?: AnimConfig) => {
 
     const processAnimation = newMergeAnimation ? mergeAnimations(anim, newMergeAnimation) : anim
 
@@ -79,7 +79,7 @@ const generateAnimations = (anim: typeof DEFAULT_ANIMATIONS['pop'], id: string, 
     const anims = () => ({
         back: (customAnim?: Function) => {
             if (customAnim) {
-                const processReverseAnim = mergeAnimations(DEFAULT_ANIMATIONS.pop, { back: customAnim(`[data-modal-back-id="${id}"]`) } || {})
+                const processReverseAnim = mergeAnimations(DEFAULT_ANIMATIONS.fade, { back: customAnim(`[data-modal-back-id="${id}"]`) } || {})
                 return nodes().back?.animate?.(processReverseAnim.back.keyframes, processReverseAnim.back.config)
 
             }
@@ -87,7 +87,7 @@ const generateAnimations = (anim: typeof DEFAULT_ANIMATIONS['pop'], id: string, 
         },
         container: (customAnim?: Function) => {
             if (customAnim) {
-                const processReverseAnim = mergeAnimations(DEFAULT_ANIMATIONS.pop, customAnim(`[data-modal-back-id="${id}"]`) || {})
+                const processReverseAnim = mergeAnimations(DEFAULT_ANIMATIONS.fade, customAnim(`[data-modal-back-id="${id}"]`) || {})
                 return nodes().container?.animate?.(processReverseAnim.back.keyframes, processReverseAnim.back.config)
 
             }
