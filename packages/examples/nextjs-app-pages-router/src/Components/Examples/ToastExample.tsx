@@ -1,6 +1,6 @@
 import { type ModalProps } from "decl-modal"
-import { generateModal, type AnimConfig } from "decl-modal/react"
-import { useEffect, useId, useRef } from "react"
+import { generateModal, type AnimConfig, useModalProps } from "decl-modal/react"
+import React, { useEffect, useId, useRef } from "react"
 
 export const ToastAnimation = {
   back: {
@@ -25,15 +25,15 @@ export const ToastAnimation = {
   }
 } satisfies AnimConfig
 
-interface ToastComponentProps extends ModalProps<string | false> {
-  content: string,
-  timeout: number
+interface ToastContainerProps {
+  children: React.ReactNode;
 }
 
-const ToastComponent: React.FC<ToastComponentProps> = ({ content, closeModal, timeout }) => {
+const ToastContainer: React.FC<ToastContainerProps> = ({ children }) => {
 
+  const { closeModal, timeout } = useModalProps<ToastComponentProps>()
   const loadingRef = useRef<HTMLDivElement | null>(null)
-  const id = useId()
+
   // Auto close effect
   useEffect(() => {
 
@@ -55,13 +55,28 @@ const ToastComponent: React.FC<ToastComponentProps> = ({ content, closeModal, ti
   return (
     <div className="pt-6" data-modal-type='back'>
       <div className="bg-white flex flex-col h-auto min-w-max w-[12.5rem] rounded-md cursor-pointer overflow-hidden" onClick={() => closeModal()} data-modal-type='container'>
-        <h1 className="font-bold p-5">{content}{` - ID: ${id}`}</h1>
+        {children}
         {timeout && <div className="h-[6px] bg-[#0096d1] w-full origin-left" ref={loadingRef} />}
       </div>
     </div>
   )
 }
 
+
+interface ToastComponentProps extends ModalProps<string | false> {
+  content: string,
+  timeout: number
+}
+
+const ToastComponent: React.FC<ToastComponentProps> = ({ content }) => {
+
+  const id = useId()
+
+  return <ToastContainer>
+    <h1 className="font-bold p-5">{content}{` - ID: ${id}`}</h1>
+  </ToastContainer>
+
+}
 
 const [showMethod, ModalRoot] = generateModal({ Modals: { ToastComponent } })
 
@@ -81,6 +96,5 @@ const ToastRoot: React.FC<ToastRootProps> = (props) => {
     </div>
   )
 }
-
 
 export { ToastRoot, showToast }

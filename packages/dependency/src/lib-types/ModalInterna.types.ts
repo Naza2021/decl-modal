@@ -7,14 +7,15 @@ export type modalResponse<R = any, A = any> = {
   updateModal: (args?: A) => void,
   closeModal: (...args: Partial<Parameters<MessagesQueueInstance<R>['sendMessage']>>) => ReturnType<MessagesQueueInstance<R>['sendMessage']>,
   waitFor: MessagesQueueInstance<R>['waitFor'], sendMessage: MessagesQueueInstance<R>['sendMessage'],
-  response: R
+  response: R,
+  modalId?: string
 }
 
 export type ModalTupleType<T, E = {}> = {
   [K in keyof T]: [T[K], GetComponentProps<T[K] & E>, ShowConfig & { uuid?: string }];
 }[keyof T];
 
-export type ModalProps<R = any, Props = {}> = Omit<modalResponse<R, Props>, 'response'> & (Props extends Object ? Props : {}) & { modalId: string }
+export type ModalProps<R = any, Props = {}> = Omit<modalResponse<R, Props>, 'response'> & (Props extends Object ? Props : {})
 
 export type StringLiteral<T> = T extends string
   ? string extends T
