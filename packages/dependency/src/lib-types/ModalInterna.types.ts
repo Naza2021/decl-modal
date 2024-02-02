@@ -1,3 +1,4 @@
+import type { ShowConfig } from "@/factorys/modal.factory";
 import type { MessagesQueue } from "../factorys/messages-queue";
 
 type MessagesQueueInstance<R = any> = InstanceType<typeof MessagesQueue<R>>

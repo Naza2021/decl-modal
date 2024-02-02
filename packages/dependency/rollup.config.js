@@ -17,8 +17,6 @@ export default [
         plugins: [
             typescript({ exclude: ['./debug/**/*'], compilerOptions: { declarationDir: './dist/esm', outDir: './dist/esm' } }),
             terser(),
-            preserveDirectives()
-            // visualizer()
         ]
     },
     {
@@ -34,7 +32,7 @@ export default [
         ],
         plugins: [
             typescript({ exclude: ['./debug/**/*'], compilerOptions: { declarationDir: './dist/cjs', outDir: './dist/cjs' } }),
-            preserveDirectives()
+            terser(),
         ]
     },
     // {
