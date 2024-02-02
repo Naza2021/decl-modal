@@ -1,5 +1,5 @@
 interface animConfig extends KeyframeAnimationOptions {
-    reverse?: boolean | ((modalId: string) => {
+    reverse?: boolean | ((animatedElement: HTMLElement) => {
         keyframes?: Parameters<Animatable['animate']>[0],
         config?: Omit<animConfig, 'reverse'>
     })
@@ -78,21 +78,23 @@ const generateAnimations = (anim: typeof DEFAULT_ANIMATIONS['fade'], id: string,
     } as const)
     const anims = () => ({
         back: (customAnim?: Function) => {
+            const Nodes = nodes()
             if (customAnim) {
-                const processReverseAnim = mergeAnimations(DEFAULT_ANIMATIONS.fade, { back: customAnim(`[data-modal-back-id="${id}"]`) } || {})
-                return nodes().back?.animate?.(processReverseAnim.back.keyframes, processReverseAnim.back.config)
+                const processReverseAnim = mergeAnimations(DEFAULT_ANIMATIONS.fade, { back: customAnim(Nodes.back) } || {})
+                return Nodes.back?.animate?.(processReverseAnim.back.keyframes, processReverseAnim.back.config)
 
             }
-            return nodes().back?.animate?.(processAnimation.back.keyframes, processAnimation.back.config)
+            return Nodes.back?.animate?.(processAnimation.back.keyframes, processAnimation.back.config)
         },
         container: (customAnim?: Function) => {
+            const Nodes = nodes()
             if (customAnim) {
-                const processReverseAnim = mergeAnimations(DEFAULT_ANIMATIONS.fade, customAnim(`[data-modal-back-id="${id}"]`) || {})
-                return nodes().container?.animate?.(processReverseAnim.back.keyframes, processReverseAnim.back.config)
+                const processReverseAnim = mergeAnimations(DEFAULT_ANIMATIONS.fade, customAnim(Nodes.container) || {})
+                return Nodes.container?.animate?.(processReverseAnim.back.keyframes, processReverseAnim.back.config)
 
             }
 
-            return nodes().container?.animate?.(processAnimation.container.keyframes, processAnimation.container.config)
+            return Nodes.container?.animate?.(processAnimation.container.keyframes, processAnimation.container.config)
         }
     } as const)
 

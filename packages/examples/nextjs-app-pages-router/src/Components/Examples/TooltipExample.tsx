@@ -55,4 +55,3 @@ const showMyTooltip = (content: TooltipProps['content']) => ({
 })
 
 export { TooltipRoot, showMyTooltip }
-

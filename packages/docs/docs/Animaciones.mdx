@@ -37,9 +37,41 @@ Todas las animaciones de esta libreria estan contruidas con la API nativa de ani
 
 ## Animacion por defecto
 
-Todas las animaciones personalizadas que declares, por defecto van a extender de la animacion de "pop" la cual es la siguiente:
+Todas las animaciones personalizadas que declares, por defecto van a extender de la animacion de "fade" la cual es la siguiente:
 ```ts
+
 {
+    back: {
+        keyframes: [{ opacity: 0 }, { opacity: 1 }],
+        config: { duration: 200, fill: 'forwards' }
+    },
+    container: {
+        keyframes: [{}],
+        config: { duration: 200, fill: 'forwards' }
+}
+```
+
+:::info
+Se aclara esto por si no entiendes por que tu animacion personalizada se muestra con cierto "easing" o con cierto tiempo sin que lo declares explicitamente.
+<br/>Ademas la extencion es superficial, esto quiere decir que si declaras por ejemplo <Highlight>container.keyframes</Highlight>, se va a reemplazar completamente por los nuevos keyframes, no se van a combinar.
+:::
+
+## Declara tu propia animacion
+
+Como las animaciones personalizadas son extensiones de una por defecto, no es necesaria que declares todas las props, puedes simplemente modificar algun detalle, Ej:
+```typescript
+const myCustomAnim = {
+    container: {
+        keyframes: {
+            transform: ['translateY(60%)', 'translateY(0%)'],
+        },
+        config: { duration: 350 }
+    }
+}
+```
+Como tambien puedes crear animaciones mas completas como las del efecto "pop":
+```tsx
+const myCustomPopAnim = {
     back: {
         keyframes: [{ opacity: 0 }, { opacity: 1 }],
         config: { duration: 200, fill: 'forwards' }
@@ -52,28 +84,6 @@ Todas las animaciones personalizadas que declares, por defecto van a extender de
     }
 }
 ```
-
-:::info
-Se aclara esto por si no entiendes por que tu animacion personalizada se muestra con cierto "easing" o con cierto tiempo sin que lo declares explicitamente.
-<br/>Ademas la extencion es superficial, esto quiere decir que si declaras por ejemplo <Highlight>container.keyframes</Highlight>, se va a reemplazar completamente por los nuevos keyframes, no se van a combinar.
-:::
-
-## Declara tu propia animacion
-
-En la animacion por defecto puedes ver un ejemplo completo, pero no es necesaria que declares todas las props, gracias a que extienden de esta misma. Puedes simplemente modificar algun detalle, Ej:
-```typescript
-const myCustomAnim = {
-    container: {
-        keyframes: {
-            transform: ['translateY(60%)', 'translateY(0%)'],
-        },
-        config: { duration: 350 }
-    }
-}
-```
-:::info
-La animacion personalizada, puede ser desde una modificacion simple, hasta toda la complejidad que te permita la Web Animations API.
-:::
 
 ## Consideraciones generales de una animacion
 
