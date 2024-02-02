@@ -1,5 +1,5 @@
+import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
-import css from "rollup-plugin-import-css";
 
 export default [
     {
@@ -14,7 +14,9 @@ export default [
         }
         ],
         plugins: [
-            typescript({ exclude: ['src/debug/**/*'], compilerOptions: { declarationDir: './dist/esm', outDir: './dist/esm' } }), css()
+            typescript({ exclude: ['./debug/**/*'], compilerOptions: { declarationDir: './dist/esm', outDir: './dist/esm' } }),
+            terser()
+            // visualizer()
         ]
     },
     {
@@ -29,7 +31,7 @@ export default [
         }
         ],
         plugins: [
-            typescript({ exclude: ['src/debug/**/*'], compilerOptions: { declarationDir: './dist/cjs', outDir: './dist/cjs' } }), css()
+            typescript({ exclude: ['./debug/**/*'], compilerOptions: { declarationDir: './dist/cjs', outDir: './dist/cjs' } }),
         ]
     },
     // {
@@ -53,7 +55,7 @@ export default [
     //     input: 'dist/bundle-esm.js', output: {
     //         file: 'dist/bundle-esm.js',
     //         format: 'esm'
-    //     }, plugins: [terser()]
+    //     }, plugins: []
     // },
 
 ]

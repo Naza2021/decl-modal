@@ -1,6 +1,6 @@
-import { useTooltipPosition } from "@/hooks/useTooltipPosition"
+
 import { ModalProps } from "decl-modal"
-import { generateModal } from "decl-modal/react"
+import { generateModal, useTooltipPosition } from "decl-modal/react"
 
 interface PopupContainerProps {
   target: HTMLElement,
@@ -12,7 +12,7 @@ const PopupContainer: React.FC<PopupContainerProps> = ({ target, children }) => 
   const coords = useTooltipPosition({ target })
 
   return (
-    <div className='fixed opacity-0 z-10' data-modal-type='back' style={{top: `${coords.y}px`, left: `${coords.x}px`}}>
+    <div className='fixed opacity-0 z-10' data-modal-type='back' style={{ top: `${coords.y}px`, left: `${coords.x}px` }}>
       <div data-modal-type='container'>
         {children}
       </div>
@@ -25,7 +25,7 @@ interface PopupProps extends ModalProps<undefined> {
   content: string
 }
 
-const Popup: React.FC<PopupProps> = ({ target, closeModal }) => {
+const Popup: React.FC<PopupProps> = ({ target }) => {
   return (
     <PopupContainer target={target}>
       <div className="p-4 rounded-md bg-white font-bold text-xs break-keep whitespace-nowrap">

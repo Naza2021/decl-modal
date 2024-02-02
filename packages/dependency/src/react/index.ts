@@ -1,6 +1,5 @@
-import { useModalProps } from "./Components/ModalRoot";
-import { generateModal } from './factorys/generator-factory'
-import { type ModalProps } from '@/lib-types/ModalInterna.types'
-import { type AnimConfig } from '@/contants/animations'
-
-export { useModalProps, generateModal, type ModalProps, type AnimConfig }
+export { useTooltipPosition } from "./hooks/useTooltip";
+export { useModalProps } from "./Components/ModalRoot";
+export { generateModal } from './factorys/generator-factory'
+export { type ModalProps } from '@/lib-types/ModalInterna.types'
+export { type AnimConfig } from '@/contants/animations'
