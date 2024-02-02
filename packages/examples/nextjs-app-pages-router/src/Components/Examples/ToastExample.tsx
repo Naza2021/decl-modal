@@ -5,8 +5,8 @@ import React, { useEffect, useId, useRef } from "react"
 export const ToastAnimation = {
   back: {
     config: {
-      reverse: (id) => {
-        const parentElement = document.querySelector(id) as HTMLDivElement
+      reverse: (parentElement) => {
+
         Object.assign(parentElement.style, { overflow: 'hidden' })
 
         parentElement.animate({
