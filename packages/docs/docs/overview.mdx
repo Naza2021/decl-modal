@@ -87,6 +87,8 @@ Estos contenedores contemplan las vistas mas comunes que puedes generar con esta
 
 ## Construye tu propio modal - Paso a paso
 
+Para implementar un modal, inicia extendiendo tu componente de ModalProps para asegurar que tenga las propiedades requeridas. Posteriormente, utiliza la función generateModal de la biblioteca para crear un ModalRoot, que será el encargado de renderizar tu modal. Este componente ModalRoot no solo renderiza, sino que también provee al modal de propiedades especiales
+
 #### Construye tu Modal
 Lo mas recomendable es que cualquier vista tenga una estructura de 2 tag (Como un div) que especifiquen el "data-modal-type" como "back" y "container". El primer div es el back y el segundo el container.
 Luego de estos div ya la estructura puede ser cualquiera.
