@@ -41,7 +41,7 @@ export class ModalFactory<P = any, U = Record<string, React.FC<P>>>{
         }
     }
 
-    async show<P extends keyof U, R extends extractResponseExtendedModalProps<U[P]>>(internalModalId: P, modalProps?: Omit<extractExtendedModalProps<U[P]>, keyof modalResponse>, config: ShowConfig = {}) {
+    async show<P extends keyof U, R extends extractResponseExtendedModalProps<U[P]>>(internalModalId: P, modalProps?: Omit<extractExtendedModalProps<U[P]>, keyof ModalProps>, config: ShowConfig = {}) {
 
         const instanceModalId = crypto.randomUUID()
         const modalMessages = new MessagesQueue<R>()
@@ -59,7 +59,7 @@ export class ModalFactory<P = any, U = Record<string, React.FC<P>>>{
             this.observable.next({ config: { uuid: instanceModalId } })
         }
 
-        type updateArgs = Partial<Omit<extractExtendedModalProps<U[P]>, keyof modalResponse>>
+        type updateArgs = Partial<Omit<extractExtendedModalProps<U[P]>, keyof ModalProps>>
 
         const updateModal = (args: updateArgs = {}) => {
             this.observable.next({ config: { ...config, uuid: instanceModalId, internalModalId }, modalProps: { ...modalProps as any, ...args, closeModal, waitFor: modalMessages.waitFor.bind(modalMessages), sendMessage: clientMessages.sendMessage.bind(clientMessages) }, internalModalId: (internalModalId as string) })
@@ -85,8 +85,8 @@ export class ModalFactory<P = any, U = Record<string, React.FC<P>>>{
         factory.show = (...args: any) => show('internal', ...args)
 
         return factory as {
-            show: (props?: Omit<extractExtendedModalProps<T>, keyof modalResponse>, config?: ShowConfig) =>
-                Promise<modalResponse<extractResponseExtendedModalProps<T>, Omit<extractExtendedModalProps<T>, keyof modalResponse>>>,
+            show: (props?: Omit<extractExtendedModalProps<T>, keyof ModalProps>, config?: ShowConfig) =>
+                Promise<modalResponse<extractResponseExtendedModalProps<T>, Omit<extractExtendedModalProps<T>, keyof ModalProps>>>,
             suscribe: ModalFactory<any, { internal: T }>['suscribe']
         }
     }
