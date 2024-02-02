@@ -1,6 +1,5 @@
 import { ModalProps } from "decl-modal"
-import { AnimConfig, generateModal, useModalProps } from "decl-modal/react"
-import { useEffect, useRef, useState } from "react"
+import { AnimConfig, generateModal, useTooltipPosition } from "decl-modal/react"
 
 export const TooltipAnimation =
   {
@@ -13,40 +12,17 @@ interface TooltipContainerProps {
   children: React.ReactNode
 }
 
-const getOffset = (el: HTMLElement) => {
-  const rect = el.getBoundingClientRect();
-  return {
-    left: rect.left + window.scrollX,
-    top: rect.top + window.scrollY,
-    width: rect.width,
-    height: rect.height
-  };
-}
-
 const TooltipContainer: React.FC<TooltipContainerProps> = ({ target, children }) => {
-  const selfReference = useRef<HTMLDivElement | null>(null)
-  const [coords, setCoords] = useState({ x: 0, y: 0 })
-  const { closeModal } = useModalProps()
 
-  useEffect(() => {
-    if (!selfReference.current) return
-
-    if (!target) return
-
-    const offsets = getOffset(target)
-
-    const firstResolution = { x: offsets.left + offsets.width / 2 - selfReference.current.clientWidth / 2, y: offsets.top - selfReference.current.clientHeight - 10 }
-
-    const offsetX = Math.max((firstResolution.x + selfReference.current.clientWidth + 20) - document.documentElement.clientWidth, 0)
-
-    setCoords({ x: firstResolution.x - offsetX, y: offsets.top - selfReference.current.clientHeight - 10 })
-
-    target.addEventListener('mouseout', () => closeModal(false), { once: true })
-
-  }, [])
+  const coords = useTooltipPosition({
+    target,
+    pointTarget: 't',
+    pointContainer: 'b',
+    containerOffsets: 10
+  })
 
   return (
-    <div className='fixed pointer-events-none opacity-0' style={{ top: coords.y, left: coords.x }} ref={selfReference} data-modal-type='back'>
+    <div className='fixed pointer-events-none opacity-0' style={{ top: coords.y, left: coords.x }} data-modal-type='back'>
       <div data-modal-type='container'>
         {children}
       </div>

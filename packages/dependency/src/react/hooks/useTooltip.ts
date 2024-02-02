@@ -7,11 +7,11 @@ const getOffsets = (el: HTMLElement, shift: number = 0) => {
   const rect = el.getBoundingClientRect();
   const offsets = {
     left: rect.left + window.scrollX,
-    top: rect.top + window.scrollY,
+    top: rect.top + window.scrollY - shift,
     right: rect.right + window.scrollX,
     bottom: rect.bottom + window.scrollY,
     width: rect.width,
-    height: rect.height + shift
+    height: rect.height + (shift * 2)
   }
 
   return offsets
@@ -51,11 +51,13 @@ interface UseTooltipPositionProps {
   containerId?: string
   debug?: boolean
   containerOffsets?: number
-  zoneOutOffsets?: number
-  onZoneLeave?: () => void
+  zoneOutOffsets?: number | true
+  onZoneLeave?: () => void,
+  pointTarget?: keyof typeof coordinatesContainer | typeof coordinatesContainer['rb']
+  pointContainer?: keyof typeof coordinatesContainer | typeof coordinatesContainer['rb']
 }
 
-export const useTooltipPosition = ({ target, containerId = 'back', debug = false, containerOffsets = 20, zoneOutOffsets = 0, onZoneLeave }: UseTooltipPositionProps) => {
+export const useTooltipPosition = ({ target, containerId = 'back', debug = false, containerOffsets = 20, zoneOutOffsets = 0, onZoneLeave, pointTarget, pointContainer }: UseTooltipPositionProps) => {
 
   const [coords, setCoords] = useState({ x: 0, y: 0 })
   const { closeModal } = useModalProps()
@@ -63,17 +65,18 @@ export const useTooltipPosition = ({ target, containerId = 'back', debug = false
 
   useEffect(() => {
     const backTooltip = document.querySelector(`[data-modal-type="${containerId}"]`) as HTMLDivElement
+    const processOnZoneLeave = onZoneLeave ?? closeModal
     if (!backTooltip) return
 
     if (!target) return
 
     const zoneOut = Boolean(zoneOutOffsets)
-    const calculatedOffset = containerOffsets + zoneOutOffsets
+    const calculatedOffset = containerOffsets + (typeof zoneOutOffsets === 'boolean' ? 0 : zoneOutOffsets)
     const parseCoordinates = (object: { x: any, y: any }, offsets: any) => {
       return Object.fromEntries(Object.entries(object).map(([key, value]) => [key, offsets[key](value)]))
     }
 
-    const resizeEvent = (_event: any, coornadinatesA: any = 'b', coordinatesB: any = 't') => {
+    const resizeEvent = (coornadinatesA: any = 'b', coordinatesB: any = 't') => {
 
       if (typeof coornadinatesA === 'string') coornadinatesA = (coordinates as any)?.[coornadinatesA]
       if (typeof coordinatesB === 'string') coordinatesB = (coordinatesContainer as any)?.[coordinatesB]
@@ -122,31 +125,32 @@ export const useTooltipPosition = ({ target, containerId = 'back', debug = false
           return zone
         }
 
-        generateZoneElement(getOffsets(target) as any, containerOffsets + zoneOutOffsets, `${customId}1`)
-        generateZoneElement({ ...getOffsets(backTooltip) as any, top: firstResolution.y, left: finalResolution }, containerOffsets + zoneOutOffsets, `${customId}2`)
+        generateZoneElement(getOffsets(target) as any, calculatedOffset, `${customId}1`)
+        generateZoneElement({ ...getOffsets(backTooltip) as any, top: firstResolution.y, left: finalResolution }, calculatedOffset, `${customId}2`)
         const zone3 = generateZoneElement(getOffsets(target) as any, 0, `${customId}3`)
 
-        zone3.addEventListener('click', () => closeModal(), { once: true })
+        zone3.addEventListener('click', () => processOnZoneLeave(), { once: true })
         Object.assign(zone3.style, { cursor: 'pointer', border: debug ? '2px dashed red' : undefined, backgrondColor: debug ? '#ff00001A' : undefined })
 
         new Promise(resolve => backTooltip.addEventListener('mouseleave', resolve, { once: true })).then(() => {
-          onZoneLeave?.()
+          processOnZoneLeave?.()
         })
 
         return
       }
 
-      if (onZoneLeave) {
-        target.addEventListener('mouseleave', onZoneLeave, { once: true })
+      if (processOnZoneLeave) {
+        target.addEventListener('mouseleave', processOnZoneLeave, { once: true })
       }
     }
 
-    resizeEvent(...[] as any as [any, any, any])
-    window.addEventListener('resize', resizeEvent)
+    const handlerResize = () => resizeEvent(pointTarget, pointContainer)
+    handlerResize()
+    window.addEventListener('resize', handlerResize)
 
     return () => {
-      window.removeEventListener('resize', resizeEvent)
-      target.removeEventListener('mouseleave', onZoneLeave)
+      window.removeEventListener('resize', handlerResize)
+      target.removeEventListener('mouseleave', processOnZoneLeave)
     }
   }, [])
 
