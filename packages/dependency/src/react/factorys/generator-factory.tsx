@@ -1,3 +1,4 @@
+'use client'
 import type { AnimAvailableConfig } from '@/contants/animations';
 import { ModalFactory } from "@/index";
 import type { ValueOf, extractExtendedModalProps, modalResponse } from '@/lib-types/ModalInterna.types';

@@ -1,5 +1,6 @@
 import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
+import preserveDirectives from "rollup-plugin-preserve-directives";
 
 export default [
     {
@@ -15,7 +16,8 @@ export default [
         ],
         plugins: [
             typescript({ exclude: ['./debug/**/*'], compilerOptions: { declarationDir: './dist/esm', outDir: './dist/esm' } }),
-            terser()
+            terser(),
+            preserveDirectives()
             // visualizer()
         ]
     },
@@ -32,6 +34,7 @@ export default [
         ],
         plugins: [
             typescript({ exclude: ['./debug/**/*'], compilerOptions: { declarationDir: './dist/cjs', outDir: './dist/cjs' } }),
+            preserveDirectives()
         ]
     },
     // {
