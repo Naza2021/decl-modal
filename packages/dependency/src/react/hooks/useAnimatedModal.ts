@@ -1,20 +1,20 @@
 import { DEFAULT_ANIMATIONS, generateAnimations, type AnimConfig } from "@/contants/animations"
 import type { ModalFactory } from "@/index"
-import { useEffect, useId, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 type useAnimationProps = {
     animation?: keyof typeof DEFAULT_ANIMATIONS | AnimConfig,
     Component?: any
     waitAnimation?: ReturnType<InstanceType<typeof ModalFactory>['getConfig']>['waitAnimation']
-    sendMessage?: any,
+    sendMessage?: any
+    modalId: string
 }
 
-const useAnimatedModal = <C extends Function>({ animation, closeModal, Component, waitAnimation, sendMessage }: useAnimationProps & { closeModal?: C }) => {
+const useAnimatedModal = <C extends Function>({ animation, closeModal, Component, waitAnimation, sendMessage, modalId }: useAnimationProps & { closeModal?: C }) => {
 
     const animateRef = useRef<{ reverse: () => Promise<void>, refreshAnims: () => void } | null>()
     const animateCloseRef = useRef<Promise<any> | null>(null)
     const [closeIntermediate, setCloseIntermediate] = useState<any>(null)
-    const modalId = useId()
 
     useEffect(() => {
         document.querySelector(`[data-modal-type=back]:not([data-modal-back-id])`)?.setAttribute?.('data-modal-back-id', modalId)
@@ -76,3 +76,4 @@ const useAnimatedModal = <C extends Function>({ animation, closeModal, Component
 
 export { useAnimatedModal }
 export type { useAnimationProps }
+

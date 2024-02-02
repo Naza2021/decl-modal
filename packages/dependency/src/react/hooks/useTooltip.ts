@@ -68,7 +68,10 @@ export const useTooltipPosition = ({ target, containerId, debug = false, contain
   useEffect(() => {
     const backTooltip = document.querySelector(`[data-modal-back-id="${containerId ?? modalId}"]`) as HTMLDivElement
     const processOnZoneLeave = onZoneLeave ?? closeModal
-    if (!backTooltip) return
+    if (!backTooltip) {
+      console.error(`container: ${containerId ?? modalId} not found`)
+      return
+    }
 
     if (!target) return
 

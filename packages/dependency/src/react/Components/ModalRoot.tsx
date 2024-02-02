@@ -44,7 +44,8 @@ const InternalRender: React.FC<any> = ({ Component, animation, modalFactory, con
     closeModal: props?.closeModal,
     Component,
     waitAnimation: config?.waitAnimation ?? modalFactory?.getConfig?.()?.waitAnimation,
-    sendMessage: props?.sendMessage
+    sendMessage: props?.sendMessage,
+    modalId: config?.uuid
   })
 
   return (
