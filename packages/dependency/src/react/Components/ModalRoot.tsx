@@ -48,9 +48,11 @@ const InternalRender: React.FC<any> = ({ Component, animation, modalFactory, con
     modalId: config?.uuid
   })
 
+  const RootProps = { 'data-modal-back-id': config?.uuid }
+
   return (
-    <TypedContextProvider value={{ ...{ ...props, ...{ closeModal: closeAnimated, modalId } } }}>
-      <Component {...{ ...props, ...{ closeModal: closeAnimated, modalId } }} />
+    <TypedContextProvider value={{ ...{ ...props, ...{ closeModal: closeAnimated, modalId, RootProps } } }}>
+      <Component {...{ ...props, ...{ closeModal: closeAnimated, modalId, RootProps } }} />
     </TypedContextProvider>
   )
 }

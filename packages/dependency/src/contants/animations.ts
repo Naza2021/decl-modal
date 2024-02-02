@@ -74,7 +74,7 @@ const generateAnimations = (anim: typeof DEFAULT_ANIMATIONS['fade'], id: string,
 
     const nodes = () => ({
         back: (document.querySelector(`[data-modal-back-id="${id}"]`) as HTMLDivElement),
-        container: (document.querySelector(`[data-modal-container-id="${id}"]`) as HTMLDivElement),
+        container: (document.querySelector(`[data-modal-back-id="${id}"] > *:not([data-modal-type*="zone-"])`) as HTMLDivElement),
     } as const)
     const anims = () => ({
         back: (customAnim?: Function) => {

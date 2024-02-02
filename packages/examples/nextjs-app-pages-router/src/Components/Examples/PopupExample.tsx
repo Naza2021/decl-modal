@@ -1,6 +1,6 @@
 
 import { type ModalProps } from "decl-modal"
-import { generateModal, useTooltipPosition } from "decl-modal/react"
+import { generateModal, useModalProps, useTooltipPosition } from "decl-modal/react"
 
 interface PopupContainerProps {
   target: HTMLElement,
@@ -9,19 +9,19 @@ interface PopupContainerProps {
 
 const PopupContainer: React.FC<PopupContainerProps> = ({ target, children }) => {
 
+  const { RootProps } = useModalProps()
+
   const coords = useTooltipPosition({
     target,
-    // debug: true,
     zoneOutOffsets: true,
     containerOffsets: 20,
     pointTarget: 'b',
     pointContainer: 't',
-    // containerId: 'asd'
   })
 
   return (
-    <div className='fixed opacity-0 z-10' data-modal-type='back' style={{ top: `${coords.y}px`, left: `${coords.x}px` }}>
-      <div data-modal-type='container'>
+    <div className='fixed opacity-0 z-10' style={{ top: `${coords.y}px`, left: `${coords.x}px` }} {...RootProps}>
+      <div className="cursor-pointer">
         {children}
       </div>
     </div>

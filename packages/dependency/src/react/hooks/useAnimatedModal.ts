@@ -16,9 +16,8 @@ const useAnimatedModal = <C extends Function>({ animation, closeModal, Component
     const animateCloseRef = useRef<Promise<any> | null>(null)
     const [closeIntermediate, setCloseIntermediate] = useState<any>(null)
 
+
     useEffect(() => {
-        document.querySelector(`[data-modal-type=back]:not([data-modal-back-id])`)?.setAttribute?.('data-modal-back-id', modalId)
-        document.querySelector(`[data-modal-type=container]:not([data-modal-container-id])`)?.setAttribute?.('data-modal-container-id', modalId)
         if (animateRef.current?.refreshAnims) {
             animateRef.current.refreshAnims()
         }

@@ -114,7 +114,7 @@ export const useTooltipPosition = ({ target, containerId, debug = false, contain
           if (!zone) {
             zone = document.createElement('div')
             zone.setAttribute('data-modal-type', `zone-${zoneId}`)
-            backTooltip.insertBefore(zone, backTooltip.querySelector('[data-modal-type=container]'))
+            backTooltip.insertBefore(zone, backTooltip.querySelector('*:not([data-modal-type*="zone-"])'))
           }
 
           Object.assign(zone.style, {

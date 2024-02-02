@@ -23,7 +23,7 @@ export default bundleAnalyzer(
       ignoreBuildErrors: true,
     },
     poweredByHeader: false,
-    reactStrictMode: true,
+    reactStrictMode: false,
     webpack: (config) => {
       // config.externals is needed to resolve the following errors:
       // Module not found: Can't resolve 'bufferutil'
