@@ -61,9 +61,6 @@
   ],
   "author": "Nazareno Molinari",
   "license": "MIT",
-  "peerDependencies": {
-    "react": ">=17"
-  },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
