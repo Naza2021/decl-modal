@@ -48,6 +48,7 @@
     "tsxCheck": "tsc --noEmit",
     "clear-cache": "rimraf dist",
     "release": "rollup -c && node ./dev/node-process.js",
+    "publish": "npm run release && npm run publish",
     "watch": "npm-watch"
   },
   "keywords": [
