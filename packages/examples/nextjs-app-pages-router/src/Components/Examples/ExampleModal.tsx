@@ -32,4 +32,4 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ }) => {
 }
 
 
-export const [showModal, ModalRoot] = generateModal({ Modals: { ModalComponent }, waitAnimation: false })
+export const [showModal, ModalRoot] = generateModal({ Modals: { ModalComponent } })
