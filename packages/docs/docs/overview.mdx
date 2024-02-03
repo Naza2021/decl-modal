@@ -53,7 +53,7 @@ yarn add decl-modal
 </Tabs>
 
 ## Por que deberia utilizar esta libreria
-Esta libreria puede ser un reemplazo perfecto, para <Highlight>react-toastify</Highlight>, <Highlight>react-modal</Highlight>, <Highlight>react-tooltip</Highlight>. Ahorrando un enorme espacio en el bundle size, ademas ya no tienes por que aprender configuraciones, props, estilos especificos. Todo lo montas tu! Tus configuraciones, tus estilos, tus props! Que lo tengas que montar tu, no tiene por que ser complejo, ya que la siguiente seccion puedes simplemente copiar y copiar los contenedor de ejemplo y adaptarlos!
+Esta libreria puede ser un reemplazo perfecto, para <Highlight>react-toastify</Highlight>, <Highlight>react-modal</Highlight>, <Highlight>react-tooltip</Highlight>. Ahorrando un enorme espacio en el bundle size, ademas ya no tienes por que aprender configuraciones, props, estilos especificos. Todo lo montas tu! Tus configuraciones, tus estilos, tus props! Que lo tengas que montar tu, no tiene por que ser complejo, ya que la siguiente seccion puedes simplemente copiar y copiar los contenedores de ejemplo y adaptarlos!
 
 ## Contenedores para copiar y pegar
 Estos contenedores contemplan las vistas mas comunes que puedes generar con esta libreria. Puedes simplemente copiarlos y luego solo crear tus modales que extiendan de estos contenedores o incluso modificar los contenedores y configurarlos a tu gusto. :)
@@ -90,8 +90,7 @@ Estos contenedores contemplan las vistas mas comunes que puedes generar con esta
 Para implementar un modal, inicia extendiendo tu componente de ModalProps para asegurar que tenga las propiedades requeridas. Posteriormente, utiliza la función generateModal de la biblioteca para crear un ModalRoot, que será el encargado de renderizar tu modal. Este componente ModalRoot no solo renderiza, sino que también provee al modal de propiedades especiales
 
 #### Construye tu Modal
-Lo mas recomendable es que cualquier vista tenga una estructura de 2 tag (Como un div) que especifiquen el "data-modal-type" como "back" y "container". El primer div es el back y el segundo el container.
-Luego de estos div ya la estructura puede ser cualquiera.
+Tu primer elemento HTML que renderices deberias inyectarle las props de RootProps (Lo cual sera util luego para las animaciones). Las props que se ven aqui las va a proveer el futuro ModalRoot que renderizara nuestro modal.
 
 ```tsx
 import { ModalProps } from "decl-modal"
@@ -100,14 +99,13 @@ interface MyFirstModalProps extends ModalProps {
   myCustomProp: any
 }
 
-const MyFirstModal: React.FC<MyFirstModalProps> = ({ closeModal }) => {
+const MyFirstModal: React.FC<MyFirstModalProps> = ({ closeModal, RootProps }) => {
   return (
     <div className='flex fixed opacity-0 bg-black bg-opacity-70 top-0 bottom-0 w-full' 
       onClick={() => closeModal(false)} 
     // highlight-next-line
-      data-modal-type='back'>
-      // highlight-next-line
-      <div className='m-auto' data-modal-type='container'>
+      {...RootProps}>
+      <div className='m-auto'>
         <div className="bg-white rounded-md p-5 font-bold">
           Hello world! :)
         </div>
@@ -155,7 +153,7 @@ showMyFirstModal()
 #### Separar y contruir un ModalContainer (Layout) para este modal
 Gracias al hook useModalProps el cual es capaz de absorver las props del modal, puedes crear un modalContainer sin preocuparte por las props.
 ```tsx
-import { ModalAnimProps, useModalProps } from "decl-modal/react"
+import { useModalProps } from "decl-modal/react"
 
 interface MyGenericContainerProps { 
   children: React.ReactNode
@@ -163,20 +161,22 @@ interface MyGenericContainerProps {
 
 const MyGenericContainer: React.FC<MyGenericContainerProps> = ({ children }) => {
 
-  const { closeModal } = useModalProps()
+  const { closeModal, RootProps } = useModalProps()
 
   return (
-    <div onClick={() => closeModal(false)} {...ModalAnimProps.back}>
-      <div {...ModalAnimProps.container}>
+    <div onClick={() => closeModal(false)} {...RootProps}>
+      <div>
         {children}
       </div>
     </div>
   )
 }
 ```
-:::tip
-Puedes ver algunos ejemplos de contenedores aqui.
-:::
+<a href="/docs/container/vistas">
+  :::tip
+  Puedes ver mas en detalle como funcionan las vistas aqui.
+  :::
+</a>
 
 #### Declara multiples modales bajo el mismo showMethod/Root
 ```tsx
@@ -209,7 +209,7 @@ closeModal(anyResponse)
 
 const { response } = await showModals('Modal2', {})
 ```
-<a href="/">
+<a href="/docs/communication">
   :::tip
   Puedes saber mas acerca de la comunicacion que hay entre cliente y modal aqui.
   :::

@@ -26,7 +26,7 @@ Estan ordenadas en funcion de su prioridad, es decir un metodo puede sobrescribi
 
 # Como funciona
 
-La forma en la que el core anima las vistas, es detectando los tags que contengan <Highlight>data-modal-type</Highlight> declarado, tanto como 'back' o 'container'.
+La forma en la que el core anima las vistas, es detectando nuestro modalRoot gracias a la propiedad <Highlight>data-modal-back-id</Highlight>, el root es considerado como "back" y su siguiente elemento como "container".
 Puedes jugar con estos dos tags tanto como quieras. Normalmente con el back puedes crear un efecto de fade o mas sencillo para que "aparezca" la vista y ya con el container animar el contenido de la vista.
 
 
