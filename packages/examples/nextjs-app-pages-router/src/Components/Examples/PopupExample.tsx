@@ -21,7 +21,7 @@ const PopupContainer: React.FC<PopupContainerProps> = ({ target, children }) => 
 
   return (
     <div className='fixed opacity-0 z-10' style={{ top: `${coords.y}px`, left: `${coords.x}px` }} {...RootProps}>
-      <div className="cursor-pointer">
+      <div>
         {children}
       </div>
     </div>
