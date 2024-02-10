@@ -1,7 +1,7 @@
 import type { AnimAvailableConfig } from "@/contants/animations";
 import type { ModalProps, ModalTupleType, extractExtendedModalProps, extractResponseExtendedModalProps, modalResponse } from "@/lib-types/ModalInterna.types";
 import { Observable } from "@/observable-own";
-import React from "react";
+import type React from "react";
 import { MessagesQueue } from "./messages-queue";
 
 export type ModalFactoryProps = {

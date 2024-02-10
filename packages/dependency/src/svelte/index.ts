@@ -1,0 +1,1 @@
+export { generateModal } from "./factorys/generator-factory";

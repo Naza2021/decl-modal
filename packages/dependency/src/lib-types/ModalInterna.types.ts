@@ -8,7 +8,7 @@ export type modalResponse<R = any, A = any> = {
   closeModal: (...args: Partial<Parameters<MessagesQueueInstance<R>['sendMessage']>>) => ReturnType<MessagesQueueInstance<R>['sendMessage']>,
   waitFor: MessagesQueueInstance<R>['waitFor'], sendMessage: MessagesQueueInstance<R>['sendMessage'],
   response: R,
-  modalId?: string
+  modalId: string
 }
 
 export type ModalTupleType<T, E = {}> = {

@@ -4,7 +4,7 @@ import preserveDirectives from "rollup-plugin-preserve-directives";
 
 export default [
     {
-        input: { index: 'src/index.ts', react: 'src/react/index.ts' },  // Tu archivo de entrada
+        input: { index: 'src/index.ts', react: 'src/react/index.ts', svelte: 'src/svelte/index.ts' },  // Tu archivo de entrada
         external: id => id.indexOf('node_modules') >= 0,
         output: [{
             format: 'es',  // Formato CommonJS, adecuado para Node.js
@@ -20,7 +20,7 @@ export default [
         ]
     },
     {
-        input: { index: 'src/index.ts', react: 'src/react/index.ts' },  // Tu archivo de entrada
+        input: { index: 'src/index.ts', react: 'src/react/index.ts', svelte: 'src/svelte/index.ts' },  // Tu archivo de entrada
         external: id => id.indexOf('node_modules') >= 0,
         output: [{
             format: 'cjs',  // Formato CommonJS, adecuado para Node.js
