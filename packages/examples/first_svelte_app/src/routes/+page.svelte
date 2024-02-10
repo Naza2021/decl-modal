@@ -1,23 +1,33 @@
 <script lang="ts">
-  import { onMount, setContext } from "svelte";
+  import {
+    MenuAnimation,
+    MenuRootProps,
+    showMenu,
+  } from "../Components/Examples/Menu/Menu";
+  import { aRootProps, showa } from "../Components/Examples/Modal/ModalPopup";
+  import {
+    PopupRootProps,
+    showMyPopup,
+  } from "../Components/Examples/Popup/Popup";
+  import { showToast } from "../Components/Examples/Toast/Toast";
+  import ToastRoot from "../Components/Examples/Toast/ToastRoot.svelte";
+  import {
+    TooltipAnimation,
+    TooltipRootProps,
+    showMyTooltip,
+  } from "../Components/Examples/Tooltip/Tooltip";
   import ModalRoot from "../Components/ModalRoot.svelte";
-  import { aRootProps, showA } from "../Components/Examples/ModalPopup";
 
   let input = "";
 
-  onMount(() => {
-    document
-      .querySelector(`#xd`)
-      ?.animate(
-        { backgroundColor: ["#fff", "#000"] },
-        { direction: "alternate", duration: 1000, iterations: Infinity }
-      );
-  });
-
-  (() => {
-    setContext("internal", "tu mama");
-    // root.$destroy();
-  })();
+  const onShowInput = async () => {
+    const { response } = await showa(
+      "ModalPopuwModalInput",
+      { exampleInputProp: "test-input" },
+      { waitAnimation: false, animation: "pop" }
+    );
+    if (typeof response === "string") input = response;
+  };
 </script>
 
 <svelte:head>
@@ -28,31 +38,35 @@
 <div class="bg-gradient-to-bl from-[#ff590a] to-[#ee3b00] h-full w-full flex">
   <div class="m-auto flex flex-col gap-4 items-center">
     <div class="flex gap-12 items-center">
-      <button class="bg-[#2e0804] rounded-md py-2 px-4 font-bold text-white">
+      <button
+        class="bg-[#2e0804] rounded-md py-2 px-4 font-bold text-white"
+        on:click={(e) => showMyPopup(e)}
+      >
         Popup
       </button>
-      <button class="bg-[#2e0804] rounded-md py-2 px-4 font-bold text-white">
+      <button
+        class="bg-[#2e0804] rounded-md py-2 px-4 font-bold text-white"
+        on:click={() => showMenu("Menu")}
+      >
         Menu
       </button>
     </div>
     <div class="flex gap-12 items-center mt-6">
       <button
         class="bg-[#2e0804] rounded-md py-2 px-4 font-bold text-white"
-        on:click={() => showA("ModalPopup", { myProp: "Holi" })}
+        on:click={() => showa("ModalPopup", { exampleProp: "test-popup" })}
       >
         Modal
       </button>
-      <p class="text-white select-none">Tooltip | Popup</p>
+      <p
+        class="text-white select-none"
+        on:mouseenter={(e) => showMyTooltip(e, "Svelte")}
+      >
+        Tooltip | Popup
+      </p>
       <button
         class="bg-[#2e0804] rounded-md py-2 px-4 font-bold text-white"
-        onClick={async () => {
-          // const { response } = await showInputModal(
-          //   "TestComponent2",
-          //   { myProp: "holi" },
-          //   { animation: "pop", waitAnimation: false }
-          // );
-          // if (typeof response === "string") setinput(response);
-        }}
+        on:click={onShowInput}
       >
         Input
       </button>
@@ -60,6 +74,7 @@
     {#if input}
       <p
         class="text-white select-none cursor-pointer max-w-[10rem] text-ellipsis overflow-hidden text-center text-nowrap break-keep"
+        on:click={() => showToast(input)}
       >
         Input: {input}
       </p>
@@ -67,4 +82,8 @@
   </div>
 </div>
 
-<ModalRoot {...aRootProps} />
+<ModalRoot {...aRootProps} animation="bubble" />
+<ModalRoot {...TooltipRootProps} animation={TooltipAnimation} />
+<ModalRoot {...PopupRootProps} animation="pop" />
+<ModalRoot {...MenuRootProps} animation={MenuAnimation} />
+<ToastRoot />

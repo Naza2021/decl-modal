@@ -3,15 +3,15 @@
   import { onMount, setContext } from "svelte";
   import { readonly, writable } from "svelte/store";
 
-  export let closeModal: any;
-  export let RootProps: any;
   export let ownThis: any;
-  let oldClose = closeModal;
-  let ownClose: any;
-  let closeProcess: boolean = false;
+  export let factory: any;
+  let ownClose = $$restProps?.closeModal;
+
+  let RootProps = { "data-modal-back-id": $$restProps?.modalId };
+
   let PropsStore = writable({
-    ...$$props,
-    ownThis: undefined,
+    ...$$restProps,
+    RootProps,
   });
 
   setContext("modal_props_internal", readonly(PropsStore));
@@ -19,27 +19,38 @@
   onMount(() => {
     if (!ownThis) return () => {};
 
-    const { reverse } = animations.generateAnimations(
-      animations.DEFAULT_ANIMATIONS.bubble,
-      RootProps?.["data-modal-back-id"]
+    const { animatedClose } = animations.generateAnimations(
+      animations.DEFAULT_ANIMATIONS.fade,
+      $$restProps?.modalId,
+      undefined as any,
+      { ...$$restProps, factory } as any
     );
 
-    ownClose = async () => {
-      if (closeProcess) return;
-      closeProcess = true;
-      await reverse();
-      oldClose(false);
-      closeProcess = false;
-    };
+    ownClose = animatedClose;
   });
 
   $: {
     PropsStore.set({
-      ...$$props,
-      ownThis: undefined,
+      ...$$restProps,
       closeModal: ownClose,
+      RootProps,
     } as any);
   }
+
+  const externalProps = [
+    "RootProps",
+    "animation",
+    "modalId",
+    "waitFor",
+    "sendMessage",
+    "waitAnimation",
+    "closeModal",
+  ];
 </script>
 
-<svelte:component this={ownThis} />
+<svelte:component
+  this={ownThis}
+  {...Object.fromEntries(
+    Object.entries($$restProps).filter(([key]) => !externalProps.includes(key))
+  )}
+/>

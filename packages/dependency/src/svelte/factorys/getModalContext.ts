@@ -1,10 +1,6 @@
-import { type ModalProps } from "decl-modal";
-import { generateModal } from 'decl-modal/svelte';
-import { getContext } from "svelte";
-import { get, type Readable } from "svelte/store";
-import ModalPopup from "./ModalPopup.svelte";
-
-export const { aRootProps, getAContext, showA } = generateModal({ Modals: { ModalPopup }, name: 'a' })
+import type { ModalProps } from "@/index"
+import { getContext } from "svelte"
+import { get, type Readable } from "svelte/store"
 
 export const getModalContext = () => {
     const store = getContext('modal_props_internal') as any

@@ -1,33 +1,37 @@
 <script lang="ts">
-  import { type ModalFactory, type ModalProps } from "decl-modal";
-  import { SvelteComponent, getContext, onMount } from "svelte";
+  import { get, writable } from "svelte/store";
+
+  import { stateUpdater, type ModalFactory } from "decl-modal";
+  import { SvelteComponent, onMount } from "svelte";
   import AnimatedWrapper from "./AnimatedWrapper.svelte";
-  import { get, type Readable } from "svelte/store";
+  import { type AnimConfig } from "decl-modal";
 
-  export const getModalContext = () => {
-    const store = getContext("modal_props_internal") as any;
+  type T = $$Generic;
 
-    const { closeModal, ...otherProps } = get(store) as any;
-
-    return {
-      ...otherProps,
-      closeModal: (...args: any[]) =>
-        (get(store) as any)?.closeModal?.(...args),
-      store,
-    } as any as ModalProps & { store: Readable<ModalProps> };
+  type $$Props = Partial<T> & {
+    factory: InstanceType<typeof ModalFactory>;
+    animation?: AnimConfig;
   };
 
-  let DynamicComponent = {
+  let DynamicComponent = writable({
     Component: null as any as SvelteComponent,
     Props: {} as any,
     Config: {} as any,
-  };
+  });
 
   export let factory: InstanceType<typeof ModalFactory>;
+  export let animation: AnimConfig;
 
   onMount(() => {
     const suscribtion = factory.suscribe((Component, Props, Config) => {
-      DynamicComponent = { Component, Props, Config };
+      DynamicComponent.set(
+        stateUpdater({
+          Component,
+          Props,
+          Config,
+          oldState: get(DynamicComponent),
+        })
+      );
     });
 
     return () => {
@@ -35,17 +39,31 @@
     };
   });
 
-  console.log({ factory });
-
-  let RootProps = { "data-modal-back-id": DynamicComponent.Config?.uuid };
-
-  $: RootProps = { "data-modal-back-id": DynamicComponent.Config?.uuid };
+  $: console.log({ $DynamicComponent });
 </script>
 
-{#if !Array.isArray(DynamicComponent) && DynamicComponent.Component}
+{#if Array.isArray($DynamicComponent)}
+  {#each $DynamicComponent as $Component ($Component.Config.uuid)}
+    <AnimatedWrapper
+      {...$$restProps}
+      {factory}
+      ownThis={$Component.Component}
+      {...$Component.Props}
+      waitAnimation={$Component.Config?.waitAnimation}
+      animation={$Component.Config?.animation ?? animation}
+      modalId={$Component.Config?.uuid}
+    />
+  {/each}
+{/if}
+
+{#if !Array.isArray($DynamicComponent) && $DynamicComponent.Component}
   <AnimatedWrapper
-    ownThis={DynamicComponent.Component}
-    {...DynamicComponent.Props}
-    {RootProps}
+    {...$$restProps}
+    {factory}
+    ownThis={$DynamicComponent.Component}
+    {...$DynamicComponent.Props}
+    waitAnimation={$DynamicComponent.Config?.waitAnimation}
+    animation={$DynamicComponent.Config?.animation ?? animation}
+    modalId={$DynamicComponent.Config?.uuid}
   />
 {/if}

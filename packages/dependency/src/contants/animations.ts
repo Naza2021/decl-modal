@@ -1,3 +1,6 @@
+import type { ModalFactory, ShowConfig } from "@/factorys/modal.factory"
+import { throttle, type ModalProps } from ".."
+
 interface animConfig extends KeyframeAnimationOptions {
     reverse?: boolean | ((animatedElement: HTMLElement) => {
         keyframes?: Parameters<Animatable['animate']>[0],
@@ -55,7 +58,11 @@ const DEFAULT_ANIMATIONS = {
     } as AnimConfig,
 }
 
-const mergeAnimations = (anim1: any, anim2: any) => {
+export const mergeAnimations = (anim1: AnimAvailableConfig, anim2: AnimAvailableConfig): AnimConfig => {
+
+    if (typeof anim1 === 'string') anim1 = (DEFAULT_ANIMATIONS as any)?.[anim1]
+    if (typeof anim2 === 'string') anim2 = (DEFAULT_ANIMATIONS as any)?.[anim2]
+
     return {
         back: {
             keyframes: anim2?.back?.keyframes || anim1.back.keyframes,
@@ -68,9 +75,11 @@ const mergeAnimations = (anim1: any, anim2: any) => {
     }
 }
 
-const generateAnimations = (anim: typeof DEFAULT_ANIMATIONS['fade'], id: string, newMergeAnimation?: AnimConfig) => {
+const generateAnimations = (anim: typeof DEFAULT_ANIMATIONS['fade'], id: string, newMergeAnimation: AnimConfig, { factory, closeModal, sendMessage, waitAnimation, animation }: ModalProps & { factory: ModalFactory } & ShowConfig = {} as any) => {
 
-    const processAnimation = newMergeAnimation ? mergeAnimations(anim, newMergeAnimation) : anim
+    if (typeof anim === 'string') anim = (DEFAULT_ANIMATIONS as any)?.[anim]
+
+    const processAnimation = (newMergeAnimation ?? animation) ? mergeAnimations(anim, (newMergeAnimation ?? animation)) : anim
 
     const nodes = () => ({
         back: (document.querySelector(`[data-modal-back-id="${id}"]`) as HTMLDivElement),
@@ -100,7 +109,7 @@ const generateAnimations = (anim: typeof DEFAULT_ANIMATIONS['fade'], id: string,
 
     let originAnims = Object.fromEntries(Object.entries(anims()).map(([key, anim]) => [key, anim()]))
 
-    return {
+    const response = {
         refreshAnims: () => {
             const newAnims = Object.entries(anims()).map(([key, anim]) => {
                 if (((processAnimation as any)[key]).config.reverse === false) return Promise.resolve()
@@ -140,8 +149,19 @@ const generateAnimations = (anim: typeof DEFAULT_ANIMATIONS['fade'], id: string,
             return Promise.all(animsPromises) as any
         }
     }
+
+    return {
+        ...response,
+        animatedClose: throttle(async (...args: any[]) => {
+            console.log({ factory })
+            const config = factory.getConfig()
+            if ((waitAnimation ?? config?.waitAnimation) === false) sendMessage(...args as [any])
+            await response.reverse()
+            closeModal(...args)
+        })
+    }
 }
 
 type AnimAvailableConfig = keyof typeof DEFAULT_ANIMATIONS | AnimConfig
 
-export { DEFAULT_ANIMATIONS, generateAnimations, type AnimConfig, type AnimAvailableConfig }
+export { DEFAULT_ANIMATIONS, generateAnimations, type AnimAvailableConfig, type AnimConfig }
