@@ -38,8 +38,6 @@
       suscribtion.unsubscribe();
     };
   });
-
-  $: console.log({ $DynamicComponent });
 </script>
 
 {#if Array.isArray($DynamicComponent)}

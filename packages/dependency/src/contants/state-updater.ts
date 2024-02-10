@@ -23,8 +23,6 @@ export const stateUpdater = ({ Component, Props = {}, Config = {}, oldState = {}
         // Delete Component in List
         if (Array.isArray(oldState) && !Component && Config.uuid) {
 
-            console.log({ oldState })
-
             const newState = oldState.filter(state => state.Config.uuid !== Config.uuid)
 
             if (newState.length === 0) {
