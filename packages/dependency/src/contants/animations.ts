@@ -12,10 +12,12 @@ type AnimConfig = {
     back?: {
         keyframes?: Parameters<Animatable['animate']>[0],
         config?: animConfig
+        custom?: ((el: HTMLElement) => AnimConfig | Animation)
     },
     container?: {
         keyframes?: Parameters<Animatable['animate']>[0],
         config?: animConfig
+        custom?: ((el: HTMLElement) => AnimConfig | Animation)
     }
 }
 
@@ -66,11 +68,13 @@ export const mergeAnimations = (anim1: AnimAvailableConfig, anim2: AnimAvailable
     return {
         back: {
             keyframes: anim2?.back?.keyframes || anim1.back.keyframes,
-            config: { ...anim1.back.config, ...anim2?.back?.config }
+            config: { ...anim1.back.config, ...anim2?.back?.config },
+            custom: anim2?.back?.custom
         },
         container: {
             keyframes: anim2?.container?.keyframes || anim1.container.keyframes,
-            config: { ...anim1.container.config, ...anim2?.container?.config }
+            config: { ...anim1.container.config, ...anim2?.container?.config },
+            custom: anim2?.container?.custom
         }
     }
 }
@@ -81,6 +85,8 @@ const generateAnimations = (anim: typeof DEFAULT_ANIMATIONS['fade'], id: string,
 
     const processAnimation = (newMergeAnimation ?? animation) ? mergeAnimations(anim, (newMergeAnimation ?? animation)) : anim
 
+    console.log({ processAnimation, animation })
+
     const nodes = () => ({
         back: (document.querySelector(`[data-modal-back-id="${id}"]`) as HTMLDivElement),
         container: (document.querySelector(`[data-modal-back-id="${id}"] > *:not([data-modal-type*="zone-"])`) as HTMLDivElement),
@@ -88,8 +94,11 @@ const generateAnimations = (anim: typeof DEFAULT_ANIMATIONS['fade'], id: string,
     const anims = () => ({
         back: (customAnim?: Function) => {
             const Nodes = nodes()
-            if (customAnim) {
-                const processReverseAnim = mergeAnimations(DEFAULT_ANIMATIONS.fade, { back: customAnim(Nodes.back) } || {})
+            if (customAnim || typeof processAnimation?.back?.custom === 'function') {
+                const animation = (typeof processAnimation?.back?.custom === 'function' ? processAnimation?.back?.custom : customAnim)(Nodes.back)
+                if (animation instanceof Animation) return animation
+
+                const processReverseAnim = mergeAnimations(DEFAULT_ANIMATIONS.fade, { back: animation } || {})
                 return Nodes.back?.animate?.(processReverseAnim.back.keyframes, processReverseAnim.back.config)
 
             }
@@ -97,8 +106,11 @@ const generateAnimations = (anim: typeof DEFAULT_ANIMATIONS['fade'], id: string,
         },
         container: (customAnim?: Function) => {
             const Nodes = nodes()
-            if (customAnim) {
-                const processReverseAnim = mergeAnimations(DEFAULT_ANIMATIONS.fade, customAnim(Nodes.container) || {})
+            if (customAnim || typeof processAnimation?.container?.custom === 'function') {
+                const animation = (typeof processAnimation?.container?.custom === 'function' ? processAnimation?.container?.custom : customAnim)(Nodes.container)
+                if (animation instanceof Animation) return animation
+
+                const processReverseAnim = mergeAnimations(DEFAULT_ANIMATIONS.fade, { container: animation } || {})
                 return Nodes.container?.animate?.(processReverseAnim.back.keyframes, processReverseAnim.back.config)
 
             }
@@ -141,7 +153,8 @@ const generateAnimations = (anim: typeof DEFAULT_ANIMATIONS['fade'], id: string,
 
                 processsAnim.effect.updateTiming({ direction: 'reverse' })
 
-                const animTime = (processAnimation as any)[key].config.duration + ((processAnimation as any)[key].config.delay || 0)
+                const animTime = processsAnim.effect.getTiming().duration as number + (processsAnim.effect.getTiming().delay || 0)
+
                 processsAnim.currentTime = animTime - (((originAnims as any)[key] as Animation).effect.getComputedTiming().progress * animTime)
 
                 return processsAnim.finished

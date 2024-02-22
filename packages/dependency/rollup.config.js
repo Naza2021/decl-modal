@@ -1,6 +1,7 @@
 import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 import preserveDirectives from "rollup-plugin-preserve-directives";
+import copy from 'rollup-plugin-copy'
 
 export default [
     {
@@ -17,6 +18,11 @@ export default [
         plugins: [
             typescript({ exclude: ['./debug/**/*'], compilerOptions: { declarationDir: './dist/esm', outDir: './dist/esm' } }),
             terser(),
+            copy({
+                targets: [
+                    { src: 'src/svelte/Components/**/*', dest: 'dist/esm/svelte/Components' }
+                ]
+            })
         ]
     },
     {
@@ -33,6 +39,11 @@ export default [
         plugins: [
             typescript({ exclude: ['./debug/**/*'], compilerOptions: { declarationDir: './dist/cjs', outDir: './dist/cjs' } }),
             terser(),
+            copy({
+                targets: [
+                    { src: 'src/svelte/Components/**/*', dest: 'dist/cjs/svelte/Components' }
+                ]
+            })
         ]
     },
     // {

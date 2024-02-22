@@ -14,8 +14,15 @@ export async function processDtsFiles(folderPath, callback) {
     }
 }
 
-async function processDirectory(directory, callback) {
-    const files = await fs.readdir(directory, { withFileTypes: true });
+export async function processDirectory(directory, callback) {
+    const files = await fs.readdir(directory, { withFileTypes: true }).catch(e => e.code === 'ENOTDIR');
+
+    if (directory?.split('/').at(-1).includes('.') && files === true) {
+        const content = await fs.readFile(directory, 'utf8');
+        const newContent = callback(content, directory);
+        await fs.writeFile(directory, newContent);
+        return
+    }
 
     for (const file of files) {
         const filePath = path.join(directory, file.name);

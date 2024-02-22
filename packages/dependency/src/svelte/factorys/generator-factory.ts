@@ -1,12 +1,9 @@
 'use client'
-import type { AnimAvailableConfig } from '@/contants/animations';
 import { ModalFactory, type ModalProps } from "@/index";
 import type { ValueOf, extractExtendedModalProps } from '@/lib-types/ModalInterna.types';
-import type { Call, Objects, Strings } from 'hotscript';
+import type { Call, Objects } from 'hotscript';
 import { getContext, type ComponentConstructorOptions, type SvelteComponent } from 'svelte';
 import { get, type Readable } from 'svelte/store';
-
-type configType<U> = { config?: Partial<Record<keyof U, { animation?: AnimAvailableConfig }>> }
 
 type convertSvelteToReact<T> = { [K in keyof T]: (props: getSvelteComponent<T[K]>) => void }
 

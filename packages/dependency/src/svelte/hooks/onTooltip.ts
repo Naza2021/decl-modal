@@ -8,8 +8,8 @@ const round = (number: number) => Math.floor(number * 100) / 100
 const getOffsets = (el: HTMLElement, shift: number = 0) => {
     const rect = el.getBoundingClientRect();
     const offsets = {
-        left: rect.left + window.scrollX,
-        top: rect.top + window.scrollY - shift,
+        left: rect.left,
+        top: rect.top - shift,
         right: rect.right + window.scrollX,
         bottom: rect.bottom + window.scrollY,
         width: rect.width,
@@ -57,10 +57,18 @@ interface UseTooltipPositionProps {
     onZoneLeave?: () => void,
     pointTarget?: keyof typeof coordinatesContainer | typeof coordinatesContainer['rb']
     pointContainer?: keyof typeof coordinatesContainer | typeof coordinatesContainer['rb']
+    responsive?: boolean
 }
 
 
-export const onTooltip = ({ target, containerId, debug = false, containerOffsets = 20, zoneOutOffsets = 0, onZoneLeave, pointTarget, pointContainer }: UseTooltipPositionProps) => {
+/**
+ * @example  const { coords } = onTooltip({
+    target,
+    pointContainer: 'rt',
+    pointTarget: 'rt',
+  })
+ */
+export const onTooltip = ({ target, containerId, debug = false, containerOffsets = 20, zoneOutOffsets = 0, onZoneLeave, pointTarget, pointContainer, responsive = true }: UseTooltipPositionProps) => {
 
     let coords = writable({ x: 0, y: 0 })
     const { closeModal, modalId } = getModalContext()
@@ -68,8 +76,6 @@ export const onTooltip = ({ target, containerId, debug = false, containerOffsets
     onMount(() => {
         const backTooltip = document.querySelector(`[data-modal-back-id="${containerId ?? modalId}"]`) as HTMLDivElement
         const processOnZoneLeave = onZoneLeave ?? closeModal
-
-        console.log({ backTooltip })
 
         if (!backTooltip) {
             console.error(`container: ${containerId ?? modalId} not found`)
@@ -96,8 +102,10 @@ export const onTooltip = ({ target, containerId, debug = false, containerOffsets
             const ContainerOffsets = getRelativeOffset(backTooltip, false)
             const Coordinates = parseCoordinates(coornadinatesA, RelativeOffsets)
             const ContainerCoordinates = parseCoordinates(coordinatesB, ContainerOffsets)
+
             const firstResolution = { x: Math.max(Coordinates.x + ContainerCoordinates.x, calculatedOffset), y: Coordinates.y + ContainerCoordinates.y }
             const documentOffsets = getOffsets(document.documentElement)
+
             const maxLeft = Math.max((firstResolution.x + ContainerOffsets.x(100) + calculatedOffset) - documentOffsets.width, 0)
             const resolutionLeft = firstResolution.x - maxLeft
             const finalResolution = resolutionLeft < 0 ? round((documentOffsets.width / 2) - (ContainerOffsets.x(100) / 2)) : resolutionLeft
@@ -157,10 +165,10 @@ export const onTooltip = ({ target, containerId, debug = false, containerOffsets
 
         const handlerResize = () => resizeEvent(pointTarget, pointContainer)
         handlerResize()
-        window.addEventListener('resize', handlerResize)
+        if (responsive) window.addEventListener('resize', handlerResize)
 
         return () => {
-            window.removeEventListener('resize', handlerResize)
+            if (responsive) window.removeEventListener('resize', handlerResize)
             target.removeEventListener('mouseleave', processOnZoneLeave)
         }
     })

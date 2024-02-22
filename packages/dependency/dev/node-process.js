@@ -1,5 +1,5 @@
 import path from "path";
-import { processDtsFiles, __dirname } from "./proccess-types-files.js";
+import { processDtsFiles, __dirname, processDirectory } from "./proccess-types-files.js";
 
 const dtsProcess = (path_) => processDtsFiles(`./${path_}`, (content, filePath) => {
 
@@ -9,10 +9,23 @@ const dtsProcess = (path_) => processDtsFiles(`./${path_}`, (content, filePath) 
 
     const distRelativeResolve = `${path.relative(resolveFilePath, distFolder).replace("..", '').replace("\\", '').replaceAll('\\', '/') || '.'}/`
 
-    console.log({ distRelativeResolve })
-
     return content.replaceAll("'@/", `'${distRelativeResolve}`).replaceAll('"@/', `"${distRelativeResolve}`)
 })
 
-dtsProcess('./dist/esm')
-dtsProcess('./dist/cjs')
+await dtsProcess('./dist/esm')
+await dtsProcess('./dist/cjs')
+
+
+const svelteRootImport = () => ['./dist/esm', './dist/cjs'].map(path => {
+
+    processDirectory(`${path}/svelte.js`, (content) => {
+        return `${content}export { default as ModalRoot } from './svelte/Components/ModalRoot.svelte';`
+    })
+
+    processDirectory(`${path}/svelte/index.d.ts`, (content) => {
+        return `export { default as ModalRoot } from './Components/ModalRoot.svelte';${content}`
+    })
+})
+
+
+svelteRootImport()
