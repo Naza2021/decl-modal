@@ -26,7 +26,7 @@
         class="p-4 rounded-md bg-white font-bold text-xs break-keep whitespace-nowrap"
       >
         <button
-          class="bg-black rounded-md py-2 px-4 font-bold text-white active:bg-[#464646]"
+          class="bg-[#281812] rounded-md py-2 px-4 font-bold text-white active:bg-[#464646]"
         >
           Button
         </button>

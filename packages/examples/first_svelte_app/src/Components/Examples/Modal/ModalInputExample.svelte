@@ -14,7 +14,7 @@
       id="my-modal-input"
     />
     <button
-      class="bg-black rounded-md py-2 px-8 font-bold text-white self-end mt-4"
+      class="bg-[#281812] rounded-md py-2 px-8 font-bold text-white self-end mt-4"
       on:click={() => {
         closeModal(document.querySelector(`#my-modal-input`).value);
       }}

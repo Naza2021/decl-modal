@@ -36,7 +36,7 @@
     <h1 class="font-bold p-5">{content}</h1>
     {#if timeout}
       <div
-        class="h-[6px] bg-[#0096d1] w-full origin-left"
+        class="h-[6px] bg-[#FE5116] w-full origin-left"
         bind:this={loading}
       />
     {/if}

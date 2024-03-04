@@ -20,28 +20,28 @@ const Page: React.FC<PageProps> = ({ }) => {
       <div className="bg-[#303030] h-full w-full flex">
         <div className="m-auto flex flex-col gap-4 items-center">
           <div className="flex gap-12 items-center">
-            <button className="bg-black rounded-md py-2 px-4 font-bold text-white" onClick={(e) => showMyPopup(e, 'Popup')}>
+            <button className="bg-black rounded-md py-2 px-4 font-bold text-white" onClick={(e) => showMyPopup(e, 'Popup')} data-testid="popup">
               Popup
             </button>
-            <button className="bg-black rounded-md py-2 px-4 font-bold text-white" onClick={() => showMenu('MenuComponent')}>
+            <button className="bg-black rounded-md py-2 px-4 font-bold text-white" onClick={() => showMenu('MenuComponent')} data-testid="menu">
               Menu
             </button>
           </div>
           <div className="flex gap-12 items-center mt-6">
-            <button className="bg-black rounded-md py-2 px-4 font-bold text-white" onClick={() => showModal('ModalComponent')}>
+            <button className="bg-black rounded-md py-2 px-4 font-bold text-white" onClick={() => showModal('ModalComponent')} data-testid="modal">
               Modal
             </button>
-            <p className="text-white select-none" {...showMyTooltip('Holi')}>
+            <p className="text-white select-none" {...showMyTooltip('Holi')} data-testid="tooltip">
               Tooltip | Popup
             </p>
             <button className="bg-black rounded-md py-2 px-4 font-bold text-white" onClick={async () => {
               const { response } = await showInputModal('TestComponent2', { myProp: 'holi' }, { animation: 'pop', waitAnimation: false })
               if (typeof response === 'string') setinput(response)
-            }}>
+            }} data-testid="input">
               Input
             </button>
           </div>
-          {input && <p className="text-white select-none cursor-pointer max-w-[10rem] text-ellipsis overflow-hidden text-center text-nowrap break-keep" onClick={() => showToast(input)}>
+          {input && <p className="text-white select-none cursor-pointer max-w-[10rem] text-ellipsis overflow-hidden text-center text-nowrap break-keep" onClick={() => showToast(input)} data-testid='toast'>
             Input: {input}
           </p>}
         </div>
