@@ -1,8 +1,8 @@
-import { animations } from "@nazfy/modal";
-import { generateModal } from "@nazfy/modal/svelte";
+import { mergeAnimations } from "@nazfy/modal-svelte";
+import { generateModal } from "@nazfy/modal-svelte";
 import Tooltip from "./Tooltip.svelte";
 
-export const TooltipAnimation = animations.mergeAnimations("pop", {
+export const TooltipAnimation = mergeAnimations("pop", {
   back: { config: { duration: 200, delay: 200 } },
   container: { config: { delay: 200 } },
 });

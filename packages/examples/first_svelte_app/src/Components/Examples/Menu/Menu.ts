@@ -1,4 +1,4 @@
-import { generateModal } from '@nazfy/modal/svelte'
+import { generateModal } from '@nazfy/modal-svelte'
 import Menu from './Menu.svelte'
 import type { AnimConfig } from '@nazfy/modal'
 

@@ -1,4 +1,4 @@
-import { ModalFactory, type ModalProps } from "@nazfy/modal";
+import { ModalFactory, type ModalProps } from "@nazfy/modal-svelte";
 import { getContext, type ComponentProps } from "svelte";
 import MyfirstModal from "./MyfirstModal.svelte";
 import { get, type Readable } from "svelte/store";

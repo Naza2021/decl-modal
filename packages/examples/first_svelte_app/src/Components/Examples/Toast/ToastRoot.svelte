@@ -1,5 +1,5 @@
 <script>
-  import ModalRoot from "../../ModalRoot.svelte";
+  import { ModalRoot } from "@nazfy/modal-svelte";
   import { ToastAnimation, ToastRootProps } from "./Toast";
 </script>
 

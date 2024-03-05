@@ -1,9 +1,9 @@
-import { animations } from "@nazfy/modal";
+import { mergeAnimations } from "@nazfy/modal-svelte";
 import Toast from "./Toast.svelte";
-import { generateModal } from "@nazfy/modal/svelte";
+import { generateModal } from "@nazfy/modal-svelte";
 import type { ComponentProps } from "svelte";
 
-export const ToastAnimation = animations.mergeAnimations("pop", {
+export const ToastAnimation = mergeAnimations("pop", {
   back: {
     config: {
       reverse: (parentElement) => {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getModalContext } from "@nazfy/modal/svelte";
+  import { getModalContext } from "@nazfy/modal-svelte";
 
   const { RootProps, closeModal } = getModalContext();
 </script>

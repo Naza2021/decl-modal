@@ -1,4 +1,4 @@
-import { generateModal } from "@nazfy/modal/svelte";
+import { generateModal } from "@nazfy/modal-svelte";
 import ModalPopup from "./ModalExample.svelte";
 import ModalPopuwModalInput from "./ModalInputExample.svelte";
 
