@@ -1,4 +1,4 @@
-import type { ModalProps } from "@/index"
+import type { ModalProps } from "@nazfy/modal"
 import { getContext } from "svelte"
 import { get, type Readable } from "svelte/store"
 

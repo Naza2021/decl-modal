@@ -1,1 +1,0 @@
-export const DEFAULT_MODAL_ID = 'default_modal_id'

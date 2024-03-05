@@ -18,11 +18,11 @@ await dtsProcess('./dist/cjs')
 
 const svelteRootImport = () => ['./dist/esm', './dist/cjs'].map(path => {
 
-    processDirectory(`${path}/svelte.js`, (content) => {
-        return `${content}export { default as ModalRoot } from './svelte/Components/ModalRoot.svelte';`
+    processDirectory(`${path}/index.js`, (content) => {
+        return `${content}export { default as ModalRoot } from './Components/ModalRoot.svelte';`
     })
 
-    processDirectory(`${path}/svelte/index.d.ts`, (content) => {
+    processDirectory(`${path}/index.d.ts`, (content) => {
         return `export { default as ModalRoot } from './Components/ModalRoot.svelte';${content}`
     })
 })

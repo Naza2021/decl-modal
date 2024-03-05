@@ -1,6 +1,6 @@
 {
-  "name": "@nazfy/modal",
-  "version": "0.0.5",
+  "name": "@nazfy/modal-svelte",
+  "version": "1.0.0",
   "sideEffects": false,
   "type": "module",
   "description": "Declarative modals",
@@ -19,16 +19,6 @@
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js",
       "types": "./dist/esm/index.d.ts"
-    },
-    "./react": {
-      "import": "./dist/esm/react.js",
-      "require": "./dist/cjs/react.js",
-      "types": "./dist/esm/react/index.d.ts"
-    },
-    "./svelte": {
-      "import": "./dist/esm/svelte.js",
-      "require": "./dist/cjs/svelte.js",
-      "types": "./dist/esm/svelte/index.d.ts"
     }
   },
   "watch": {
@@ -68,6 +58,9 @@
   ],
   "peerDependencies": {
     "svelte": ">=4"
+  },
+  "dependencies": {
+    "@nazfy/modal": "workspace:^"
   },
   "author": "Nazareno Molinari",
   "license": "MIT",

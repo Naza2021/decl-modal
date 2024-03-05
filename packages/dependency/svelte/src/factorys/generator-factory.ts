@@ -1,6 +1,6 @@
 'use client'
-import { ModalFactory, type ModalProps } from "@/index";
-import type { ValueOf, extractExtendedModalProps } from '@/lib-types/ModalInterna.types';
+import { ModalFactory, type ModalProps } from "@nazfy/modal";
+import type { ValueOf, extractExtendedModalProps } from '@nazfy/modal';
 import type { Call, Objects } from 'hotscript';
 import { getContext, type ComponentConstructorOptions, type SvelteComponent } from 'svelte';
 import { get, type Readable } from 'svelte/store';

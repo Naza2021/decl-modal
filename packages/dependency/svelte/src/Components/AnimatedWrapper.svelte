@@ -1,5 +1,5 @@
 <script lang="ts">
-  import * as animations from "../../contants/animations";
+  import { generateAnimations, DEFAULT_ANIMATIONS } from "@nazfy/modal";
   import { onMount, setContext } from "svelte";
   import { readonly, writable } from "svelte/store";
 
@@ -19,8 +19,8 @@
   onMount(() => {
     if (!ownThis) return () => {};
 
-    const { animatedClose } = animations.generateAnimations(
-      animations.DEFAULT_ANIMATIONS.fade,
+    const { animatedClose } = generateAnimations(
+      DEFAULT_ANIMATIONS.fade,
       $$restProps?.modalId,
       undefined as any,
       { ...$$restProps, factory } as any,
