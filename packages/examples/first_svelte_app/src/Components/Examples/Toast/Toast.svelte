@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getModalContext } from "decl-modal/svelte";
+  import { getModalContext } from "@nazfy/modal/svelte";
   import { onMount } from "svelte";
 
   let loading: HTMLDivElement;

@@ -1,5 +1,5 @@
-import { ModalFactory, ModalProps } from "decl-modal"
-import { ModalPopUpContainer } from "decl-modal/react"
+import { ModalFactory, ModalProps } from "@nazfy/modal"
+import { ModalPopUpContainer } from "@nazfy/modal/react"
 
 
 export interface MyGenericModalProps extends ModalProps<'ResponseType'> {

@@ -25,6 +25,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"decl-modal": "workspace:^"
+		"@nazfy/modal": "workspace:^"
 	}
 }

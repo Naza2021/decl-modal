@@ -1,0 +1,100 @@
+{
+  "name": "@nazfy/modal-react",
+  "version": "1.0.0",
+  "sideEffects": false,
+  "type": "module",
+  "description": "Declarative modals",
+  "repository": {
+    "url": "https://github.com/Naza2021/@nazfy/modal",
+    "type": "git"
+  },
+  "main": "dist/esm/index.js",
+  "files": [
+    "dist/**/*",
+    "package.json",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/esm/index.d.ts"
+    }
+  },
+  "watch": {
+    "release": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "ts,tsx,js,jsx"
+    }
+  },
+  "scripts": {
+    "clean": "rimraf dist/*",
+    "dev:watch": "tsx watch ./src/debug/debug.ts",
+    "dev:full": "tsx watch --inspect=4321 ./src/index.ts",
+    "dev": "tsx ./src/debug/debug.ts",
+    "format": "prettier --write 'src/**/*.{js,ts,json}'",
+    "lint:all": "yarn lint && yarn tscCheck",
+    "lint:fx": "eslint src/**/*.ts --fix",
+    "lint": "eslint src/**/*.ts",
+    "start": "tsc && node dist/index.js",
+    "tsc": "tsc",
+    "tsxCheck": "tsc --noEmit",
+    "clear-cache": "rimraf dist",
+    "release": "rollup -c && node ./dev/node-process.js",
+    "publish": "npm run release && npm publish",
+    "watch": "npm-watch"
+  },
+  "keywords": [
+    "React",
+    "Javascript",
+    "Typescript",
+    "Types",
+    "Modal",
+    "Nazfy",
+    "Next.Js",
+    "Svelte"
+  ],
+  "author": "Nazareno Molinari",
+  "license": "MIT",
+  "dependencies": {
+    "@nazfy/modal": "workspace:^"
+  },
+  "devDependencies": {
+    "@mdx-js/rollup": "^3.0.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.15.11",
+    "@types/react": "18.2.46",
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.37.0",
+    "eslint-config-prettier": "^8.8.0",
+    "express": "^4.18.2",
+    "hotscript": "^1.0.13",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
+    "nodemon": "^3.0.3",
+    "npm-watch": "^0.11.0",
+    "prettier": "^2.8.7",
+    "rimraf": "^4.4.1",
+    "rollup": "^4.9.2",
+    "rollup-plugin-analyzer": "^4.0.0",
+    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-import-css": "^3.4.0",
+    "rollup-plugin-multi-input": "^1.4.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-preserve-directives": "^0.4.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-visualizer": "^5.12.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^3.14.0",
+    "svelte": "^4.2.7",
+    "typescript": "^5.3.3"
+  }
+}

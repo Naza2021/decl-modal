@@ -30,24 +30,24 @@ Es un modal declarativo donde al ejecutar un show, puedes mostrar una vista sin 
 💡 Ultra versatil core, para construir modales, popups, tooltips, sidebars, menus, lo que imagines! <br/>
 
 ## Demo
-https://decl-modal-next-example.nazfy.dev/
+https://@nazfy/modal-next-example.nazfy.dev/
 
 ## Instalacion
 
 <Tabs>
 <TabItem value='npm'>
 ```npm
-npm install decl-modal
+npm install @nazfy/modal
 ```
 </TabItem>
 <TabItem value='pnpm'>
 ```npm
-pnpm install decl-modal
+pnpm install @nazfy/modal
 ```
 </TabItem>
 <TabItem value='yarn'>
 ```npm
-yarn add decl-modal
+yarn add @nazfy/modal
 ```
 </TabItem>
 </Tabs>
@@ -93,7 +93,7 @@ Para implementar un modal, inicia extendiendo tu componente de ModalProps para a
 Tu primer elemento HTML que renderices deberias inyectarle las props de RootProps (Lo cual sera util luego para las animaciones). Las props que se ven aqui las va a proveer el futuro ModalRoot que renderizara nuestro modal.
 
 ```tsx
-import { ModalProps } from "decl-modal"
+import { ModalProps } from "@nazfy/modal"
 
 interface MyFirstModalProps extends ModalProps {
   myCustomProp: any
@@ -118,7 +118,7 @@ const MyFirstModal: React.FC<MyFirstModalProps> = ({ closeModal, RootProps }) =>
 #### Genera un showMethod/ModalRoot
 
 ```tsx
-import { generateModal } from "decl-modal/react"
+import { generateModal } from "@nazfy/modal/react"
 
 // Es como el useState, puedes asignarles el nombre que quieras.
 export const [showMyFirstModal, MyFirstModalRoot] = generateModal(MyFirstModal)
@@ -153,7 +153,7 @@ showMyFirstModal()
 #### Separar y contruir un ModalContainer (Layout) para este modal
 Gracias al hook useModalProps el cual es capaz de absorver las props del modal, puedes crear un modalContainer sin preocuparte por las props.
 ```tsx
-import { useModalProps } from "decl-modal/react"
+import { useModalProps } from "@nazfy/modal/react"
 
 interface MyGenericContainerProps { 
   children: React.ReactNode
@@ -180,7 +180,7 @@ const MyGenericContainer: React.FC<MyGenericContainerProps> = ({ children }) => 
 
 #### Declara multiples modales bajo el mismo showMethod/Root
 ```tsx
-import { type ModalProps, generateModal } from "decl-modal/react"
+import { type ModalProps, generateModal } from "@nazfy/modal/react"
 
 const Modal1: React.FC<ModalProps> = () => {
   return (

@@ -1,6 +1,6 @@
 
-import { type ModalProps } from "decl-modal"
-import { generateModal, useModalProps, useTooltipPosition } from "decl-modal/react"
+import { type ModalProps } from "@nazfy/modal"
+import { generateModal, useModalProps, useTooltipPosition } from "@nazfy/modal/react"
 
 interface PopupContainerProps {
   target: HTMLElement,

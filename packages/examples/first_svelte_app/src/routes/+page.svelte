@@ -16,7 +16,7 @@
     TooltipRootProps,
     showMyTooltip,
   } from "../Components/Examples/Tooltip/Tooltip";
-  import { ModalRoot } from "decl-modal/svelte";
+  import { ModalRoot } from "@nazfy/modal/svelte";
 
   let input = "";
 

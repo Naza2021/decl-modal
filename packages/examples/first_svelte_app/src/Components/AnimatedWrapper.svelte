@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { animations } from "decl-modal";
+  import { animations } from "@nazfy/modal";
   import { onMount, setContext } from "svelte";
   import { readonly, writable } from "svelte/store";
 

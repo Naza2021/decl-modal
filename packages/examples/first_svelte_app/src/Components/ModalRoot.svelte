@@ -1,10 +1,10 @@
 <script lang="ts">
   import { get, writable } from "svelte/store";
 
-  import { stateUpdater, type ModalFactory } from "decl-modal";
+  import { stateUpdater, type ModalFactory } from "@nazfy/modal";
   import { SvelteComponent, onMount } from "svelte";
   import AnimatedWrapper from "./AnimatedWrapper.svelte";
-  import { type AnimConfig } from "decl-modal";
+  import { type AnimConfig } from "@nazfy/modal";
 
   type T = $$Generic;
 

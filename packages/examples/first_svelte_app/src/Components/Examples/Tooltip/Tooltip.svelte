@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onTooltip, getModalContext } from "decl-modal/svelte";
+  import { onTooltip, getModalContext } from "@nazfy/modal/svelte";
   export let target: HTMLElement;
   export let content: string;
   const { RootProps } = getModalContext();

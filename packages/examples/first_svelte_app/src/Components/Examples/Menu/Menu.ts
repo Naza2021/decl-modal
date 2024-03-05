@@ -1,6 +1,6 @@
-import { generateModal } from 'decl-modal/svelte'
+import { generateModal } from '@nazfy/modal/svelte'
 import Menu from './Menu.svelte'
-import type { AnimConfig } from 'decl-modal'
+import type { AnimConfig } from '@nazfy/modal'
 
 export const MenuAnimation = {
     container: {
