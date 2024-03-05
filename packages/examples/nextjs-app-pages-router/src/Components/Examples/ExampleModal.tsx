@@ -1,5 +1,5 @@
-import { ModalProps } from "@nazfy/modal"
-import { generateModal, useModalProps } from "@nazfy/modal/react"
+import { ModalProps } from "@nazfy/modal-react"
+import { generateModal, useModalProps } from "@nazfy/modal-react"
 
 interface ModalContainerProps { children: React.ReactNode, onCloseResponse?: any }
 

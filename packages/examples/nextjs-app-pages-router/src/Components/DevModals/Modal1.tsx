@@ -1,4 +1,4 @@
-import { ModalFactory, ModalProps } from "@nazfy/modal"
+import { ModalFactory, ModalProps } from "@nazfy/modal-react"
 import { ModalPopUpContainer } from "../ModalPopUpContainer"
 
 interface TestComponentProps extends ModalProps<boolean> {
@@ -38,8 +38,8 @@ function Exacto3(props: Exacto3Props) {
   )
 }
 
-// import { ModalFactory } from "@nazfy/modal"
-// import type { ModalProps } from "@nazfy/modal/react"
+// import { ModalFactory } from "@nazfy/modal-react"
+// import type { ModalProps } from "@nazfy/modal-react"
 
 // const Modal1: React.FC<ModalProps> = ({ }) => {
 //   return (

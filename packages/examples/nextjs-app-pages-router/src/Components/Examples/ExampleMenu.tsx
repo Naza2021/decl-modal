@@ -1,5 +1,5 @@
-import { type ModalProps } from "@nazfy/modal"
-import { type AnimConfig, generateModal, useModalProps } from "@nazfy/modal/react"
+import { type ModalProps } from "@nazfy/modal-react"
+import { type AnimConfig, generateModal, useModalProps } from "@nazfy/modal-react"
 
 export const MenuAnimation = {
   container: {

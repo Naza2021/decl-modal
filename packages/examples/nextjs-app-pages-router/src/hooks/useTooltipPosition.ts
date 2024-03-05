@@ -1,4 +1,4 @@
-import { useModalProps } from "@nazfy/modal/react";
+import { useModalProps } from "@nazfy/modal-react";
 import { useEffect, useId, useState } from "react";
 
 const round = (number: number) => Math.floor(number * 100) / 100;

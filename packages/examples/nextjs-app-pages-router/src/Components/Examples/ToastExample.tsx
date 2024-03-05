@@ -1,5 +1,5 @@
-import { type ModalProps } from "@nazfy/modal"
-import { generateModal, type AnimConfig, useModalProps } from "@nazfy/modal/react"
+import { type ModalProps } from "@nazfy/modal-react"
+import { generateModal, type AnimConfig, useModalProps } from "@nazfy/modal-react"
 import React, { useEffect, useId, useRef } from "react"
 
 export const ToastAnimation = {

@@ -1,5 +1,5 @@
-import { ModalProps } from "@nazfy/modal"
-import { AnimConfig, generateModal, useModalProps, useTooltipPosition } from "@nazfy/modal/react"
+import { ModalProps } from "@nazfy/modal-react"
+import { AnimConfig, generateModal, useModalProps, useTooltipPosition } from "@nazfy/modal-react"
 
 export const TooltipAnimation =
   {

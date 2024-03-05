@@ -1,4 +1,4 @@
-import { useModalProps } from "@nazfy/modal/react"
+import { useModalProps } from "@nazfy/modal-react"
 
 interface MyGenericContainerProps { children: React.ReactNode }
 

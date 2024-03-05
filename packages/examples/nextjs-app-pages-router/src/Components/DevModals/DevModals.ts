@@ -1,4 +1,4 @@
-import { ModalFactory } from "@nazfy/modal";
+import { ModalFactory } from "@nazfy/modal-react";
 import { Exacto2, TestComponent, Exacto3 } from "./Modal1";
 
 const Modals = {

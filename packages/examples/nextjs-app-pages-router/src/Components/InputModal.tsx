@@ -1,5 +1,5 @@
-import { ModalProps } from "@nazfy/modal"
-import { generateModal } from "@nazfy/modal/react"
+import { ModalProps } from "@nazfy/modal-react"
+import { generateModal } from "@nazfy/modal-react"
 import React from "react"
 import { MyGenericContainer } from "./ModalPopUpContainer"
 
