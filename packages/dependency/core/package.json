@@ -1,10 +1,10 @@
 {
   "name": "@nazfy/modal",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "sideEffects": false,
   "type": "module",
   "description": "Declarative modals",
-  "url": "https://decl-modal-docs.nazfy.dev/",
+  "homepage": "https://decl-modal-docs.nazfy.dev/",
   "repository": {
     "url": "https://github.com/Naza2021/@nazfy/modal",
     "type": "git"
@@ -44,7 +44,6 @@
     "tsxCheck": "tsc --noEmit",
     "clear-cache": "rimraf dist",
     "release": "rollup -c && node ./dev/node-process.js",
-    "publish": "npm run release && npm publish",
     "watch": "npm-watch"
   },
   "keywords": [
