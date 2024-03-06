@@ -1,9 +1,10 @@
 {
   "name": "@nazfy/modal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "sideEffects": false,
   "type": "module",
   "description": "Declarative modals",
+  "url": "https://decl-modal-docs.nazfy.dev/",
   "repository": {
     "url": "https://github.com/Naza2021/@nazfy/modal",
     "type": "git"
