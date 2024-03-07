@@ -15,14 +15,12 @@ jobs:
           version: 8
       - name: Install dependencies
         run: pnpm i
-      - name: Install pm2
-        run: pnpm install -g pm2
       - name: Install playwright browsers
         run: cd packages/tests && npx playwright install --with-deps
       - name: release core
-        run: cd packages\dependency\core && npm run release
+        run: cd packages/dependency/core && npm run release
       - name: release react
-        run: cd packages\dependency\react && npm run release
+        run: cd packages/dependency/react && npm run release
       - name: Dev mode React app
         run: cd packages/examples/nextjs-app-pages-router && npm run dev & npx wait-on http://localhost:3000 --timeout 60000 && cd ../../tests && npx playwright test
       # - name: Test wait
