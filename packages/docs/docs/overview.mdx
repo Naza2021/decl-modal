@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+slug: "/"
 ---
 
 import Tabs from '@theme/Tabs';
@@ -13,84 +14,72 @@ import Highlight from '../src/components/Hightlist';
   <img src="/img/overview.gif" />  
 </p>
 
-## Features
-Es un modal declarativo donde al ejecutar un show, puedes mostrar una vista sin necesidad de montar un state de isVisible, ademas las show functions tienen un tipado estricto, y permiten una comunicacion bidireccional entre modal y cliente (Donde se ejecuto el show) permitiendo crear una infinita variedad de logicas genericas, para evitar que modales genericos absorvan logica de negocio especifica (Ej: modales de confirmacion). Como tambien esperar a que usuario tipee una input dentro del modal, sin necesidad de salir del contexto de ejecucion de una function local, ni tampoco montar un state especifico para esta respuesta.
-<br/>Ademas la libreria solo expone su Core para tu montes tu propia UI, esto quiere decir que puedes montar tus propias animaciones, modales, tipos de modales, estilos, configuraciones, sin ninguna limitacion!
-
-✅ Core contruido con JS Vanilla, adaptadores para multiples Frameworks o librerias (React, Next.js, Prox: Solid, Qwik, Svelte, PReact).<br/>
-✅ SRR Soportado.<br/>
-✅ Perfectamente tipado.<br/>
-🚀 Ultra liviano, 0 dependencias, solamente APIs nativas (~2kb size).<br/>
-🌟 Modales hiper genericos sin logica de negocio dentro.<br/>
-🌟 Modales declarativos sin ningun tipo de estado (Si no se requiere).<br/>
-🌟 Comunicacion bidireccional con modales.<br/>
-🌟 Async/Await para respuestas del modal, sin salirte del contexto de la funcion.<br/>
-💡 Headless contruye tu propia ui sin ningun tipo de limitacion, ni props extrañas y complicadas.<br/>
-💡 Animaciones basicas incluidas, pero puedes animarlo tanto como gustes!<br/>
-💡 Ultra versatil core, para construir modales, popups, tooltips, sidebars, menus, lo que imagines! <br/>
+## Declaratives Modals
+Discover an advanced modal solution! With a declarative approach and strict typing, you'll be able to display views without needing to manage visibility states. This solution offers bidirectional communication between modal and client, allowing an infinite variety of generic logics without absorbing specific business logic. Additionally, you can expect user responses within the modal without leaving the local execution context. Best of all, its Core allows you to fully customize your user experience with tailored animations, styles, and configurations.
 
 ## Demo
-https://@nazfy/modal-next-example.nazfy.dev/
+https://decl-modal-next-example.nazfy.dev/
 
-## Instalacion
+## Installation
 
 <Tabs>
 <TabItem value='npm'>
 ```npm
-npm install @nazfy/modal
+npm install @nazfy/modal-react
 ```
 </TabItem>
 <TabItem value='pnpm'>
 ```npm
-pnpm install @nazfy/modal
+pnpm install @nazfy/modal-react
 ```
 </TabItem>
 <TabItem value='yarn'>
 ```npm
-yarn add @nazfy/modal
+yarn add @nazfy/modal-react
 ```
 </TabItem>
 </Tabs>
 
-## Por que deberia utilizar esta libreria
-Esta libreria puede ser un reemplazo perfecto, para <Highlight>react-toastify</Highlight>, <Highlight>react-modal</Highlight>, <Highlight>react-tooltip</Highlight>. Ahorrando un enorme espacio en el bundle size, ademas ya no tienes por que aprender configuraciones, props, estilos especificos. Todo lo montas tu! Tus configuraciones, tus estilos, tus props! Que lo tengas que montar tu, no tiene por que ser complejo, ya que la siguiente seccion puedes simplemente copiar y copiar los contenedores de ejemplo y adaptarlos!
+## Why should you use this library
+This library can be a perfect replacement for <Highlight>react-toastify</Highlight>, <Highlight>react-modal</Highlight>, <Highlight>react-tooltip</Highlight>. Saving a huge amount of bundle size, and you no longer have to learn specific configurations, props, styles. You set everything up! Your configurations, your styles, your props! The fact that you have to set it up doesn't have to be complex, as in the following section, you can simply copy and paste the example containers and adapt them!
 
-## Contenedores para copiar y pegar
-Estos contenedores contemplan las vistas mas comunes que puedes generar con esta libreria. Puedes simplemente copiarlos y luego solo crear tus modales que extiendan de estos contenedores o incluso modificar los contenedores y configurarlos a tu gusto. :)
+## Containers to copy and paste
+These containers cover the most common views you can generate with this library. You can simply copy them and then create your modals that extend from these containers, or even modify the containers 
+
 <nav class="pagination-nav">
   <div class="pagination-nav__item">
-    <a class="pagination-nav__link" href="/docs/container/modal">
+    <a class="pagination-nav__link" href="/container/modal">
       <div class="pagination-nav__label">Modal</div>
     </a>
   </div>
   <div class="pagination-nav__item">
-    <a class="pagination-nav__link" href="/docs/container/tooltip">
+    <a class="pagination-nav__link" href="/container/tooltip">
       <div class="pagination-nav__label">Tooltip</div>
     </a>
   </div>
   <div class="pagination-nav__item">
-    <a class="pagination-nav__link" href="/docs/container/popup">
+    <a class="pagination-nav__link" href="/container/popup">
       <div class="pagination-nav__label">Popup</div>
     </a>
   </div>
   <div class="pagination-nav__item">
-    <a class="pagination-nav__link" href="/docs/container/menu">
+    <a class="pagination-nav__link" href="/container/menu">
       <div class="pagination-nav__label">Menu</div>
     </a>
   </div>
   <div class="pagination-nav__item">
-    <a class="pagination-nav__link" href="/docs/container/toast">
+    <a class="pagination-nav__link" href="/container/toast">
       <div class="pagination-nav__label">Toast</div>
     </a>
   </div>
 </nav>
 
-## Construye tu propio modal - Paso a paso
+## Build your own modal - Step by step
 
-Para implementar un modal, inicia extendiendo tu componente de ModalProps para asegurar que tenga las propiedades requeridas. Posteriormente, utiliza la función generateModal de la biblioteca para crear un ModalRoot, que será el encargado de renderizar tu modal. Este componente ModalRoot no solo renderiza, sino que también provee al modal de propiedades especiales
+To implement a modal, start by extending your ModalProps component to ensure it has the required properties. Next, use the generateModal function from the library to create a ModalRoot, which will be responsible for rendering your modal. This ModalRoot component not only renders but also provides the modal with special properties.
 
-#### Construye tu Modal
-Tu primer elemento HTML que renderices deberias inyectarle las props de RootProps (Lo cual sera util luego para las animaciones). Las props que se ven aqui las va a proveer el futuro ModalRoot que renderizara nuestro modal.
+#### Build your Modal
+The first HTML element you render should be injected with the RootProps (which will be useful later for animations). The props you see here will be provided by the future ModalRoot that will render our modal.
 
 ```tsx
 import { ModalProps } from "@nazfy/modal"
@@ -115,43 +104,43 @@ const MyFirstModal: React.FC<MyFirstModalProps> = ({ closeModal, RootProps }) =>
 }
 ```
 
-#### Genera un showMethod/ModalRoot
+#### Generate a showMethod/ModalRoot
 
 ```tsx
 import { generateModal } from "@nazfy/modal/react"
 
-// Es como el useState, puedes asignarles el nombre que quieras.
+// It's like useState, you can name them whatever you want.
 export const [showMyFirstModal, MyFirstModalRoot] = generateModal(MyFirstModal)
 ```
 
-#### Renderiza tu ModalRoot
+#### Render your ModalRoot
 ```tsx
-//Renderiza el Root donde quieras.
+//Render the Root wherever you want.
 <MyFirstModalRoot />
 ```
 
-#### Muestra tu modal
+#### Show your modal
 
 ```tsx
-// Simplemente llama al metodo show, Ej un onClick event
+// Simply call the show method, e.g., an onClick event
 showMyFirstModal()
 ```
 
-### Siguientes pasos (Opcionales):
+### Next steps (Optional):
 
-#### Asginale una animacion a tu Modal
+#### Assign an animation to your Modal
 ```tsx
-// Definir la propiedad animation en ModalRoot
+// Define the animation property in ModalRoot
 <MyFirstModalRoot animation='bubble'/>
 ```
-<a href="/docs/animations">
+<a href="/animations">
   :::tip
-  Puedes saber mas acerca de las animaciones aqui.
+  You can learn more about animations here.
   :::
 </a>
 
-#### Separar y contruir un ModalContainer (Layout) para este modal
-Gracias al hook useModalProps el cual es capaz de absorver las props del modal, puedes crear un modalContainer sin preocuparte por las props.
+#### Separate and build a ModalContainer (Layout) for this modal
+Thanks to the useModalProps hook, which is capable of absorbing the modal's props, you can create a modalContainer without worrying about the props.
 ```tsx
 import { useModalProps } from "@nazfy/modal/react"
 
@@ -172,13 +161,13 @@ const MyGenericContainer: React.FC<MyGenericContainerProps> = ({ children }) => 
   )
 }
 ```
-<a href="/docs/container/vistas">
+<a href="/container/views">
   :::tip
-  Puedes ver mas en detalle como funcionan las vistas aqui.
+  You can see more details about how views work here.
   :::
 </a>
 
-#### Declara multiples modales bajo el mismo showMethod/Root
+#### Declare multiple modals under the same showMethod/Root
 ```tsx
 import { type ModalProps, generateModal } from "@nazfy/modal/react"
 
@@ -186,7 +175,7 @@ const Modal1: React.FC<ModalProps> = () => {
   return (
     <ModalPopUpContainer>
       <div className="bg-white rounded-md p-5 font-bold">
-        Hola desde Modal1!
+        Hello from Modal1!
       </div>
     </ModalPopUpContainer>
   )
@@ -200,17 +189,17 @@ showModals('Modal1', {})
 showModals('Modal2', {})
 ```
 
-#### Enviar respuesta y esperar una respuesta de tu modal
-En el modal puede enviar una respuesta via dos metodos sendMessage, closeModal. Ambos metodos pueden extraerse de las props del modal o del useModalProps.<br/>
-El cliente para obtener la respuesta simplemente deberia hacerle un await a la promise que devuelve.
+#### Send a response and wait for a response from your modal
+In the modal, you can send a response via two methods: sendMessage and closeModal. Both methods can be extracted from the modal's props or from useModalProps.<br/>
+The client to get the response should simply await the promise returned.
 ```tsx
 sendMessage(anyResponse)
 closeModal(anyResponse)
 
 const { response } = await showModals('Modal2', {})
 ```
-<a href="/docs/communication">
+<a href="/communication">
   :::tip
-  Puedes saber mas acerca de la comunicacion que hay entre cliente y modal aqui.
+  You can learn more about the communication between the client and modal here.
   :::
 </a>

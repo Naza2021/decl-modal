@@ -4,62 +4,61 @@ slug: '/communication'
 
 import Highlight from '../src/components/Hightlist';
 
-# Comunicacion Modal-Cliente
+# Modal-Client Communication
 
-Todas las vistas que se invoquen con el show method se crea un canal interno, para intercambiar informacion en ambas direcciones.
+All views invoked with the show method create an internal channel for exchanging information in both directions.
 
-# Configuracion por defecto
+# Default Configuration
 
 #### ShowMethod
-Por defecto el showMethod devuelve una promise, que se resuelve en cuanto la vista devuelve su primer mensaje. Este comportamiento se puede anular para que la promise se resuelva instantaneamente luego de mostrar el modal, utilizando la propiedad de <Highlight>wait</Highlight>.
+By default, the showMethod returns a promise that resolves as soon as the view returns its first message. This behavior can be overridden so that the promise resolves instantly after showing the modal, using the <Highlight>wait</Highlight> property.
 
 #### CloseModal
-Por defecto el closeModal su primer argumento va a ser la respuesta que va a devolver el modal, y esta respuesta se va a enviar instantaneamente. Puedes anular este comportamiento para que el mensaje se envie una vez el modal se termine de cerrar correctamente, osea que terminen las animaciones, utilizando la propiedad de <Highlight>waitAnimation</Highlight>.
+By default, the first argument of closeModal will be the response that the modal will return, and this response will be sent instantly. You can override this behavior so that the message is sent once the modal finishes closing correctly, i.e., after the animations are complete, using the <Highlight>waitAnimation</Highlight> property.
 <br/>
-Puedes establecer estas propiedades de las siguientes maneras:
+You can set these properties in the following ways:
 ```tsx
-// Configuracion especifica en un momento especifico
+// Specific configuration at a specific moment
 showMethod(...modalProps, { wait: false, waitAnimation: false })
 ```
 ```tsx
-// Configuracion generalizada
+// General configuration
 generateModal({Modals: {/*...MyModals*/}, wait: false, waitAnimation: false})
 ```
 :::tip
-Estan ordenadas en funcion de su prioridad, es decir un metodo puede sobrescribir al otro
+They are ordered according to their priority, meaning one method can override the other
 :::
 
-# Escuchar mensajes
+# Listen for messages
 
-El showMethod devuelve una funcion <Highlight>waitFor</Highlight>, esta function tambien se encuentra dentro de las props del modal. Al invocarla devuelve una promise la cual va a esperar hasta el modal devuelva algun mensaje. Esta promise puede ser abortada por 2 motivos, se le puede configurar un timeout, o llamar el metodo <Highlight>abort</Highlight> de la propia promise. Puedes utilizar este waitFor para esperar respuestas del modal, o en el propia modal para te envie data el cliente.
+The showMethod returns a <Highlight>waitFor</Highlight> function, which is also found within the modal's props. When invoked, it returns a promise that will wait until the modal returns a message. This promise can be aborted for two reasons: you can configure a timeout, or call the <Highlight>abort</Highlight> method of the promise itself. You can use this waitFor to wait for responses from the modal, or in the modal itself to have the client send you data.
 
 ```tsx
 const { waitFor } = await showMethod()
 
-// Esperar por un mensaje
-cosnt response = await waitFor()
+// Wait for a message
+const response = await waitFor()
 
-// Esperar por un mensaje por maximo 1 segundo
+// Wait for a message for a maximum of 1 second
 waitFor({timeout: 1000 })
 
-// Abortar con el metodo abort
+// Abort with the abort method
 const waitForPromise = waitFor()
 waitForPromise.abort()
 ```
 :::info
-Se puede recibir una infinita cantidad de mensajes.
+An infinite number of messages can be received.
 :::
 
-# Enviar mensajes
+# Send messages
 
-Al igual que la funcion de waitFor, las props de las modales y la respuesta showMethod, tienen una funcion sendMessage, la cual se puede utilizar para enviar mensajes en ambas direcciones, Modal -> Cliente o Cliente -> Modal.
+Like the waitFor function, the modal props and the showMethod response have a sendMessage function, which can be used to send messages in both directions, Modal -> Client or Client -> Modal.
 
 ```tsx
-// Cliente
+// Client
 const { sendMessage } = await showMethod()
 sendMessage(myMessage)
 
 // Modal
 sendMessage(myMessage)
 ```
-

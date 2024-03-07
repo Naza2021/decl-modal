@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "sideEffects": false,
   "type": "module",
+  "homepage": "https://decl-modal-docs.nazfy.dev/",
   "description": "Declarative modals",
   "repository": {
     "url": "https://github.com/Naza2021/@nazfy/modal",

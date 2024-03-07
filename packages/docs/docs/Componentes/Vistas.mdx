@@ -1,15 +1,15 @@
 ---
 sidebar_position: 1
-slug: '/container/vistas'
+slug: '/container/views'
 ---
 
-# Vistas
+# Views
 
-Existen 2 posibles configuraciones, se puede optar por una combinacion de las configuraciones en funcion del tipo de modal que se monte.
-- Modal Root que monta diferentes modalContainers y Modales (o recuerda que los Modales pueden contener un container en si mismos Ej:2)
-- Modal Root que ya actua como modalContainer y modal
+There are 2 possible configurations, you can opt for a combination of configurations depending on the type of modal to be mounted.
+- Modal Root that mounts different modalContainers and Modals (or remember that Modals can contain a container within themselves E.g.:2)
+- Modal Root that already acts as a modalContainer and modal
 
-Algunos ejemplos:
+Some examples:
 <div align='center' style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem'}}>
 ```mermaid
 graph TD;
@@ -28,18 +28,18 @@ graph TD;
 
 ### ModalRoot
 
-Ubicacion donde se van a renderizar la vista (o las vistas). Puedes obtener un ModalRoot utilizando el metodo de generateModal.
+Location where the view (or views) will be rendered. You can get a ModalRoot using the generateModal method.
 
 #### Props
 
 ##### animation
-Hay un lista de animaciones por defecto, pero puedes definir la animacion que gustes! Por defecto cualquier animacion que declares va a extender de la animacion fade, por lo tanto la animacion va a tener ciertas props por default, ejemplo una duracion de 300ms, pero obviamente puedes redifinir todo a tu gusto.
+There is a list of default animations, but you can define the animation you like! By default, any animation you declare will extend from the fade animation, so the animation will have certain default props, for example, a duration of 300ms, but obviously, you can redefine everything as you wish.
 
 ##### ...extenalProps
-Mediante esta prop puedes compartir estado del padre donde se renderice el ModalRoot hacia las vistas (ModalContainers-Modals).
-No recomiendo el uso de esta prop, idealmente pasarle las props necesarias via el Show method, o utilizar distintas tecnicas de estado, como swr, react-query, zustand, redux, etc.
+Through this prop, you can share the state of the parent where the ModalRoot is rendered with the views (ModalContainers-Modals).
+I do not recommend the use of this prop, ideally pass the necessary props via the Show method, or use different state techniques, such as swr, react-query, zustand, redux, etc.
 
-#### Ejemplo
+#### Example
 
 ```tsx
 //Render
@@ -47,15 +47,15 @@ No recomiendo el uso de esta prop, idealmente pasarle las props necesarias via e
 ```
 
 ### ModalContainer
-Esta tipo de Component no es estrictamente necesario, ya que los Modal pueden tener definido en si mismo un ModalContainer. La idea de este componente es si van a renderizar distintos modales con un tipo de vista especifico, utilizarlos, como un "Layout".<br/>
-Los ModalContainer definen el como se va a renderizar las vistas, por ejemplo en un modal tipico, mostrar un fondo con opacidad y una vista centrada.<br/>
-#### Ejemplo
+This type of Component is not strictly necessary, since the Modal can have a ModalContainer defined within itself. The idea of this component is if you are going to render different modals with a specific type of view, use them as a "Layout".<br/>
+The ModalContainers define how the views will be rendered, for example, in a typical modal, display a background with opacity and a centered view.<br/>
+#### Example
 ```tsx
 import { ModalPopUpContainer } from "@nazfy/modal/react"
  
-// ... exmaple modal container
+// ... example modal container
 ```
-La idea de esta libreria es no proveer ningun tipo de UI para que puedas montar cualquier tipo de vista, sin depender de ninguna prop especifica. Por lo tanto puedes montar tus propios ModalContainer.
+The idea of this library is not to provide any kind of UI so that you can mount any type of view, without depending on any specific prop. Therefore, you can mount your own ModalContainers.
 
 ### Modal
-Los modales ya son como tal la vista final que se renderiza, el contenido del mismo modal, los Modal en si tambien pueden ser ModalContainers, no tienen por que estas 2 ui estar separadas.
+The modals are the final view that is rendered, the content of the modal itself, the Modals themselves can also be ModalContainers, these 2 UIs do not have to be separated.

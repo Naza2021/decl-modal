@@ -1,0 +1,152 @@
+---
+slug: /animations
+sidebar_position: 4
+---
+
+import Highlight from "../src/components/Hightlist";
+
+## Asigna una animacion a tu vista
+
+Por defecto puedes utilizar las default <Highlight>bubble</Highlight> ,<Highlight>pop</Highlight>, <Highlight>fade</Highlight> o directamente un objeto que defina tu animacion.<br/>
+Existen 3 formas de declarar una animacion a tu vista:
+
+```tsx
+// Ejecutar una animacion especifica en un momento especifico
+showMethod(...modalProps, { animation: "pop" });
+```
+
+```tsx
+// Ejecutar una animacion especifica en un modal especifico
+<MyModalRoot config={{ MyModal: { animation: "fade" } }} />
+```
+
+```tsx
+// Ejecutar una animacion especifica generalizada para todos los modales
+<MyModalRoot animation="bubble" />
+```
+
+:::tip
+Estan ordenadas en funcion de su prioridad, es decir un metodo puede sobrescribir al otro
+:::
+
+# Como funciona
+
+La forma en la que el core anima las vistas, es detectando nuestro modalRoot gracias a la propiedad <Highlight>data-modal-back-id</Highlight>, el root es considerado como "back" y su siguiente elemento como "container".
+Puedes jugar con estos dos tags tanto como quieras. Normalmente con el back puedes crear un efecto de fade o mas sencillo para que "aparezca" la vista y ya con el container animar el contenido de la vista.
+
+## Api nativa
+
+Todas las animaciones de esta libreria estan contruidas con la API nativa de animaciones del navegador, esto quiere decir, que si quieres extender o crear tu propia animacion, tendras que hacerlo con las props esta api.<br/>
+[Animate method](https://developer.mozilla.org/en-US/Web/API/Element/animate)<br/>
+[Web Animations API](https://developer.mozilla.org/en-US/Web/API/Web_Animations_API)<br/>
+
+## Animacion por defecto
+
+Todas las animaciones personalizadas que declares, por defecto van a extender de la animacion de "fade" la cual es la siguiente:
+
+```ts
+
+{
+    back: {
+        keyframes: [{ opacity: 0 }, { opacity: 1 }],
+        config: { duration: 200, fill: 'forwards' }
+    },
+    container: {
+        keyframes: [{}],
+        config: { duration: 200, fill: 'forwards' }
+}
+```
+
+:::info
+Se aclara esto por si no entiendes por que tu animacion personalizada se muestra con cierto "easing" o con cierto tiempo sin que lo declares explicitamente.
+
+<br />
+Ademas la extencion es superficial, esto quiere decir que si declaras por ejemplo <Highlight>
+  container.keyframes
+</Highlight>
+, se va a reemplazar completamente por los nuevos keyframes, no se van a
+combinar. :::
+
+## Declara tu propia animacion
+
+Como las animaciones personalizadas son extensiones de una por defecto, no es necesaria que declares todas las props, puedes simplemente modificar algun detalle, Ej:
+
+```typescript
+const myCustomAnim = {
+  container: {
+    keyframes: {
+      transform: ["translateY(60%)", "translateY(0%)"],
+    },
+    config: { duration: 350 },
+  },
+};
+```
+
+Como tambien puedes crear animaciones mas completas como las del efecto "pop":
+
+```tsx
+const myCustomPopAnim = {
+  back: {
+    keyframes: [{ opacity: 0 }, { opacity: 1 }],
+    config: { duration: 200, fill: "forwards" },
+  },
+  container: {
+    keyframes: {
+      transform: ["translateY(60%) scale(0.8)", "translateY(0%) scale(1)"],
+    },
+    config: {
+      duration: 250,
+      fill: "forwards",
+      reverse: false,
+      easing: "cubic-bezier(.47,1.64,.41,.8)",
+    },
+  },
+};
+```
+
+## Consideraciones generales de una animacion
+
+#### Ciclo de vida
+
+En cuanto se ejecuta el metodo show entra en ejecucion la animacion, y cuando se llama el metodo close, se ejecuta la misma animacion pero en reversa.
+Esto es asi, para que se puede cerrar la vista, incluso cuando se esta animando su entrada, y evitar parpadeos o saltos. Puedes anular este comportamiento definiendo en false, la propiedad <Highlight>config.reverse</Highlight>
+Lo que va a provocar en cuando se cierre el modal no se ejecute en reversa. No haria nada. (Ejemplo en pop cuando se cierra el modal no se va hacia abajo)
+
+```typescript
+const myCustomAnim = {
+  container: {
+    config: { reverse: false },
+  },
+};
+```
+
+#### Animacion personalizada de reversa
+
+Puedes definir tambien <Highlight>reverse</Highlight> como una function, la cual tendra un devolver una configuracion de animacion, el primer argumento de esta function va a ser el elemento a animar esto quiere decir, que podras crear configuraciones de salida dinamicas. Un ejemplo de esto lo puedes encontrar en el [Toast de ejemplo](/container/toast).
+
+```tsx
+const ToastAnim = {
+  back: {
+    config: {
+      reverse: (parentElement) => {
+        Object.assign(parentElement.style, { overflow: "hidden" });
+
+        parentElement.animate(
+          {
+            opacity: [1, 0],
+          },
+          { duration: 150, fill: "forwards" }
+        );
+
+        return {
+          keyframes: {
+            maxHeight: [`${parentElement?.offsetHeight}px`, "0px"],
+            paddingTop: [`${parentElement.style.paddingTop}px`, "0px"],
+          },
+          config: { duration: 300, delay: 150 },
+        };
+      },
+    },
+  },
+};
+```

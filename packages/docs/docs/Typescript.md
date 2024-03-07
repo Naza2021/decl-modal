@@ -1,35 +1,42 @@
 # Typescript
-Diferentes metodos o formas para obtener un tipado fuerte en todas tus vistas.
+
+Different methods or ways to obtain strong typing in all your views.
 
 #### ModalProps
-Todos los modales deben extender de estas props para obtener los tipados de closeModal
+
+All modals should extend from these props to obtain the types of closeModal
+
 ```typescript
 interface myModalType extends ModalProps {}
 
 const MyComponent = (props: myModalType)...
 
-// Puedes tipar la comunicacion de waitFor, sendMessage, pasandole como argumento el tipado:
+// You can type the communication of waitFor, sendMessage, passing the type as an argument:
 interface myModalType extends ModalProps<{message: string}> {}
 ```
 
 #### useModalProps
-Puedes tipar las props pasandole como argumento ModalProps o tal cual el tipado que van tener los waitFor, sendMessage
+
+You can type the props by passing ModalProps or the typing that waitFor, sendMessage will have as an argument
 
 ```typescript
 interface myModalType extends ModalProps {}
-useModalProps<myModalType>()
+useModalProps<myModalType>();
 
-// O
-useModalProps<{message: string}>()
+// Or
+useModalProps<{ message: string }>();
 ```
 
 #### AnimConfig
-Tipado como definir animaciones
-```tsx 
+
+Typed to define animations
+
+```tsx
 const myCustomAnim = {
-    // Tu animacion...
+    // Your animation...
 } satisfies AnimConfig
 ```
 
 #### ModalRoot
-Los ModalRoot automaticamente absorven el tipado de generateModal, si se genera un Root con multiples modales, las props de estos modales van a combinarse hacia el root.
+
+ModalRoots automatically absorb the typing of generateModal, if a Root with multiple modals is generated, the props of these modals will be combined into the root.

@@ -1,48 +1,66 @@
-import Highlight from '../../src/components/Hightlist';
+import Highlight from "../../src/components/Hightlist";
 
-Este hook solo idealmente se utiliza dentro de un modal y te provee la capacidad de obtener coordenadas para ubicar un elemento en relacion con otro elemento. Idealmente para tooltips o popups.
+This hook is ideally used only within a modal and provides you with the ability to obtain coordinates to locate an element in relation to another element. Ideally for tooltips or popups.
 
 ### Props
 
 #### target
-Elemento del cual se va a utilizar como referencia.
+
+The element that will be used as a reference.
 
 #### containerId
-Elemento el cual se quiere ubicar. Por defecto va a agarrar el modal-type=back.
+
+The element that you want to locate. By default, it will grab the modal-type=back.
 
 #### containerOffsets
-Distancia generalizada del Elemento target hacia el container.
+
+Generalized distance from the target element to the container.
 
 #### zoneOutOffsets
-Al asignarle un valor, cuando monte el container, va a genera una zona alrededor y con este parametro se puede definir la distancia. Ideal para popups.
 
-#### debug 
-Al configurarlo como true, la zona que se configura con zoneOutOffsets empieza a ser visible.
+When assigned a value, when the container mounts, it will generate a zone around it, and with this parameter, you can define the distance. Ideal for popups.
+
+#### debug
+
+When set to true, the zone configured with zoneOutOffsets becomes visible.
 
 #### onZoneLeave
-Funcion que se ejecutar cuando el mouse abandone la zona del modal. Esta zona por defecto es el elemento target, pero si zoneOutOffsets esta definido, la zona sera el elemento. Por defecto se ejecuta un closeModal, puedes personalizarlo con tu propio callback.
+
+Function executed when the mouse leaves the modal zone. This zone is the target element by default, but if zoneOutOffsets is defined, the zone will be the element. By default, it executes a closeModal, but you can customize it with your own callback.
 
 #### pointTarget
-Punto de referencia del target donde se quiere ubicar el container. Puedes elegir entre estas opciones:<br/>
-<Highlight>lt</Highlight>: Superio izquierda<br/>
-<Highlight>t</Highlight>: Superior<br/>
-<Highlight>rt</Highlight>: Superior derecha<br/>
-<Highlight>lb</Highlight>: Inferior izquierda<br/>
-<Highlight>b</Highlight>: Inferior<br/>
-<Highlight>rb</Highlight>: Inferior derecha<br/>
 
-Tambien puedes proporcionar coordenadas relativas en forma de un objecto algo como:
+Reference point of the target where you want to locate the container. You can choose from these options:<br/>
+
+<Highlight>lt</Highlight>: Top left
+<br />
+<Highlight>t</Highlight>: Top
+<br />
+<Highlight>rt</Highlight>: Top right
+<br />
+<Highlight>lb</Highlight>: Bottom left
+<br />
+<Highlight>b</Highlight>: Bottom
+<br />
+<Highlight>rb</Highlight>: Bottom right
+<br />
+
+You can also provide relative coordinates in the form of an object like:
+
 ```typescript
 { x: -50, y: 100 }
 ```
-Estas coordenadas son relativas, esto quiere decir que por ejemplo y: 100, seria el 100% de la altura del contenedor.
+
+These coordinates are relative, meaning that, for example, y: 100 would be 100% of the container's height.
 
 #### pointContainer
-Punto de referencia del container. Puedes utilizar las mismas posibles opciones que el pointTarget.
 
-### Ejemplo
-En el [Popup](/docs/container/popup) puedes ver su utilizacion mas basica para posicionar los puntos. Donde hay una distribucion de "b" en el target y "t" en el container:
+Reference point of the container. You can use the same possible options as pointTarget.
 
-<div align='center'>
-<img src='/img/example-points.jpg' width={350}/>
+### Example
+
+In the [Popup](/container/popup), you can see its most basic use for positioning the points, where there is a distribution of "b" on the target and "t" on the container:
+
+<div align="center">
+  <img src="/img/example-points.jpg" width={350} />
 </div>
