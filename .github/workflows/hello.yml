@@ -21,5 +21,9 @@ jobs:
         run: cd packages/examples/nextjs-app-pages-router && npm run dev &
       - name: Dev mode Svelte app
         run: cd packages/examples/first_svelte_app && npm run dev &
+      - name: Wait for dev server
+        run: |
+          npx wait-on http://localhost:3000 &&
+          npx wait-on http://localhost:5173
       - name: Run tests
         run: cd packages/tests && npx playwright test
