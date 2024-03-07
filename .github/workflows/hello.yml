@@ -18,9 +18,11 @@ jobs:
       - name: Install playwright browsers
         run: cd packages/tests && npx playwright install --with-deps
       - name: Dev mode React app
-        run: cd packages/examples/nextjs-app-pages-router && npm run dev & cd ../../../ && npx wait-on http://localhost:3000 --timeout 60000
-      - name: Dev mode Svelte app
-        run: 
-          cd packages/examples/first_svelte_app && npm run dev & cd ../../../ && npx wait-on http://localhost:5173 --timeout 60000
+        run: cd packages/examples/nextjs-app-pages-router && nohup npm run dev
+      - name: Test wait
+        run: npx wait-on http://localhost:3000 --timeout 60000
+      # - name: Dev mode Svelte app
+      #   run: 
+      #     cd packages/examples/first_svelte_app && npm run dev & cd ../../../ && npx wait-on http://localhost:5173 --timeout 60000
       - name: Run tests
         run: cd packages/tests && npx playwright test
