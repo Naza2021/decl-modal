@@ -9,6 +9,11 @@ jobs:
     name: Run React app in dev mode
     runs-on: ubuntu-latest
     steps:
+      - name: Get runner IP
+        id: ip
+        run: |
+          IP=$(hostname -i)
+          echo "::set-output name=address::$IP"
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
       - uses: pnpm/action-setup@v3
@@ -21,7 +26,7 @@ jobs:
           cd packages/examples/nextjs-app-pages-router
           npm run dev &
       - name: Wait for React app
-        run: npx wait-on http://localhost:3000 --timeout 60000
+        run: npx wait-on ${{ steps.ip.outputs.address }}:3000 --timeout 60000
 
   svelte-app:
     name: Run Svelte app in dev mode
