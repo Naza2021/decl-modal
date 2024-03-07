@@ -22,7 +22,7 @@ jobs:
       - name: release react
         run: cd packages/dependency/react && npm run release
       - name: Dev mode React app
-        run: cd packages/examples/nextjs-app-pages-router && npm run dev & npx wait-on http://localhost:3000 --timeout 60000 && cd packages/tests && npx playwright test
+        run: cd packages/examples/nextjs-app-pages-router && npm run dev & npx wait-on http://localhost:3000 --timeout 60000 && cd packages/examples/first_svelte_app && npm run dev & npx wait-on http://localhost:5173 --timeout 60000 && cd packages/tests && npx playwright test
         env:
           CI: true
       # - name: Test wait
