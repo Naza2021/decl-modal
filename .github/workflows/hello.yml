@@ -4,9 +4,47 @@ on:
     branches:
       - main
 jobs:
-  tests_e2e:
+
+  react-app:
+    name: Run React app in dev mode
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - name: Install dependencies
+        run: pnpm i
+      - name: Start React app
+        run: |
+          cd packages/examples/nextjs-app-pages-router
+          npm run dev &
+      - name: Wait for React app
+        run: npx wait-on http://localhost:3000 --timeout 60000
+
+  svelte-app:
+    name: Run Svelte app in dev mode
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - name: Install dependencies
+        run: pnpm i
+      - name: Start Svelte app
+        run: |
+          cd packages/examples/first_svelte_app
+          npm run dev &
+      - name: Wait for Svelte app
+        run: npx wait-on http://localhost:5173 --timeout 60000
+
+  tests:
     name: Run end-to-end tests
     runs-on: ubuntu-latest
+    needs: [react-app, svelte-app]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -17,13 +55,5 @@ jobs:
         run: pnpm i
       - name: Install playwright browsers
         run: cd packages/tests && npx playwright install --with-deps
-      - name: Dev mode React app
-        run: cd packages/examples/nextjs-app-pages-router && npm run dev &
-      - name: Dev mode Svelte app
-        run: cd packages/examples/first_svelte_app && npm run dev &
-      - name: Wait for dev server
-        run: |
-          npx wait-on http://localhost:3000 &&
-          npx wait-on http://localhost:5173
       - name: Run tests
         run: cd packages/tests && npx playwright test
