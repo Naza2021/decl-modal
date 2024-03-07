@@ -1,0 +1,11 @@
+name: 'First ci test'
+on: 
+  push:
+    branches:
+      - main
+jobs: 
+  test_schedule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Holi
+        run: echo "This step will always run"
