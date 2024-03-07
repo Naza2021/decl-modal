@@ -18,4 +18,4 @@ jobs:
       - name: Install playwright browsers
         run: cd packages/tests && npx playwright install --with-deps
       - name: Run tests
-        run: npx playwright test
+        run: cd packages/tests && npx playwright test
