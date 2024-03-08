@@ -25,7 +25,7 @@ Welcome to a world where modals become a seamless part of your user interface. D
 - 🌍 **Framework Agnostic Core**: Developed with Vanilla JS, Declarative Modal supports adapters for popular libraries including React, Svelte, and in the near future, Solid and Qwik.
 - 📦 **Server-Side Rendering (SSR) Support**: Fully compatible with SSR.
 - 🔒 **Type-Safe Show Functions**: Strict typing for show functions enables bidirectional communication between the modal and its caller, providing endless possibilities for generic logic without embedding specific business logic.
-- 💨 **Lightweight & Zero Dependencies**: With a focus on native APIs, the library boasts a small footprint (~2kb) with no external dependencies.
+- 💨 **Lightweight & Zero Dependencies**: With a focus on native APIs, the library boasts a small footprint (~8kb) with no external dependencies.
 - 🎨 **Headless UI Construction**: Freedom to build your UI with any animation, style, or configuration without being confined by complicated props or configurations.
 - 🌀 **Inclusion of Basic Animations**: While basic animations are provided, you have the liberty to animate your modals as much as you wish.
 - 🛠 **Versatile Core**: Beyond modals, use the core to create popups, tooltips, sidebars, menus, and whatever else your project requires.
