@@ -1,6 +1,8 @@
 # 💡 Declarative Modal JS
 
 [![MIT License](https://img.shields.io/badge/license-MIT-0374b5?style=flat)](https://github.com/your-username/declarative-modal-js/blob/main/LICENSE)
+[![npm version](https://badge.fury.io/js/@nazfy%2Fmodal-react.svg)](https://badge.fury.io/js/@nazfy%2Fmodal-react)
+[![Playwright CI](https://github.com/Naza2021/decl-modal/actions/workflows/ci-tests.yml/badge.svg)](https://github.com/Naza2021/decl-modal/actions/workflows/ci-tests.yml)
 
 <p align="center">
   <img src="https://decl-modal-docs.vercel.app/img/overview.gif" alt="Declarative Modal Overview">

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const handlebars = require('handlebars');
+const templatesConfig = require('./md-files-config');
 
 const packagesDir = path.join(__dirname);
 const packages = fs.readdirSync(packagesDir).filter(entry => fs.lstatSync(path.join(packagesDir, entry)).isDirectory());
@@ -15,6 +16,7 @@ handlebars.registerPartial('extraSlots', '');
 
 packages.forEach(packageName => {
   const packageDir = path.join(packagesDir, packageName);
+
   // const packageJson = require(path.join(packageDir, 'package.json'));
 
   const hasUsageSlot = fs.existsSync(path.join(packageDir, 'usage-slot.md'));
@@ -26,9 +28,11 @@ packages.forEach(packageName => {
   handlebars.registerPartial('usageSlot', usageSlot);
   handlebars.registerPartial('extraSlots', extraSlots);
 
+
   const readme = template({
     hasUsageSlot,
-    hasExtraSlots
+    hasExtraSlots,
+    ...templatesConfig[packageName]
     // name: packageJson.name,
     // description: packageJson.description,
     // license: packageJson.license,
