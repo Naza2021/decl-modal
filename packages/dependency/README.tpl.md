@@ -28,7 +28,7 @@ Welcome to a world where modals become a seamless part of your user interface. D
 
 ## 🔍 Live Demo
 
-Experience the simplicity and power of Declarative Modal JS firsthand: [https://decl-modal-next-example.nazfy.dev/](https://decl-modal-next-example.nazfy.dev/)
+Experience the simplicity and power of Declarative Modal JS firsthand: {{demo}}
 
 ## 📚 Documentation
 

@@ -1,7 +1,7 @@
 # 💡 Declarative Modal JS
 
 [![MIT License](https://img.shields.io/badge/license-MIT-0374b5?style=flat)](https://github.com/your-username/declarative-modal-js/blob/main/LICENSE)
-[![npm version](https://badge.fury.io/js/@nazfy%2Fmodal-react.svg)](https://badge.fury.io/js/@nazfy%2Fmodal-react)
+
 [![Playwright CI](https://github.com/Naza2021/decl-modal/actions/workflows/ci-tests.yml/badge.svg)](https://github.com/Naza2021/decl-modal/actions/workflows/ci-tests.yml)
 
 <p align="center">
@@ -25,7 +25,7 @@ Welcome to a world where modals become a seamless part of your user interface. D
 
 ## 🔍 Live Demo
 
-Experience the simplicity and power of Declarative Modal JS firsthand: https://decl-modal-next-example.nazfy.dev/
+Experience the simplicity and power of Declarative Modal JS firsthand: 
 
 ## 📚 Documentation
 
