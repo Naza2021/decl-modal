@@ -59,7 +59,7 @@
   "author": "Nazareno Molinari",
   "license": "MIT",
   "dependencies": {
-    "@nazfy/modal": "workspace:^"
+    "@nazfy/modal": "1.0.5"
   },
   "devDependencies": {
     "@mdx-js/rollup": "^3.0.0",
