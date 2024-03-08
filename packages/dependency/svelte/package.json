@@ -1,6 +1,6 @@
 {
   "name": "@nazfy/modal-svelte",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "sideEffects": false,
   "type": "module",
   "description": "Declarative modals",
@@ -44,7 +44,6 @@
     "tsxCheck": "tsc --noEmit",
     "clear-cache": "rimraf dist",
     "release": "rollup -c && node ./dev/node-process.js",
-    "publish": "npm run release && npm publish",
     "watch": "npm-watch"
   },
   "keywords": [
