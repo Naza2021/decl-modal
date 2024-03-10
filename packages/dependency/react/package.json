@@ -1,6 +1,6 @@
 {
   "name": "@nazfy/modal-react",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "sideEffects": false,
   "type": "module",
   "homepage": "https://decl-modal-docs.nazfy.dev/",
